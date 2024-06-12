@@ -1,0 +1,522 @@
+---
+title: "Cxcl13HpbGranuloma"
+author: "A.DeMartin"
+date: "2024-02-21"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages, warning=FALSE, include=FALSE}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+library(dplyr)
+library(ggplot2)
+library(scran)
+```
+
+######################### pre processing ############################
+
+## load files and merge
+```{r load file, eval=FALSE, include=TRUE}
+##load objects juli2022 and merge all 
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2022/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+  }else{
+    seuratN <- seuratS
+  }
+}
+remove(seuratS)
+table(seuratN$dataset)
+
+##load objects juli 2021 and merge all
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2021/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+  }else{
+    seuratN <- seuratS
+  }
+}
+remove(seuratS)
+
+seuratM <- seuratN
+remove(seuratN)
+table(seuratM$dataset)
+
+#rerun seurat
+seuratM <- NormalizeData (object = seuratM)
+seuratM <- FindVariableFeatures(object = seuratM)
+seuratM <- ScaleData(object = seuratM, verbose = TRUE)
+seuratM <- RunPCA(object=seuratM, npcs = 30, verbose = FALSE)
+seuratM <- RunTSNE(object=seuratM, reduction="pca", dims = 1:20)
+seuratM <- RunUMAP(object=seuratM, reduction="pca", dims = 1:20)
+seuratM <- FindNeighbors(object = seuratM, reduction = "pca", dims= 1:20)
+
+res <- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratM <- FindClusters(object = seuratM, resolution = res[i], random.seed = 1234)
+}
+
+### save seurat object
+saveRDS(seuratM, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat.rds")
+
+### remove cluster 21 (0.25res) LEC/fb doublets
+### check counts detected
+seuratLEC <- subset(seurat, RNA_snn_res.0.25 =="21")
+sce <- as.SingleCellExperiment(seuratLEC)
+plotQC2 <- function(sce, feature){
+  p <- gghistogram(data = as.data.frame(sce@colData),
+              x=feature,
+              bins=70,
+              #title=unique(sce$dataset),
+              fill = "slategray",
+              legend = "right", color= "black")
+  return(p)
+}
+plotQC2(sce, "total")
+plotQC2(sce, "detected")
+
+##remove 
+table(seurat$RNA_snn_res.0.25)
+seurat1 <- subset(seurat, RNA_snn_res.0.25 == "21", invert = TRUE)
+table(seurat1$RNA_snn_res.0.25)
+
+### save seurat object
+saveRDS(seurat, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds")
+```
+
+############################### end pre processing ###################################
+
+## load merged file granuloma
+```{r load merged file granuloma}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds"
+seurat <- readRDS(fileNam)
+table(seurat$dataset)
+table(seurat$RNA_snn_res.0.25)
+table(seurat$orig.ident)
+```
+## add metadata
+```{r add metadata, eval=FALSE, include=TRUE}
+### add any type of metadata
+#### cluster_name
+seurat$cluster_name <- "cluster_name"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "0" )] <- "PdgfraloFb1"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "1" )] <- "Mph1"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "2" )] <- "CD8Tcell1"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "3" )] <- "Neut"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "4" )] <- "IgABcell1"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "5" )] <- "LEC"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "6" )] <- "Telocytes"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "7" )] <- "DC"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "8" )] <- "CD4Tcell/ILC2"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "9" )] <- "Mph2"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "10" )] <- "NKcell"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "11" )] <- "CD8Tcell2"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "12" )] <- "Mph3"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "13" )] <- "Trophocytes"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "14" )] <- "PdgfrahiLy6anegFb"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "15" )] <- "IgABcell2"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "16" )] <- "Myocytes"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "17" )] <- "PdgfraloFb2"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "18" )] <- "IgDBcell"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "19" )] <- "NC"
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% "20" )] <- "ICC"
+table(seurat$cluster_name)
+table(seurat$RNA_snn_res.0.25)
+
+###order
+Idents(seurat) <- seurat$cluster_name
+seurat$cluster_name <- factor(seurat$cluster_name, levels=c("CD8Tcell1","CD8Tcell2","NKcell", "CD4Tcell/ILC2","Neut", "Mph1","Mph2", "Mph3","DC","IgABcell1","IgABcell2","IgDBcell","PdgfraloFb1","PdgfraloFb2", "Trophocytes", "Telocytes", "Myocytes", "PdgfrahiLy6anegFb", "NC", "LEC", "ICC"))
+Idents(seurat) <- seurat$cluster_name
+table(seurat$cluster_name)
+
+### add slot cluster plus cond2
+seurat$cluster_plus_cond2 <- paste0(seurat$seurat_clusters, '_', seurat$cond2)
+
+#### cond2
+WT <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3","o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3","9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3")
+cko <- c("o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3","o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3","10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+
+seurat$cond2 <- "cond2"
+seurat$cond2[which(seurat$dataset %in% WT)] <- "WT"
+seurat$cond2[which(seurat$dataset %in% cko)] <- "cko"
+table(seurat$cond2)
+
+###order
+Idents(seurat) <- seurat$cond2
+seurat$cond2 <- factor(seurat$cond2, levels=c("WT", "cko"))
+Idents(seurat) <- seurat$cond2
+table(seurat$cond2)
+
+### save seurat object
+saveRDS(seurat, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds")
+```
+
+## set color vectors
+```{r set color vectors}
+### col clustername
+colclustername <- c("#355C7D","#B1746FFF","#202547","#B09C85", "#4e5a4c","#53354A","#2A363B","#8491B4FF","#00A087FF","#DC9989","#84ad83", "#628395","#D33B44","#779d8d","#727077","#868686FF","#F8B195","#FF847C","#725663FF","#904D39","#91D1C2")
+names(colclustername) <- c("PdgfraloFb1","Mph1", "CD8Tcell1","Neut", "IgABcell1", "LEC", "Telocytes", "DC", "CD4Tcell/ILC2", "Mph2",  "NKcell", "CD8Tcell2", "Mph3", "Trophocytes", "PdgfrahiLy6anegFb", "IgABcell2", "Myocytes", "PdgfraloFb2", "IgDBcell", "NC", "ICC")
+
+### col cond2
+colcond2 <- c("#202547","#BE3144")
+names(colcond2) <- c("WT", "cko")
+```
+
+## umaps clustername
+```{r plot umaps clustername}
+### umaps
+Idents(seurat) <- seurat$cluster_name
+DimPlot(seurat, reduction = "umap", cols = colclustername)
+DimPlot(seurat, reduction = "umap", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 0.5) + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 1) + theme(legend.position = "none")
+```
+## umaps condition
+```{r plot umaps condition}
+### umaps
+Idents(seurat) <- seurat$cond2
+DimPlot(seurat, reduction = "umap", cols = colcond2, split.by = "cond2")
+DimPlot(seurat, reduction = "umap", cols = colcond2, order = "WT")
+DimPlot(seurat, reduction = "umap", cols = colcond2, order="WT") + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", pt.size = 0.5, cols = colcond2, order="WT") + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", pt.size = 1, cols = colcond2, order="WT") + theme(legend.position = "none")
+```
+
+```{r calculate marker genes, eval=FALSE, include=TRUE}
+### calculate cluster marker genes
+Idents(seurat) <- seurat$cluster_name
+levels(seurat)
+
+markerGenes <- FindAllMarkers(seurat, only.pos=T) %>% 
+  dplyr::filter(p_val_adj < 0.01) 
+
+write.table(markerGenes, 
+            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/markergenes_cluster_name",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
+```
+
+### dotplot cluster marker
+```{r dotplot, fig.height=11, fig.width=10}
+genes <- data.frame(gene=rownames(seurat)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Cpe","Ano1","Pecam1","Prox1","Lyve1","Sostdc1","Plp1","Ly6a","Acta2","Cd81","Cd34","Ncam1","Pdgfra","Pdpn", "Cd79a", "Cd79b", "Cd19", "Ighm", "Ighd", "Igha","Itgax","H2-Eb1","H2-Ab1","Cd74","Siglech", "Cx3cr1","Lyz2","Itgam","Msr1", "Arg1", "S100a8", "S100a9", "Il1b", "Rora", "Gata3", "Icos", "Cd4", "Klre1", "Klrk1", "Nkg7", "Gzmb","Cd8b1","Cd8a", "Trbc2", "Cd3d", "Trbc1")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
+
+## relative abundance CD45+
+```{r abundance CD45-}
+##subset CD45- cells
+seuratCD45neg <- subset(seurat, cluster_name %in% c("PdgfraloFb1","PdgfraloFb2", "Trophocytes", "Telocytes", "Myocytes", "PdgfrahiLy6anegFb", "NC", "LEC", "ICC"))
+table(seuratCD45neg$cluster_name)
+
+## Abundance plot CD45neg
+## make count list
+datList <- NULL
+for(con in unique(seuratCD45neg$cond2)){
+  seuratSub <- subset(seuratCD45neg, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$cluster_name)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT", "cko") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "cluster", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
+```
+## relative abundance CD45-
+```{r relative abundance CD45-}
+##subset CD45+ cells
+seuratCD45pos <- subset(seurat, cluster_name %in% c("CD8Tcell1","CD8Tcell2","NKcell","CD4Tcell/ILC2","Neut","Mph1","Mph2","Mph3","DC","IgABcell1","IgABcell2","IgDBcell"))
+table(seuratCD45pos$cluster_name)
+
+## Abundance plot CD45neg
+## make count list
+datList <- NULL
+for(con in unique(seuratCD45pos$cond2)){
+  seuratSub <- subset(seuratCD45pos, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$cluster_name)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT", "cko") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "cluster", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
+```
+
+## assign cell types
+```{r assign celltypes}
+#### celltype
+seurat$celltype <- "celltype"
+seurat$celltype[which(seurat$cluster_name %in% c("CD8Tcell1", "CD8Tcell2"))] <- "CD8Tcells"
+seurat$celltype[which(seurat$cluster_name %in% c("NKcell"))] <- "NKcells"
+seurat$celltype[which(seurat$cluster_name %in% c("CD4Tcell/ILC2"))] <- "CD4Tcell/ILC2"
+seurat$celltype[which(seurat$cluster_name %in% c("Neut"))] <- "Neut"
+seurat$celltype[which(seurat$cluster_name %in% c("Mph1", "Mph2", "Mph3"))] <- "Macrophages"
+seurat$celltype[which(seurat$cluster_name %in% c("DC"))] <- "DC"
+seurat$celltype[which(seurat$cluster_name %in% c("IgABcell1","IgABcell2","IgDBcell"))] <- "Bcells"
+seurat$celltype[which(seurat$cluster_name %in% c("PdgfraloFb1","PdgfraloFb2", "Trophocytes", "Telocytes", "Myocytes", "PdgfrahiLy6anegFb"))] <- "Fb"
+seurat$celltype[which(seurat$cluster_name %in% c("NC"))] <- "NC"
+seurat$celltype[which(seurat$cluster_name %in% c("LEC"))] <- "LEC"
+seurat$celltype[which(seurat$cluster_name %in% c("ICC"))] <- "ICC"
+table(seurat$celltype)
+
+###order
+Idents(seurat) <- seurat$celltype
+seurat$celltype <- factor(seurat$celltype, levels=c("CD8Tcells","NKcells", "CD4Tcell/ILC2","Neut","Macrophages","DC","Bcells", "Fb", "NC", "LEC", "ICC"))
+Idents(seurat) <- seurat$celltype
+table(seurat$celltype)
+```
+## set color vector celltype
+```{r set color vectors celltype}
+### col clustername
+colcelltype <- c("#202547","#84ad83","#00A087FF","#B09C85","#D33B44","#8491B4FF", "#4e5a4c","#355C7D","#904D39","#725663FF","#91D1C2")
+names(colcelltype) <- c("CD8Tcells","NKcells", "CD4Tcell/ILC2","Neut","Macrophages","DC","Bcells", "Fb", "NC", "LEC", "ICC")
+```
+
+## celltype umap
+```{r celltype umap}
+### umaps
+Idents(seurat) <- seurat$celltype
+DimPlot(seurat, reduction = "umap", cols = colcelltype)
+DimPlot(seurat, reduction = "umap", cols = colcelltype) + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", pt.size = 0.5, cols = colcelltype) + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", pt.size = 1, cols = colcelltype) + theme(legend.position = "none")
+```
+## DE genes for each cell type according to WT/cko
+```{r DE genes celltypes}
+Idents(seurat) <- seurat$cond2
+#top 100 DE genes CD8Tcells
+seuratCD8Tcells <- subset(seurat, celltype == "CD8Tcells")
+table(seuratCD8Tcells$cond2)
+levels(seuratCD8Tcells)
+
+DEGenesCD8Tcells <- FindAllMarkers(seuratCD8Tcells,only.pos=T, logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "CD8Tcells")
+DEGenesCD8TcellsWT <- DEGenesCD8Tcells %>% filter (cluster == "WT")
+DEGenesCD8TcellsWT100 <- DEGenesCD8TcellsWT %>% top_n(100, avg_log2FC) 
+
+DEGenesCD8Tcellscko <- DEGenesCD8Tcells %>% filter (cluster == "cko")  
+DEGenesCD8Tcellscko100 <- DEGenesCD8Tcellscko %>% top_n(100, avg_log2FC)
+
+DEGenesCD8TcellsWTcko <- FindAllMarkers(seuratCD8Tcells, logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "CD8Tcells")
+DEGenesCD8TcellsWTcko100 <- DEGenesCD8TcellsWTcko %>% top_n(100, avg_log2FC) 
+
+
+#top 100 DE genes NKcells
+seuratNKcells <- subset(seurat, celltype == "NKcells")
+table(seuratNKcells$cond2)
+levels(seuratNKcells)
+
+DEGenesNKcells <- FindAllMarkers(seuratNKcells, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "NKcells")
+DEGenesNKcellsWT <- DEGenesNKcells %>% filter (cluster == "WT")
+DEGenesNKcellsWT100 <- DEGenesNKcellsWT %>% top_n(100, avg_log2FC)
+
+DEGenesNKcellscko <- DEGenesNKcells %>% filter (cluster == "cko")
+DEGenesNKcellscko100 <- DEGenesNKcellscko %>% top_n(100, avg_log2FC) 
+
+DEGenesNKcellsWTcko <- FindAllMarkers(seuratNKcells,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "NKcells")
+DEGenesNKcellsWTcko100 <- DEGenesNKcellsWTcko %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes CD4Tcell/ILC2
+seuratCD4TcellILC2 <- subset(seurat, celltype == "CD4Tcell/ILC2")
+table(seuratCD4TcellILC2$cond2)
+levels(seuratCD4TcellILC2)
+
+DEGenesCD4TcellILC2 <- FindAllMarkers(seuratCD4TcellILC2, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "CD4Tcell/ILC2")
+DEGenesCD4TcellILC2WT <- DEGenesCD4TcellILC2 %>% filter (cluster == "WT")
+DEGenesCD4TcellILC2WT100 <- DEGenesCD4TcellILC2WT %>% top_n(100, avg_log2FC) 
+
+DEGenesCD4TcellILC2cko <- DEGenesCD4TcellILC2 %>% filter (cluster == "cko")
+DEGenesCD4TcellILC2cko100 <- DEGenesCD4TcellILC2cko %>% top_n(100, avg_log2FC)
+
+DEGenesCD4TcellILC2WTcko <- FindAllMarkers(seuratCD4TcellILC2,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "CD4Tcell/ILC2")
+DEGenesCD4TcellILC2WTcko100 <- DEGenesCD4TcellILC2WTcko %>% top_n(100, avg_log2FC)
+
+#top 100 DE genes Neut
+seuratNeut <- subset(seurat, celltype == "Neut")
+table(seuratNeut$cond2)
+levels(seuratNeut)
+
+DEGenesNeut <- FindAllMarkers(seuratNeut, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Neut")
+DEGenesNeutWT <- DEGenesNeut %>% filter (cluster == "WT")
+DEGenesNeutWT100 <- DEGenesNeutWT %>% top_n(100, avg_log2FC)
+
+DEGenesNeutcko <- DEGenesNeut %>% filter (cluster == "cko")
+DEGenesNeutcko100 <- DEGenesNeutcko %>% top_n(100, avg_log2FC) 
+
+DEGenesNeutWTcko <- FindAllMarkers(seuratNeut,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Neut")
+
+DEGenesNeutWTcko100 <- DEGenesNeutWTcko %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Macrophages
+seuratMacrophages <- subset(seurat, celltype == "Macrophages")
+table(seuratMacrophages$cond2)
+levels(seuratMacrophages)
+
+DEGenesMacrophages <- FindAllMarkers(seuratMacrophages, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Macrophages")
+DEGenesMacrophagesWT <- DEGenesMacrophages %>% filter (cluster == "WT")
+DEGenesMacrophagesWT100 <- DEGenesMacrophagesWT %>% top_n(100, avg_log2FC) 
+
+DEGenesMacrophagescko <- DEGenesMacrophages %>% filter (cluster == "cko")
+DEGenesMacrophagescko100 <- DEGenesMacrophagescko %>% top_n(100, avg_log2FC) 
+
+DEGenesMacrophagesWTcko <- FindAllMarkers(seuratMacrophages,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Macrophages")
+
+DEGenesMacrophagesWTcko100 <- DEGenesMacrophagesWTcko %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes DC
+seuratDC <- subset(seurat, celltype == "DC")
+table(seuratDC$cond2)
+levels(seuratDC)
+
+DEGenesDC <- FindAllMarkers(seuratDC, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "DC")
+DEGenesDCWT <- DEGenesDC %>% filter (cluster == "WT")
+DEGenesDCWT100 <- DEGenesDCWT %>% top_n(100, avg_log2FC) 
+
+DEGenesDCcko <- DEGenesDC %>% filter (cluster == "cko")
+DEGenesDCcko100 <- DEGenesDCcko %>% top_n(100, avg_log2FC) 
+
+DEGenesDCWTcko <- FindAllMarkers(seuratDC, logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "DC")
+
+DEGenesDCWTcko100 <- DEGenesDCWTcko %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Bcells
+seuratBcells <- subset(seurat, celltype == "Bcells")
+table(seuratBcells$cond2)
+levels(seuratBcells)
+
+DEGenesBcells <- FindAllMarkers(seuratBcells, only.pos=T,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Bcells")
+DEGenesBcellsWT <- DEGenesBcells %>% filter (cluster == "WT")
+DEGenesBcellsWT100 <- DEGenesBcellsWT %>% top_n(100, avg_log2FC) 
+
+DEGenesBcellscko <- DEGenesBcells %>% filter (cluster == "cko")
+DEGenesBcellscko100 <- DEGenesBcellscko %>% top_n(100, avg_log2FC) 
+
+DEGenesBcellsWTcko <- FindAllMarkers(seuratBcells,logfc.threshold = 0.1) %>% 
+  dplyr::filter(p_val_adj < 0.1) %>% mutate(celltype = "Bcells")
+
+DEGenesBcellsWTcko100 <- DEGenesBcellsWTcko %>% top_n(100, avg_log2FC) 
+
+DEGenesAll100WT <- full_join(DEGenesCD8TcellsWT100, DEGenesNKcellsWT100)
+DEGenesAll100WT <- full_join(DEGenesAll100WT, DEGenesCD4TcellILC2WT100)
+DEGenesAll100WT <- full_join(DEGenesAll100WT, DEGenesNeutWT100)
+DEGenesAll100WT <- full_join(DEGenesAll100WT, DEGenesMacrophagesWT100)
+DEGenesAll100WT <- full_join(DEGenesAll100WT, DEGenesDCWT100)
+DEGenesAll100WT <- full_join(DEGenesAll100WT, DEGenesBcellsWT100)
+
+DEGenesAll100cko <- full_join(DEGenesCD8Tcellscko100, DEGenesNKcellscko100)
+DEGenesAll100cko <- full_join(DEGenesAll100cko, DEGenesCD4TcellILC2cko100)
+DEGenesAll100cko <- full_join(DEGenesAll100cko, DEGenesNeutcko100)
+DEGenesAll100cko <- full_join(DEGenesAll100cko, DEGenesMacrophagescko100)
+DEGenesAll100cko <- full_join(DEGenesAll100cko, DEGenesDCcko100)
+DEGenesAll100cko <- full_join(DEGenesAll100cko, DEGenesBcellscko100)
+
+DEGenesAll100WTcko <- full_join(DEGenesCD8TcellsWTcko100, DEGenesNKcellsWTcko100)
+DEGenesAll100WTcko <- full_join(DEGenesAll100WTcko, DEGenesCD4TcellILC2WTcko100)
+DEGenesAll100WTcko <- full_join(DEGenesAll100WTcko, DEGenesNeutWTcko100)
+DEGenesAll100WTcko <- full_join(DEGenesAll100WTcko, DEGenesMacrophagesWTcko100)
+DEGenesAll100WTcko <- full_join(DEGenesAll100WTcko, DEGenesDCWTcko100)
+DEGenesAll100WTcko <- full_join(DEGenesAll100WTcko, DEGenesBcellsWTcko100)
+```
+
+## distribution of logFC of top 100 cw DE genes WT
+```{r boxplot top100 DE genes WT}
+ggdensity(DEGenesAll100WT, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+
+ggviolin(DEGenesAll100WT, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+
+ggboxplot(DEGenesAll100WT, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+```
+
+## distribution of logFC of top 100 cw DE genes cko
+```{r boxplot top100 DE genes cko}
+ggdensity(DEGenesAll100cko, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+
+ggviolin(DEGenesAll100cko, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+
+ggboxplot(DEGenesAll100cko, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+```
+
+## distribution of logFC of overall top 100 cw DE genes
+```{r boxplot top100 DE genes overall}
+ggdensity(DEGenesAll100WTcko, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+
+ggviolin(DEGenesAll100WTcko, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+
+ggboxplot(DEGenesAll100WTcko, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

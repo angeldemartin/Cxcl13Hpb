@@ -1,0 +1,220 @@
+---
+title: "GranulomaMacrophages"
+author: "A.DeMartin"
+date: "2024-06-12"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+```
+
+## load merged file granuloma
+```{r load merged file granuloma}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds"
+seurat <- readRDS(fileNam)
+table(seurat$dataset)
+table(seurat$RNA_snn_res.0.25)
+table(seurat$orig.ident)
+```
+
+## set color vectors
+```{r set color vectors}
+### col clustername
+colclustername <- c("#355C7D","#B1746FFF","#202547","#B09C85", "#4e5a4c","#53354A","#2A363B","#8491B4FF","#00A087FF","#DC9989","#84ad83", "#628395","#D33B44","#779d8d","#727077","#868686FF","#F8B195","#FF847C","#725663FF","#904D39","#91D1C2")
+names(colclustername) <- c("PdgfraloFb1","Mph1", "CD8Tcell1","Neut", "IgABcell1", "LEC", "Telocytes", "DC", "CD4Tcell/ILC2", "Mph2",  "NKcell", "CD8Tcell2", "Mph3", "Trophocytes", "PdgfrahiLy6anegFb", "IgABcell2", "Myocytes", "PdgfraloFb2", "IgDBcell", "NC", "ICC")
+
+### col cond2
+colcond2 <- c("#202547","#BE3144")
+names(colcond2) <- c("WT", "cko")
+```
+
+## subset macrophages
+```{r subset mph}
+##subset macrophages
+seuratMph <- subset(seurat, cluster_name %in% c("Mph1","Mph2","Mph3"))
+Idents(seuratMph) <- seuratMph$cluster_name
+levels(seuratMph)
+DimPlot(seuratMph, reduction = "umap", cols = colclustername) 
+```
+
+## relative abundance macrophages
+```{r relative abundance mph}
+## Abundance plot Mph
+##make count list
+datList <- NULL
+for(con in unique(seuratMph$cond2)){
+  seuratSub <- subset(seuratMph, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$cluster_name)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond2=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+ordXcond2 <- c("WT", "cko")
+
+## plot abundance
+ggbarplot(dat_all, x= "cond2", y= "percent", fill = "Var1", legend = "right", legend.titel = "cluster_name", ylab = "frequency", palette = colclustername, order = ordXcond2) + theme(legend.position = "null")
+```
+
+## DE genes mph
+```{r DEgenes mph, eval=FALSE, include=TRUE}
+##calculate DE genes 
+Idents(seuratMph) <- seuratMph$cluster_name
+levels(seuratMph)
+DEGenesMph <- FindAllMarkers(seuratMph, only.pos=T, logfc.threshold = 0.2) %>% filter(p_val_adj < 0.01) 
+
+#write.table(DEGenesMph, 
+            #file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/DEgenesMph_cluster_name",
+            #sep="\t",
+            #quote=F,
+            #row.names=F,
+            #col.names=T)
+```
+
+## mph1 vs mph3
+```{r filter mph1 and mph3}
+##filter mph1 and mph3
+seuratMph1and3 <- subset(seurat, cluster_name %in% c("Mph1","Mph3"))
+Idents(seuratMph1and3) <- seuratMph1and3$cluster_name
+levels(seuratMph1and3)
+DimPlot(seuratMph1and3, reduction = "umap", pt.size = 0.1, cols = colclustername) 
+```
+
+## DE genes mph1 vs mph3
+```{r DE genes mph1 vs mph3}
+##calculate DE genes 
+Idents(seuratMph1and3) <- seuratMph1and3$cluster_name
+levels(seuratMph1and3)
+DEGenesMph1and3 <- FindAllMarkers(seuratMph1and3, only.pos=T, logfc.threshold = 0.2) %>% filter(p_val_adj < 0.01) 
+
+#write.table(DEGenesMph1and3, 
+            #file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/DEgenesMph1vsMph3",
+            #sep="\t",
+            #quote=F,
+            #row.names=F,
+            #col.names=T)
+```
+
+## scatterplot DE genes mph1 vs mph3
+```{r scatter plot DEgenesMph1vsMph3, fig.height=15, fig.width=20}
+### table with expression levels of all genes
+allID <- seuratMph1and3
+Idents(allID) <- allID$cluster_name
+avg.allID <- AverageExpression(allID, group.by = "cluster_name")
+avg.allID <- data.frame(log1p(avg.allID$RNA)) %>% 
+  rownames_to_column(var="gene")
+
+## table with genes of a certain expression frequency
+GeneFreq <- as.data.frame(GetAssayData(allID, assay = "RNA", slot = "data")) %>%
+  tibble::rownames_to_column(var="gene") %>% mutate(count=rowSums(.!=0)-1) %>%
+  mutate(countFreq=count/ncol(allID)) %>%
+  dplyr::select(gene, count, countFreq) %>%
+  dplyr::filter(countFreq>=0.02)
+
+## table with DEGenes to labeel - avg_log2FC > 1.5 and p_val_adj < 1e-100
+genes.to.label <- DEGenesMph1and3 %>% group_by(.,cluster) %>%
+  dplyr::filter(p_val_adj < 1e-100) %>% dplyr::filter(avg_log2FC > 1.5) %>% mutate(labelNam=gsub("^.*\\.","",gene)) 
+  
+avg.allID <- avg.allID %>% mutate(labelNam=gsub("^.*\\.","",gene)) %>% 
+  mutate(colourGrp=ifelse(gene %in% genes.to.label$gene, "lab", 
+                          ifelse(gene %in% DEGenesMph1and3$gene, "sig", "notSig"))) %>% dplyr::filter(gene%in%GeneFreq$gene)
+
+p_allID <- ggscatter(avg.allID, x="Mph1", y="Mph3",
+                     color = "colourGrp",
+                     palette = c("#B2182B", "#808080", "#2166AC"),
+                     label= "labelNam",
+                     label.select = genes.to.label$labelNam,
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "Mph1",
+                     ylab = "Mph3",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p_allID
+```
+
+## GSEA Mph1
+```{r GSEA Mph1, fig.height=12, fig.width=12}
+## GSEA on genes upregulated in Mph1
+##adjust table
+DEGenesMph1 <- dplyr::filter(DEGenesMph1and3, cluster == "Mph1")
+DEGenesMph1 <- DEGenesMph1 %>% rownames_to_column(., var = "long") %>%
+  mutate(gene=gsub("^.*\\.", "", long))  %>%
+  mutate(EnsID=gsub("\\..*","", long))
+
+##GSEA Mph1
+egoMph1 <- enrichGO(gene = unique(DEGenesMph1$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+egoMph1 <- setReadable(egoMph1, OrgDb = org.Mm.eg.db)
+dotplot(egoMph1, showCategory=30)
+```
+
+## GSEA Mph3
+```{r GSEA Mph3, fig.height=12, fig.width=12}
+## GSEA on genes upregulated in Mph3
+##adjust table
+DEGenesMph3 <- dplyr::filter(DEGenesMph1and3, cluster == "Mph3")
+DEGenesMph3 <- DEGenesMph3 %>% rownames_to_column(., var = "long") %>%
+  mutate(gene=gsub("^.*\\.", "", long))  %>%
+  mutate(EnsID=gsub("\\..*","", long))
+
+##GSEA Mph3
+egoMph3 <- enrichGO(gene = unique(DEGenesMph3$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+egoMph3 <- setReadable(egoMph3, OrgDb = org.Mm.eg.db)
+dotplot(egoMph3, showCategory=30)
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

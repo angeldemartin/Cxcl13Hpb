@@ -1,0 +1,845 @@
+---
+title: "vorlagen"
+author: "A.DeMartin"
+date: "2024-06-06"
+output: html_document
+---
+# install.packages("devtools")
+devtools::install_github("immunogenomics/presto")
+
+## cluster marker genes
+```{r marker genes}
+#genes upregulated during infection
+#subset WT
+table(seuratFb2$cond2)
+seuratWT <- subset(seuratFb2, cond2 == "WT")
+table(seuratWT$cond2)
+
+#subset naive u D4 Hp
+table(seuratWT$cond3)
+seuratFbN4 <- subset(seuratWT, cond3 %in% c("naive", "infectedD4"))
+table(seuratFbN4$cond3)
+
+Idents(seuratFbN4) <- seuratFbN4$cond3
+levels(seuratFbN4)
+markerGenes <- FindAllMarkers(seuratFbN4, only.pos=T,logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1) 
+
+#subset naive u D8 Hp
+seuratFbN8 <- subset(seuratWT, cond3 %in% c("naive", "infectedD8"))
+table(seuratFbN8$cond3)
+
+Idents(seuratFbN8) <- seuratFbN8$cond3
+levels(seuratFbN8)
+markerGenesN8 <- FindAllMarkers(seuratFbN8, only.pos = T, logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1)
+
+#run GSEA on DE genes N-D8
+##filter genes D8
+markerGenesN8fil <- markerGenesN8 %>% filter (cluster == "infectedD8") %>% mutate(EnsID=gsub("\\..*","", gene))
+egoHpD8 <- enrichGO(gene = unique(markerGenesN8fil$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+egoHpD8 <- setReadable(egoHpD8, OrgDb = org.Mm.eg.db)
+
+topGSHpD8 <- filter(egoHpD8@result, egoHpD8@result$ID %in% c("GO:0032963","GO:0070371","GO:0045765","GO:0045785","GO:0032970","GO:0042060","GO:0006457","GO:0050900")) %>%
+  mutate(log10pval = -log10(p.adjust)) 
+
+#make ggbarplot
+topGSHpD8 %>% 
+  arrange(log10pval) %>% ggbarplot(x = "Description", y = "log10pval", fill= "#B2182B" , width = 0.4, orientation = "horizontal", sort.by.groups = TRUE) 
+```
+
+## vulcanoplot
+```{r vulcano}
+#subset WT
+table(seuratFb2$cond2)
+seuratWT <- subset(seuratFb2, cond2 == "WT")
+table(seuratWT$cond2)
+#subset naive u D8 Hp
+seuratFbN8 <- subset(seuratWT, cond3 %in% c("naive", "infectedD8"))
+table(seuratFbN8$cond3)
+#calculate DE genes infected D8
+Idents(seuratFbN8) <- seuratFbN8$cond3
+levels(seuratFbN8)
+markerGenesN8 <- FindAllMarkers(seuratFbN8, logfc.threshold = 0.2) %>% dplyr::filter(cluster == "infectedD8")
+
+# Create a new column to indicate significant genes based on p-value and fold change thresholds
+markerGenesN8$sig <- ifelse(markerGenesN8$avg_log2FC > 0.3, "Yes", "No")
+markerGenesN8$minuslog10padjust <- -log10(markerGenesN8$p_val_adj)
+
+ggplot(markerGenesN8, aes(x = avg_log2FC, y = -log10(p_val_adj), color = sig)) +
+  geom_point(alpha = 0.8) +
+  scale_color_manual(values = c("No" = "gray", "Yes" = "#B2182B")) +
+  theme_classic() +
+  labs(x = "Log2 Fold Change", y = "-log10(Adjusted P-value)", color = "Significant")
+```
+
+## scatterplot
+```{r vulcano}
+#subset WT
+table(seuratFb2$cond2)
+seuratWT <- subset(seuratFb2, cond2 == "WT")
+table(seuratWT$cond2)
+#subset naive u D8 Hp
+seuratFbN8 <- subset(seuratWT, cond3 %in% c("naive", "infectedD8"))
+table(seuratFbN8$cond3)
+#calculate DE genes infected D8
+Idents(seuratFbN8) <- seuratFbN8$cond3
+levels(seuratFbN8)
+DEGenesN8 <- FindAllMarkers(seuratFbN8, only.pos = T, logfc.threshold = 0.2) %>% 
+  dplyr::filter(p_val_adj < 0.1)
+
+# scatterplot
+allID <- seuratFbN8
+Idents(allID) <- allID$cond3
+avg.allID <- AverageExpression(allID, group.by = "cond3")
+avg.allID <- data.frame(log1p(avg.allID$RNA)) %>% 
+  rownames_to_column(var="gene")
+#expression frequency
+GeneFreqSel <- as.data.frame(GetAssayData(allID, assay = "RNA", slot = "data")) %>%
+  tibble::rownames_to_column(var="gene") %>% mutate(count=rowSums(.!=0)-1) %>%
+  mutate(countFreq=count/ncol(allID)) %>%
+  dplyr::select(gene, count, countFreq) %>%
+  dplyr::filter(countFreq>=0.1)
+
+genes.to.label <- DEGenesN8 %>% group_by(.,cluster) %>%
+  dplyr::filter(avg_log2FC > 0.5) %>% mutate(labelNam=gsub("^.*\\.","",gene))  %>%
+  dplyr::filter(cluster == "infectedD8")
+
+avg.allID <- avg.allID %>% mutate(labelNam=gsub("^.*\\.","",gene)) %>% 
+  mutate(colourGrp=ifelse(gene %in% genes.to.label$gene, "lab", 
+                          ifelse(gene %in% DEGenesN8$gene, "sig", "notSig"))) %>% dplyr::filter(gene%in%GeneFreqSel$gene)
+
+p_allID <- ggscatter(avg.allID, x="infectedD8", y="naive",
+                     color = "colourGrp",
+                     palette = c("#B2182B", "#808080", "#2166AC"),
+                     label= "labelNam",
+                     label.select = genes.to.label$labelNam,
+                     repel = T,
+                     label.rectangle = F,
+                     xlab = "infectedD8",
+                     ylab = "naive",
+                     font.label = c("10", "plain","black"),
+                     size=2,)
+p_allID
+```
+
+
+## average Heatmap - extended marker heatmap FSC subsets (plot wo granuloma data)
+```{r avg heatmap}
+##0.25 cluster
+colPal <- c("#355C7D", "#42858C","#779d8d","#2A363B","#E84A5F","#FF847C","#F8B195" ,"#727077", "#C06C84", "#24A99C","#99B898")
+names(colPal) <- c("0" ,"1", "2", "3", "4", "5", "6", "7", "8", "9","10")
+##order
+Idents(seuratFb) <- seuratFb$RNA_snn_res.0.25
+seuratFb$RNA_snn_res.0.25 <- factor(seuratFb$RNA_snn_res.0.25, levels=c("1", "0", "4","2", "5","3", "6", "7", "9","10","8"))
+Idents(seuratFb) <- seuratFb$RNA_snn_res.0.25
+levels(seuratFb)
+
+seurat <- seuratFb
+Idents(seurat)
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(^.*?_)","",
+                                       colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=gsub("(_.*$)","",colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot <- data.frame(gene=c("Mmp10","Igfbp3","Mgp","Cxcl1","Ptgs2","Pdpn","Ncam1","Rgs5", "Ereg", "Mgp", "Cxcl1", "Ptgs2",  "Pdpn","Ncam1", "Cxcl9", "Saa3", "Cxcl5", "Ccl2", "Ccl8","Prss23", "Grem1", "Ackr4", "Cd81", "Ogn", "Chodl", "Cd34", "Ly6a", "Cxcl14", "P2rx1", "Plvap", "Pros1","Itga8"))
+
+#genesPlot <- data.frame(gene=c("Tagln", "Tmem158", "Ednrb", "Pdgfra", "Acta2", "Kcnj8", "Ogn", "Myh11", "Actg2", "Tpm2", "Myl9", "Cnn1", "Ptn", "Scg2", "Lcn2", "Thbs2", "Fxyd6","Thy1","Pla1a", "Steap4", "Ifi204", "Plau", "Col6a6","Fabp5","Plp1","Sostdc1","S100a4","Mcam", "Stmn1", "H2az1",  "Hmgb2","Cenpf","Mki67"))
+
+levels(seurat)
+colVec <- colPal
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+#### analysis Fb across all conditions (wo ganuloma data)
+## exclude granuloma and plot 
+```{r subset}
+Idents(seuratFb)
+DimPlot(seuratFb, reduction = "umap", cols=colPal, pt.size = 1, split.by = "cond3") 
+table(seuratFb$cond3)
+seuratFb2 <- subset(seuratFb, cond3 =="granulomaD4", invert=T)
+table(seuratFb2$cond3)
+
+##wt vs cko (cond2)
+colCond2 <- c("#202547","#BE3144")
+names(colCond2) <- c("WT", "cko")
+Idents(seuratFb2) <- seuratFb2$cond2
+DimPlot(seuratFb2, reduction = "umap", cols=colCond2, pt.size = 0.3)  +
+  theme(legend.position = "none")
+
+##0.25 cluster
+colPal <- c("#355C7D", "#42858C","#779d8d","#2A363B","#E84A5F","#FF847C","#F8B195" ,"#727077", "#C06C84", "#24A99C","#99B898")
+names(colPal) <- c("0" ,"1", "2", "3", "4", "5", "6", "7", "8", "9","10")
+
+Idents(seuratFb2) <- seuratFb2$RNA_snn_res.0.25
+DimPlot(seuratFb2, reduction = "umap", cols=colPal, pt.size = 0.3)  +
+  theme(legend.position = "none")
+
+saveRDS(seuratFb2, file="/Users/immbio/Desktop/Project/Angelina/analysis nov 22/merged_all_subsetFb_wogranulomaD4_seurat.rds")
+```
+
+## dotplot (for all incl. granuloma)
+```{r dotplot}
+#reorder clusters
+Idents(seuratFb) <- seuratFb$RNA_snn_res.0.25
+seuratFb$RNA_snn_res.0.25 <- factor(seuratFb$RNA_snn_res.0.25, levels=c("1", "0", "4","2", "5","3", "6", "7", "9","10","8"))
+Idents(seuratFb) <- seuratFb$RNA_snn_res.0.25
+levels(seuratFb)
+table(seuratFb$cond3)
+
+genes <- data.frame(gene=rownames(seuratFb)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Pdpn", "Pdgfra","Cd34","Ncam1", "Ly6a","Cd81", "Acta2")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFb, features = selGenes, group.by= "RNA_snn_res.0.25") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
+
+## Abundance plot
+```{r abundance plot}
+##subset naive
+table(seuratFb2$cond3)
+seuratFb2naive <- subset(seuratFb2, cond == "naive")
+table(seuratFb2naive$cond3)
+
+##subset D4
+table(seuratFb2$cond3)
+seuratFb2D4 <- subset(seuratFb2, cond3 == "infectedD4")
+table(seuratFb2D4$cond3)
+
+##subset D8
+table(seuratFb2$cond3)
+seuratFb2D8 <- subset(seuratFb2, cond3 == "infectedD8")
+table(seuratFb2D8$cond3)
+
+##make count list (cond2 = cko wt)
+seurattp <- seuratFb2naive
+seurattp <- seuratFb2D4
+seurattp <- seuratFb2D8
+
+datList <- NULL
+for(con in unique(seurattp$cond2)){
+  seuratSub <- subset(seurattp, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$RNA_snn_res.0.25)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond2=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+ordX <- c("WT","cko")
+## plot abundance
+ggbarplot(dat_all, x= "cond2", y= "percent", fill = "Var1", palette = colPal, legend = "right", legend.titel = "cluster", ylab = "frequency")  + scale_x_discrete(limits=ordX)
+```
+
+## create Venn Diagram
+```{r venn diagram}
+##calculate DEGenes
+seurat1 <- subset(seuratFb2, cond3 %in% c("naive", "infectedD4"))
+Idents(seurat1) <-seurat1$cond3
+levels(seurat1)
+DEGenesHpD4 <- FindAllMarkers(seurat1, only.pos=T, logfc.threshold = 0.2) %>% dplyr::filter(p_val_adj < 0.01) 
+DEGenesHpD4 <- DEGenesHpD4 %>% filter (cluster == "infectedD4")
+
+seurat2 <- subset(seuratFb2, cond3 %in% c("infectedD4"))
+Idents(seurat2) <-seurat2$cond2
+levels(seurat2)
+DEGenesAtD4 <- FindAllMarkers(seurat2, only.pos=T, logfc.threshold = 0.2) %>% dplyr::filter(p_val_adj < 0.01) 
+DEGenesAtD4 <- DEGenesAtD4 %>% filter (cluster == "WT")
+
+seurat3 <- subset(seuratFb2, cond3 %in% c("infectedD8"))
+Idents(seurat3) <-seurat3$cond2
+levels(seurat3)
+DEGenesAtD8 <- FindAllMarkers(seurat3, only.pos=T, logfc.threshold = 0.2) %>% dplyr::filter(p_val_adj < 0.01) 
+DEGenesAtD8 <- DEGenesAtD8 %>% filter (cluster == "WT")
+
+seurat4 <- subset(seuratFb2, cond3 %in% c("naive","infectedD8"))
+Idents(seurat4) <-seurat4$cond3
+levels(seurat4)
+DEGenesHpD8 <- FindAllMarkers(seurat4, only.pos=T, logfc.threshold = 0.2) %>% dplyr::filter(p_val_adj < 0.01) 
+DEGenesHpD8 <- DEGenesHpD8 %>% filter (cluster == "infectedD8")
+
+##make Venn Diagram
+x <- list(A=DEGenesHpD4$gene,
+          B=DEGenesHpD8$gene,
+          C=DEGenesAtD4$gene,
+          D=DEGenesAtD8$gene)
+library(VennDiagram)
+venn.diagram(x, filename = "venn-4-diagram.png")
+# Helper function to display Venn diagram
+display_venn <- function(z, ...) {
+  grid.newpage()
+  venn_object <- venn.diagram (z, filename = NULL, ...)
+  grid.draw (venn_object)
+}
+display_venn(x)
+# change fill color and circles
+display_venn(x, fill = c("#2166AC", "#B2182B", "#91B3D6", "#D98C96"), lwd = 5, lty = 'blank')
+# extract genes in intersections
+library(gplots)
+vTab <- venn(x)
+vTab
+```
+
+## violin plot
+```{r make violin plot}
+##violin plot
+colCond6 <- c("#F7F7F7","#7F7F7F","#2166AC", "#B2182B", "#91B3D6", "#D98C96")
+names(colCond6) <- levels(seuratFb2)
+names(colCond6) <- c("WT_naive", "cko_naive","WT_infectedD4", "WT_infectedD8", "cko_infectedD4", "cko_infectedD8")
+
+Idents(seuratFb2) <- seuratFb2$cond2_plus_cond3
+levels(seuratFb2)
+seuratFb2$cond2_plus_cond3 <- factor(seuratFb2$cond2_plus_cond3, levels=c("WT_naive", "cko_naive", "WT_infectedD4","cko_infectedD4","WT_infectedD8", "cko_infectedD8"))
+Idents(seuratFb2) <- seuratFb2$cond2_plus_cond3
+levels(seuratFb2)
+
+VlnPlot(object=seuratFb2, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colCond6) + theme(legend.position = "none")
+VlnPlot(object=seuratFb2, features = "ENSMUSG00000029371.Cxcl5", pt.size = 0) + theme(legend.position = "none")	
+VlnPlot(object=seuratFb2, features = "ENSMUSG00000024164.C3", pt.size = 0) + theme(legend.position = "none")	
+VlnPlot(object=seuratFb2, features = "ENSMUSG00000025027.Xpnpep1", pt.size = 0) + theme(legend.position = "none")	
+
+FeaturePlot(seuratFb2, features = "ENSMUSG00000020676.Ccl11")
+```
+
+## average Heatmap of DE genes 
+```{r avg heatmap}
+colCond6 <- c("#F7F7F7","#7F7F7F","#2166AC", "#B2182B", "#91B3D6", "#D98C96")
+names(colCond6) <- c("WT_naive", "cko_naive","WT_infectedD4", "WT_infectedD8", "cko_infectedD4", "cko_infectedD8")
+Idents(seuratFb2) <- seuratFb2$cond2_plus_cond3
+levels(seuratFb2)
+seurat <- seuratFb2
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(^.*?_)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=colnames(logNormExpresMa))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+    ordVec <- c("WT_naive", "cko_naive","WT_infectedD4","cko_infectedD4", "WT_infectedD8", "cko_infectedD8")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot <- data.frame(gene=c("Ccl11", "Cxcl5", "C3", "Xpnpep1"))
+#genesPlot <- data.frame(gene=c("Serpina3n", "Serpina3g", "Tff2", "Il1r1", "Ccl8", "Col6a1","Col6a2", "Col6a5", "Col5a2", "Col4a1", "Igf1", "Ltbp1", "Bgn", "Ppic", "Pgf", "Cyp1b1", "Ugcg"))
+levels(seurat)
+colVec <- colCond6
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+################# subset hp d4 and granuloma d4 ##############################
+## load files and subset
+```{r load file and subset}
+##load object and subset D4
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/analysis nov 22//merged_all_subsetFb_seurat.rds"
+seuratFb <- readRDS(fileNam)
+table(seuratFb$cond3)
+DimPlot(seuratFb, reduction= "umap", split.by = "cond3")
+
+seuratD4 <- subset(seuratFb, cond3 %in% c("infectedD4", "granulomaD4"))
+table(seuratD4$cond3)
+
+## plot umap 
+colGran <- c("#C4C4C4", "#BE3144")
+names(colGran) <-c("infectedD4", "granulomaD4")
+Idents(seuratD4) <- seuratD4$cond3
+Idents(seuratD4) <- seuratD4$RNA_snn_res.0.25
+DimPlot(seuratD4, reduction= "umap", cols = colGran)  +
+  theme(legend.position = "none")
+
+## DE genes granuloma vs infected d4
+DEGenesGran <- FindAllMarkers(seuratD4, only.pos=T, logfc.threshold = 0.2) %>% dplyr::filter(p_val_adj < 0.01) 
+DEGenesGran1 <- dplyr::filter(DEGenesGran, cluster == "granulomaD4")
+
+## violin plots Ccl11, Cxcl5, C3, Xpnpep1
+VlnPlot(object=seuratD4, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000029371.Cxcl5", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000024164.C3", pt.size = 0, cols = colPal) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000025027.Xpnpep1", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000054263.Lifr", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+VlnPlot(object=seuratD4, features = "ENSMUSG00000021756.Il6st", pt.size = 0, cols = colGran) + theme(legend.position = "none")
+
+## GSEA on genes upregulated in granuloma
+##adjust table
+DEGenesGran2 <- DEGenesGran1 %>% rownames_to_column(., var = "long") %>%
+  mutate(gene=gsub("^.*\\.", "", long))  %>%
+  mutate(EnsID=gsub("\\..*","", long))
+##filter and GSEA ACTA2PRC
+ego <- enrichGO(gene = unique(DEGenesGran2$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+ego <- setReadable(ego, OrgDb = org.Mm.eg.db)
+	
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="leukocyte migration")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="generation of precursor metabolites and energy")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="ATP metabolic process")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="regulation of angiogenesis")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="positive regulation of cell adhesion")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="response to interferon-gamma")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+ego1 <- dplyr::filter(ego@result,ego@result$Description=="generation of precursor metabolites and energy")
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+
+genes <- data.frame(geneID=rownames(sce)) %>% mutate(gene=gsub(".*\\.", "", geneID))
+##convert seurat object to sce object
+sce <- as.SingleCellExperiment(seuratD4)
+
+pal = colorRampPalette(c("#053061", "#2166ac", "#f7f7f7", "#f4a582", "#b2183c", "#85122d"))
+##make a count matrix of signature genes
+signGenes <- genes %>% dplyr::filter(gene %in% df$gene)
+
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 1.5))
+sceSub$sign2[which(sceSub$sign > 1.5)] <- 1.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc +
+  theme(legend.position = "none")
+
+##check max and min values
+max(sceSub$sign)
+```
+
+## average Heatmap of genes in GSEA
+```{r avg heatmap}
+#reorder
+seuratD4$RNA_snn_res.0.25 <- factor(seuratD4$RNA_snn_res.0.25, levels=c("1", "0", "4","2", "5","3", "6", "7", "9","10","8"))
+seuratD4$cond3 <- factor(seuratD4$cond3, levels=c("infectedD4", "granulomaD4"))
+#make slot cluster0.25 plus cond3
+seuratD4$cluster_plus_cond <- paste0(seuratD4$cond3, '_', seuratD4$RNA_snn_res.0.25)
+Idents(seuratD4) <- seuratD4$cluster_plus_cond
+seuratD4$cluster_plus_cond <- factor(seuratD4$cluster_plus_cond, levels=c("infectedD4_1","granulomaD4_1","infectedD4_0","granulomaD4_0","infectedD4_4","granulomaD4_4","infectedD4_2","granulomaD4_2","infectedD4_5","granulomaD4_5","infectedD4_3","granulomaD4_3","infectedD4_6","granulomaD4_6","infectedD4_7","granulomaD4_7","infectedD4_9","granulomaD4_9","granulomaD4_10","infectedD4_8","granulomaD4_8"))
+levels(seuratD4)
+
+seurat <- seuratD4
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+    annotation_col <- as.data.frame(gsub("(^.*?_)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(cond=gsub("(_.*$)","",colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(celltype = gsub("^","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+  
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+ordVec <- c("infectedD4_1","granulomaD4_1","infectedD4_0","granulomaD4_0","infectedD4_4","granulomaD4_4","infectedD4_2","granulomaD4_2","infectedD4_5","granulomaD4_5","infectedD4_3","granulomaD4_3","infectedD4_6","granulomaD4_6","infectedD4_7","granulomaD4_7","infectedD4_9","granulomaD4_9","granulomaD4_10","infectedD4_8","granulomaD4_8")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+##extract genes from GSEA analysis
+g1 <- ego1$geneID
+Str <-(g1)
+StrSub <- strsplit(Str, "/")
+df <- as.data.frame(StrSub)
+colnames(df) <- c("gene")
+genesPlot <- df
+
+genesin <- genesPlot %>% filter((gene %in% genes$geneID))
+genesout <- genesPlot  %>% filter((!gene %in% genes$geneID))
+
+genesPlot <- genesin
+
+levels(seurat)
+colVec <- colPal
+colVecC <- colGran
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec, colVecCond = colVecC)
+```
+
+## create chord Diagram
+```{r chord Diagram}
+Idents(seuratD4) <- seuratD4$cond3
+cluster2cond3 <- data.frame(table(seuratD4$RNA_snn_res.0.25, seuratD4$cond3))
+
+#color palette
+mycolor <- c(rep(colGran["granulomaD4"]), rep(colGran["infectedD4"]), colPal)
+
+chordDiagram(cluster2cond3, column.col = colPal, grid.col = mycolor, annotationTrack = c("grid", "name"), annotationTrackHeight = c(0.05, 0.05))
+
+#datList <- NULL
+#for(con in unique(seuratD4$cond3)){
+  #seuratSub <- subset(seuratD4, cond3==con)
+  #print(dim(seuratSub))
+  #dat_con <- as.data.frame(table(seuratSub$RNA_snn_res.0.25)) %>%
+  #mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond3=con)
+  #datList[[con]] <- dat_con
+#}
+#dat_all <- do.call("rbind", datList) 
+#dat_all1 <- subset(dat_all, select = c("Var1", "cond3","percent"))
+
+#chordDiagram(dat_all1, column.col = colPal, grid.col = mycolor, annotationTrack = c("grid", "name"), annotationTrackHeight = c(0.05, 0.05))
+
+
+```
+
+## create Alluvial plot
+```{r chord Diagram}
+#reorder cluster
+seuratD4$RNA_snn_res.0.25 <- factor(seuratD4$RNA_snn_res.0.25, levels=c("1","0","2","4", "5","3", "6", "7", "9","10","8"))
+
+Idents(seuratD4) <- seuratD4$cond3
+cluster2cond3 <- data.frame(table(seuratD4$RNA_snn_res.0.25, seuratD4$cond3))
+
+ggplot(cluster2cond3,
+       aes(y = Freq, axis1 = Var2, axis2 = Var1)) +
+  geom_alluvium(aes(fill = Var1), width = 1/12) +
+  geom_stratum(width = 1/12, fill = "white", color = "black") +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("cond3", "cluster"), expand = c(.05, .05)) +
+  scale_fill_manual(values = colPal)
+```
+
+## vulcanoplot
+```{r vulcano}
+# Create a new column to indicate significant genes based on p-value and fold change thresholds
+DEGenesMph1and3$sig <- ifelse(DEGenesMph1and3$avg_log2FC > 1.5, "Yes", "No")
+DEGenesMph1and3$minuslog10padjust <- -log10(DEGenesMph1and3$p_val_adj)
+
+ggplot(DEGenesMph1and3, aes(x = avg_log2FC, y = -log10(p_val_adj), color = sig)) +
+  geom_point(alpha = 0.8) +
+  scale_color_manual(values = c("No" = "gray", "Yes" = "#B2182B")) +
+  theme_classic() +
+  labs(x = "Log2 Fold Change", y = "-log10(Adjusted P-value)", color = "Significant")
+```
+
+
+```{r feature plot}
+### feature plots
+FeaturePlot(seurat, features = "ENSMUSG00000026069.Il1rl1", pt.size = 2, cols = c("lightgrey", "#BE3144"), order=TRUE, split.by = "cond2")
+FeaturePlot(seurat, features = "ENSMUSG00000005583.Mef2c", pt.size = 1, cols = c("lightgrey", "#BE3144"), split.by ="cond2")
+```
+
+## violin plots
+```{r violin plots CD45neg}
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000054263.Lifr", pt.size = 0, cols = colCond2)
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000021756.Il6st", pt.size = 0, cols = colCond2)
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colCond2)
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000024164.C3", pt.size = 0, cols = colCond2)
+VlnPlot(object=seuratCD45neg, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colCond2)
+```
+
+```{r DE genes mph1 vs mph3}
+DEGenesM <- subset(DEGenesMphcond2, cluster == "WT")
+DEGenesMcko <- subset(DEGenesMphcond2, cluster == "cko")
+##adjust table
+DEGenesM <- DEGenesM %>% 
+  mutate(Gene=gsub("^.*\\.", "", gene))  %>%
+  mutate(EnsID=gsub("\\..*","", gene))
+##run GSEA
+ego <- enrichGO(gene = unique(DEGenesM$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+ego <- setReadable(ego, OrgDb = org.Mm.eg.db)
+## select gene sets and make cnetplot
+selWT <- c("GO:0032103", "GO:0071621")
+egoWTfil <- ego %>% filter(ego@result$ID %in% selWT)
+#make cnetplot
+adjpval <- (DEGenesM$avg_log2FC)
+names(adjpval) <- DEGenesM$EnsID
+cnetplot(egoWTfil, foldChange = adjpval, node_label ="all", shadowtext="none", showCategory = 25, layout = "fr", cex_label_gene = 0.5, cex_label_category = 0.5) + scale_color_viridis_c(option = "E")
+
+##filter cko
+DEGenesMcko <- subset(DEGenesMacrophages, cluster == "cko")
+##adjust table
+DEGenesMcko <- DEGenesMcko %>% 
+  mutate(Gene=gsub("^.*\\.", "", gene))  %>%
+  mutate(EnsID=gsub("\\..*","", gene))
+##run GSEA
+egocko <- enrichGO(gene = unique(DEGenesMcko$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+egocko <- setReadable(egocko, OrgDb = org.Mm.eg.db)
+dotplot(egocko, showCategory=30)
+selcko <- c("GO:0019886","GO:0006898")
+egockofil <- egocko %>% filter(egocko@result$ID %in% selcko)
+#make cnetplot
+adjpval <- (DEGenesMcko$avg_log2FC)
+names(adjpval) <- DEGenesMcko$EnsID
+cnetplot(egockofil, foldChange = adjpval, node_label ="all", shadowtext="none", showCategory = 25, layout = "fr", cex_label_gene = 0.2, cex_label_category = 0.5) + scale_color_viridis_c(option = "E")
+
+##calculate DE genes accoding to cluster_name
+Idents(seuratMph) <- seuratMph$cluster_name
+Idents(seuratMph) <- factor(seuratMph$cluster_name, levels = c("Mph1", "Mph2", "Mph3"))
+levels(seuratMph)
+DEGenesMphcluster_name <- FindAllMarkers(seuratMph, only.pos=T, logfc.threshold = 0.2) %>% filter(p_val_adj < 0.01) 
+##filter 
+DEGenesMph1 <- subset(DEGenesMphcluster_name, cluster == "Mph1")
+DEGenesMph2 <- subset(DEGenesMphcluster_name, cluster == "Mph2")
+DEGenesMph3 <- subset(DEGenesMphcluster_name, cluster == "Mph3")
+
+## violin plots
+VlnPlot(object=seuratMph, features = "ENSMUSG00000058755.Osm", pt.size = 0, cols = colCluster2)
+VlnPlot(object=seuratMph, features = "ENSMUSG00000027398.Il1b", pt.size = 0, cols = colCluster2)
+
+##calculate DE genes accoding to dataset
+Idents(seuratMph) <- seuratMph$dataset
+levels(seuratMph)
+DEGenesMphcluster_name <- FindAllMarkers(seuratMph, only.pos=T, logfc.threshold = 0.2) %>% filter(p_val_adj < 0.01) 
+##filter 
+DEGenesMph1 <- subset(DEGenesMphcluster_name, cluster == "Mph1")
+DEGenesMph2 <- subset(DEGenesMphcluster_name, cluster == "Mph2")
+DEGenesMph3 <- subset(DEGenesMphcluster_name, cluster == "Mph3")
+```
+
+## run shiny app
+```{r run app}
+SingleCellBrowserSeurat3(seuratN)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
