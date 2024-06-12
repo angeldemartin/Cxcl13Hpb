@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="A.DeMartin" />
+
+<meta name="date" content="2024-02-21" />
+
+<title>Cxcl13HpbGranuloma</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cxcl13Hpb</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Cxcl13HpbGranuloma</h1>
+<h4 class="author">A.DeMartin</h4>
+<h4 class="date">2024-02-21</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-06-12
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 2
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Cxcl13Hpb/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240311code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240311)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240311code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240311)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it
+difficult for you and others to run your code on a different machine.
+Change the absolute path(s) below to the suggested relative path(s) to
+make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2022/
+</td>
+<td style="text-align:left;">
+data/dataJuli2022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2021/
+</td>
+<td style="text-align:left;">
+data/dataJuli2021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat.rds
+</td>
+<td style="text-align:left;">
+data/merged_allgranuloma_wofilter_seurat.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds
+</td>
+<td style="text-align:left;">
+data/merged_allgranuloma_wofilter_seurat_wocl21.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/markergenes_cluster_name
+</td>
+<td style="text-align:left;">
+analysis/markergenes_cluster_name
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/figure/
+    Ignored:    data/dataJuli2021/
+    Ignored:    data/dataJuli2022/
+    Ignored:    data/dataJune2019/
+    Ignored:    data/dataSept2020/
+
+Untracked files:
+    Untracked:  analysis/DEgenesMph1vsMph3
+    Untracked:  analysis/DEgenesMph_cluster_name
+    Untracked:  analysis/FbmarkerGenesclustername.txt
+    Untracked:  analysis/FibroblastAnalysis.Rmd
+    Untracked:  analysis/GranulomaAnalysis.Rmd
+    Untracked:  analysis/GranulomaMacrophages.Rmd
+    Untracked:  analysis/markergenes_cluster_name
+    Untracked:  analysis/vorlagen.Rmd
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packages" class="section level2">
+<h2>load packages</h2>
+<div id="pre-processing" class="section level25">
+<p class="heading">pre processing</p>
+</div>
+</div>
+<div id="load-files-and-merge" class="section level2">
+<h2>load files and merge</h2>
+<pre class="r"><code>##load objects juli2022 and merge all 
+basedir &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2022/&quot;
+fileNamList &lt;- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS &lt;- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists(&quot;seuratN&quot;)){
+    seuratN &lt;- merge(x = seuratN, y = seuratS)
+  }else{
+    seuratN &lt;- seuratS
+  }
+}
+remove(seuratS)
+table(seuratN$dataset)
+
+##load objects juli 2021 and merge all
+basedir &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2021/&quot;
+fileNamList &lt;- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS &lt;- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists(&quot;seuratN&quot;)){
+    seuratN &lt;- merge(x = seuratN, y = seuratS)
+  }else{
+    seuratN &lt;- seuratS
+  }
+}
+remove(seuratS)
+
+seuratM &lt;- seuratN
+remove(seuratN)
+table(seuratM$dataset)
+
+#rerun seurat
+seuratM &lt;- NormalizeData (object = seuratM)
+seuratM &lt;- FindVariableFeatures(object = seuratM)
+seuratM &lt;- ScaleData(object = seuratM, verbose = TRUE)
+seuratM &lt;- RunPCA(object=seuratM, npcs = 30, verbose = FALSE)
+seuratM &lt;- RunTSNE(object=seuratM, reduction=&quot;pca&quot;, dims = 1:20)
+seuratM &lt;- RunUMAP(object=seuratM, reduction=&quot;pca&quot;, dims = 1:20)
+seuratM &lt;- FindNeighbors(object = seuratM, reduction = &quot;pca&quot;, dims= 1:20)
+
+res &lt;- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratM &lt;- FindClusters(object = seuratM, resolution = res[i], random.seed = 1234)
+}
+
+### save seurat object
+saveRDS(seuratM, file=&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat.rds&quot;)
+
+### remove cluster 21 (0.25res) LEC/fb doublets
+### check counts detected
+seuratLEC &lt;- subset(seurat, RNA_snn_res.0.25 ==&quot;21&quot;)
+sce &lt;- as.SingleCellExperiment(seuratLEC)
+plotQC2 &lt;- function(sce, feature){
+  p &lt;- gghistogram(data = as.data.frame(sce@colData),
+              x=feature,
+              bins=70,
+              #title=unique(sce$dataset),
+              fill = &quot;slategray&quot;,
+              legend = &quot;right&quot;, color= &quot;black&quot;)
+  return(p)
+}
+plotQC2(sce, &quot;total&quot;)
+plotQC2(sce, &quot;detected&quot;)
+
+##remove 
+table(seurat$RNA_snn_res.0.25)
+seurat1 &lt;- subset(seurat, RNA_snn_res.0.25 == &quot;21&quot;, invert = TRUE)
+table(seurat1$RNA_snn_res.0.25)
+
+### save seurat object
+saveRDS(seurat, file=&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds&quot;)</code></pre>
+<div id="end-pre-processing" class="section level31">
+<p class="heading">end pre processing</p>
+</div>
+</div>
+<div id="load-merged-file-granuloma" class="section level2">
+<h2>load merged file granuloma</h2>
+<pre class="r"><code>##load merged file 
+fileNam &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds&quot;
+seurat &lt;- readRDS(fileNam)
+table(seurat$dataset)</code></pre>
+<pre><code>
+        10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3 
+                                                           5988 
+                 9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3 
+                                                           4278 
+       o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3 
+                                                           8013 
+        o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3 
+                                                           3008 
+o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3 
+                                                           6909 
+ o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3 
+                                                           6472 </code></pre>
+<pre class="r"><code>table(seurat$RNA_snn_res.0.25)</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19 
+4607 4144 3007 2477 2382 2201 2173 2048 1944 1766 1502 1137  870  848  798  766  653  639  357  180 
+  20   21 
+ 169    0 </code></pre>
+<pre class="r"><code>table(seurat$orig.ident)</code></pre>
+<pre><code>
+      
+34668 </code></pre>
+</div>
+<div id="add-metadata" class="section level2">
+<h2>add metadata</h2>
+<pre class="r"><code>### add any type of metadata
+#### cluster_name
+seurat$cluster_name &lt;- &quot;cluster_name&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;0&quot; )] &lt;- &quot;PdgfraloFb1&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;1&quot; )] &lt;- &quot;Mph1&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;2&quot; )] &lt;- &quot;CD8Tcell1&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;3&quot; )] &lt;- &quot;Neut&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;4&quot; )] &lt;- &quot;IgABcell1&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;5&quot; )] &lt;- &quot;LEC&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;6&quot; )] &lt;- &quot;Telocytes&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;7&quot; )] &lt;- &quot;DC&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;8&quot; )] &lt;- &quot;CD4Tcell/ILC2&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;9&quot; )] &lt;- &quot;Mph2&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;10&quot; )] &lt;- &quot;NKcell&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;11&quot; )] &lt;- &quot;CD8Tcell2&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;12&quot; )] &lt;- &quot;Mph3&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;13&quot; )] &lt;- &quot;Trophocytes&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;14&quot; )] &lt;- &quot;PdgfrahiLy6anegFb&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;15&quot; )] &lt;- &quot;IgABcell2&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;16&quot; )] &lt;- &quot;Myocytes&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;17&quot; )] &lt;- &quot;PdgfraloFb2&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;18&quot; )] &lt;- &quot;IgDBcell&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;19&quot; )] &lt;- &quot;NC&quot;
+seurat$cluster_name[which(seurat$RNA_snn_res.0.25 %in% &quot;20&quot; )] &lt;- &quot;ICC&quot;
+table(seurat$cluster_name)
+table(seurat$RNA_snn_res.0.25)
+
+###order
+Idents(seurat) &lt;- seurat$cluster_name
+seurat$cluster_name &lt;- factor(seurat$cluster_name, levels=c(&quot;CD8Tcell1&quot;,&quot;CD8Tcell2&quot;,&quot;NKcell&quot;, &quot;CD4Tcell/ILC2&quot;,&quot;Neut&quot;, &quot;Mph1&quot;,&quot;Mph2&quot;, &quot;Mph3&quot;,&quot;DC&quot;,&quot;IgABcell1&quot;,&quot;IgABcell2&quot;,&quot;IgDBcell&quot;,&quot;PdgfraloFb1&quot;,&quot;PdgfraloFb2&quot;, &quot;Trophocytes&quot;, &quot;Telocytes&quot;, &quot;Myocytes&quot;, &quot;PdgfrahiLy6anegFb&quot;, &quot;NC&quot;, &quot;LEC&quot;, &quot;ICC&quot;))
+Idents(seurat) &lt;- seurat$cluster_name
+table(seurat$cluster_name)
+
+### add slot cluster plus cond2
+seurat$cluster_plus_cond2 &lt;- paste0(seurat$seurat_clusters, &#39;_&#39;, seurat$cond2)
+
+#### cond2
+WT &lt;- c(&quot;o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3&quot;,&quot;o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3&quot;,&quot;9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3&quot;)
+cko &lt;- c(&quot;o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3&quot;,&quot;o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3&quot;,&quot;10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3&quot;)
+
+seurat$cond2 &lt;- &quot;cond2&quot;
+seurat$cond2[which(seurat$dataset %in% WT)] &lt;- &quot;WT&quot;
+seurat$cond2[which(seurat$dataset %in% cko)] &lt;- &quot;cko&quot;
+table(seurat$cond2)
+
+###order
+Idents(seurat) &lt;- seurat$cond2
+seurat$cond2 &lt;- factor(seurat$cond2, levels=c(&quot;WT&quot;, &quot;cko&quot;))
+Idents(seurat) &lt;- seurat$cond2
+table(seurat$cond2)
+
+### save seurat object
+saveRDS(seurat, file=&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds&quot;)</code></pre>
+</div>
+<div id="set-color-vectors" class="section level2">
+<h2>set color vectors</h2>
+<pre class="r"><code>### col clustername
+colclustername &lt;- c(&quot;#355C7D&quot;,&quot;#B1746FFF&quot;,&quot;#202547&quot;,&quot;#B09C85&quot;, &quot;#4e5a4c&quot;,&quot;#53354A&quot;,&quot;#2A363B&quot;,&quot;#8491B4FF&quot;,&quot;#00A087FF&quot;,&quot;#DC9989&quot;,&quot;#84ad83&quot;, &quot;#628395&quot;,&quot;#D33B44&quot;,&quot;#779d8d&quot;,&quot;#727077&quot;,&quot;#868686FF&quot;,&quot;#F8B195&quot;,&quot;#FF847C&quot;,&quot;#725663FF&quot;,&quot;#904D39&quot;,&quot;#91D1C2&quot;)
+names(colclustername) &lt;- c(&quot;PdgfraloFb1&quot;,&quot;Mph1&quot;, &quot;CD8Tcell1&quot;,&quot;Neut&quot;, &quot;IgABcell1&quot;, &quot;LEC&quot;, &quot;Telocytes&quot;, &quot;DC&quot;, &quot;CD4Tcell/ILC2&quot;, &quot;Mph2&quot;,  &quot;NKcell&quot;, &quot;CD8Tcell2&quot;, &quot;Mph3&quot;, &quot;Trophocytes&quot;, &quot;PdgfrahiLy6anegFb&quot;, &quot;IgABcell2&quot;, &quot;Myocytes&quot;, &quot;PdgfraloFb2&quot;, &quot;IgDBcell&quot;, &quot;NC&quot;, &quot;ICC&quot;)
+
+### col cond2
+colcond2 &lt;- c(&quot;#202547&quot;,&quot;#BE3144&quot;)
+names(colcond2) &lt;- c(&quot;WT&quot;, &quot;cko&quot;)</code></pre>
+</div>
+<div id="umaps-clustername" class="section level2">
+<h2>umaps clustername</h2>
+<pre class="r"><code>### umaps
+Idents(seurat) &lt;- seurat$cluster_name
+DimPlot(seurat, reduction = &quot;umap&quot;, cols = colclustername)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20clustername-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20clustername-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colclustername, pt.size = 0.5) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20clustername-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colclustername, pt.size = 1) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20clustername-4.png" width="672" style="display: block; margin: auto;" />
+## umaps condition</p>
+<pre class="r"><code>### umaps
+Idents(seurat) &lt;- seurat$cond2
+DimPlot(seurat, reduction = &quot;umap&quot;, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20condition-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colcond2, order = &quot;WT&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20condition-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colcond2, order=&quot;WT&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20condition-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colcond2, order=&quot;WT&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20condition-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, pt.size = 1, cols = colcond2, order=&quot;WT&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/plot%20umaps%20condition-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>### calculate cluster marker genes
+Idents(seurat) &lt;- seurat$cluster_name
+levels(seurat)
+
+markerGenes &lt;- FindAllMarkers(seurat, only.pos=T) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.01) 
+
+write.table(markerGenes, 
+            file= &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/markergenes_cluster_name&quot;,
+            sep=&quot;\t&quot;,
+            quote=F,
+            row.names=F,
+            col.names=T)</code></pre>
+<div id="dotplot-cluster-marker" class="section level3">
+<h3>dotplot cluster marker</h3>
+<pre class="r"><code>genes &lt;- data.frame(gene=rownames(seurat)) %&gt;% 
+  mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene))
+
+selGenes &lt;- data.frame(geneID=c(&quot;Cpe&quot;,&quot;Ano1&quot;,&quot;Pecam1&quot;,&quot;Prox1&quot;,&quot;Lyve1&quot;,&quot;Sostdc1&quot;,&quot;Plp1&quot;,&quot;Ly6a&quot;,&quot;Acta2&quot;,&quot;Cd81&quot;,&quot;Cd34&quot;,&quot;Ncam1&quot;,&quot;Pdgfra&quot;,&quot;Pdpn&quot;, &quot;Cd79a&quot;, &quot;Cd79b&quot;, &quot;Cd19&quot;, &quot;Ighm&quot;, &quot;Ighd&quot;, &quot;Igha&quot;,&quot;Itgax&quot;,&quot;H2-Eb1&quot;,&quot;H2-Ab1&quot;,&quot;Cd74&quot;,&quot;Siglech&quot;, &quot;Cx3cr1&quot;,&quot;Lyz2&quot;,&quot;Itgam&quot;,&quot;Msr1&quot;, &quot;Arg1&quot;, &quot;S100a8&quot;, &quot;S100a9&quot;, &quot;Il1b&quot;, &quot;Rora&quot;, &quot;Gata3&quot;, &quot;Icos&quot;, &quot;Cd4&quot;, &quot;Klre1&quot;, &quot;Klrk1&quot;, &quot;Nkg7&quot;, &quot;Gzmb&quot;,&quot;Cd8b1&quot;,&quot;Cd8a&quot;, &quot;Trbc2&quot;, &quot;Cd3d&quot;, &quot;Trbc1&quot;)) %&gt;% left_join(., genes, by=&quot;geneID&quot;)
+
+DotPlot(seurat, features = selGenes, group.by= &quot;cluster_name&quot;) + RotatedAxis() + scale_color_viridis(option=&quot;D&quot;) + coord_flip()</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/dotplot-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="relative-abundance-cd45" class="section level2">
+<h2>relative abundance CD45+</h2>
+<pre class="r"><code>##subset CD45- cells
+seuratCD45neg &lt;- subset(seurat, cluster_name %in% c(&quot;PdgfraloFb1&quot;,&quot;PdgfraloFb2&quot;, &quot;Trophocytes&quot;, &quot;Telocytes&quot;, &quot;Myocytes&quot;, &quot;PdgfrahiLy6anegFb&quot;, &quot;NC&quot;, &quot;LEC&quot;, &quot;ICC&quot;))
+table(seuratCD45neg$cluster_name)</code></pre>
+<pre><code>
+        CD8Tcell1         CD8Tcell2            NKcell     CD4Tcell/ILC2              Neut 
+                0                 0                 0                 0                 0 
+             Mph1              Mph2              Mph3                DC         IgABcell1 
+                0                 0                 0                 0                 0 
+        IgABcell2          IgDBcell       PdgfraloFb1       PdgfraloFb2       Trophocytes 
+                0                 0              4607               639               848 
+        Telocytes          Myocytes PdgfrahiLy6anegFb                NC               LEC 
+             2173               653               798               180              2201 
+              ICC 
+              169 </code></pre>
+<pre class="r"><code>## Abundance plot CD45neg
+## make count list
+datList &lt;- NULL
+for(con in unique(seuratCD45neg$cond2)){
+  seuratSub &lt;- subset(seuratCD45neg, cond2==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$cluster_name)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(cond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 29085  7497
+[1] 29085  4771</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+##order x
+ordX &lt;-  c(&quot;WT&quot;, &quot;cko&quot;) 
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;cond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;, palette = colclustername) + scale_x_discrete(limits=ordX)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/abundance%20CD45--1.png" width="672" style="display: block; margin: auto;" />
+## relative abundance CD45-</p>
+<pre class="r"><code>##subset CD45+ cells
+seuratCD45pos &lt;- subset(seurat, cluster_name %in% c(&quot;CD8Tcell1&quot;,&quot;CD8Tcell2&quot;,&quot;NKcell&quot;,&quot;CD4Tcell/ILC2&quot;,&quot;Neut&quot;,&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Mph3&quot;,&quot;DC&quot;,&quot;IgABcell1&quot;,&quot;IgABcell2&quot;,&quot;IgDBcell&quot;))
+table(seuratCD45pos$cluster_name)</code></pre>
+<pre><code>
+        CD8Tcell1         CD8Tcell2            NKcell     CD4Tcell/ILC2              Neut 
+             3007              1137              1502              1944              2477 
+             Mph1              Mph2              Mph3                DC         IgABcell1 
+             4144              1766               870              2048              2382 
+        IgABcell2          IgDBcell       PdgfraloFb1       PdgfraloFb2       Trophocytes 
+              766               357                 0                 0                 0 
+        Telocytes          Myocytes PdgfrahiLy6anegFb                NC               LEC 
+                0                 0                 0                 0                 0 
+              ICC 
+                0 </code></pre>
+<pre class="r"><code>## Abundance plot CD45neg
+## make count list
+datList &lt;- NULL
+for(con in unique(seuratCD45pos$cond2)){
+  seuratSub &lt;- subset(seuratCD45pos, cond2==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$cluster_name)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(cond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 29085 11872
+[1] 29085 10528</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+##order x
+ordX &lt;-  c(&quot;WT&quot;, &quot;cko&quot;) 
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;cond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;cluster&quot;, ylab = &quot;frequency&quot;, palette = colclustername) + scale_x_discrete(limits=ordX)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/relative%20abundance%20CD45--1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="assign-cell-types" class="section level2">
+<h2>assign cell types</h2>
+<pre class="r"><code>#### celltype
+seurat$celltype &lt;- &quot;celltype&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;CD8Tcell1&quot;, &quot;CD8Tcell2&quot;))] &lt;- &quot;CD8Tcells&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;NKcell&quot;))] &lt;- &quot;NKcells&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;CD4Tcell/ILC2&quot;))] &lt;- &quot;CD4Tcell/ILC2&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;Neut&quot;))] &lt;- &quot;Neut&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;Mph1&quot;, &quot;Mph2&quot;, &quot;Mph3&quot;))] &lt;- &quot;Macrophages&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;DC&quot;))] &lt;- &quot;DC&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;IgABcell1&quot;,&quot;IgABcell2&quot;,&quot;IgDBcell&quot;))] &lt;- &quot;Bcells&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;PdgfraloFb1&quot;,&quot;PdgfraloFb2&quot;, &quot;Trophocytes&quot;, &quot;Telocytes&quot;, &quot;Myocytes&quot;, &quot;PdgfrahiLy6anegFb&quot;))] &lt;- &quot;Fb&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;NC&quot;))] &lt;- &quot;NC&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;LEC&quot;))] &lt;- &quot;LEC&quot;
+seurat$celltype[which(seurat$cluster_name %in% c(&quot;ICC&quot;))] &lt;- &quot;ICC&quot;
+table(seurat$celltype)</code></pre>
+<pre><code>
+       Bcells CD4Tcell/ILC2     CD8Tcells            DC            Fb           ICC           LEC 
+         3505          1944          4144          2048          9718           169          2201 
+  Macrophages            NC          Neut       NKcells 
+         6780           180          2477          1502 </code></pre>
+<pre class="r"><code>###order
+Idents(seurat) &lt;- seurat$celltype
+seurat$celltype &lt;- factor(seurat$celltype, levels=c(&quot;CD8Tcells&quot;,&quot;NKcells&quot;, &quot;CD4Tcell/ILC2&quot;,&quot;Neut&quot;,&quot;Macrophages&quot;,&quot;DC&quot;,&quot;Bcells&quot;, &quot;Fb&quot;, &quot;NC&quot;, &quot;LEC&quot;, &quot;ICC&quot;))
+Idents(seurat) &lt;- seurat$celltype
+table(seurat$celltype)</code></pre>
+<pre><code>
+    CD8Tcells       NKcells CD4Tcell/ILC2          Neut   Macrophages            DC        Bcells 
+         4144          1502          1944          2477          6780          2048          3505 
+           Fb            NC           LEC           ICC 
+         9718           180          2201           169 </code></pre>
+</div>
+<div id="set-color-vector-celltype" class="section level2">
+<h2>set color vector celltype</h2>
+<pre class="r"><code>### col clustername
+colcelltype &lt;- c(&quot;#202547&quot;,&quot;#84ad83&quot;,&quot;#00A087FF&quot;,&quot;#B09C85&quot;,&quot;#D33B44&quot;,&quot;#8491B4FF&quot;, &quot;#4e5a4c&quot;,&quot;#355C7D&quot;,&quot;#904D39&quot;,&quot;#725663FF&quot;,&quot;#91D1C2&quot;)
+names(colcelltype) &lt;- c(&quot;CD8Tcells&quot;,&quot;NKcells&quot;, &quot;CD4Tcell/ILC2&quot;,&quot;Neut&quot;,&quot;Macrophages&quot;,&quot;DC&quot;,&quot;Bcells&quot;, &quot;Fb&quot;, &quot;NC&quot;, &quot;LEC&quot;, &quot;ICC&quot;)</code></pre>
+</div>
+<div id="celltype-umap" class="section level2">
+<h2>celltype umap</h2>
+<pre class="r"><code>### umaps
+Idents(seurat) &lt;- seurat$celltype
+DimPlot(seurat, reduction = &quot;umap&quot;, cols = colcelltype)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/celltype%20umap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, cols = colcelltype) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/celltype%20umap-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, pt.size = 0.5, cols = colcelltype) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/celltype%20umap-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>DimPlot(seurat, reduction = &quot;umap&quot;, pt.size = 1, cols = colcelltype) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/celltype%20umap-4.png" width="672" style="display: block; margin: auto;" />
+## DE genes for each cell type according to WT/cko</p>
+<pre class="r"><code>Idents(seurat) &lt;- seurat$cond2
+#top 100 DE genes CD8Tcells
+seuratCD8Tcells &lt;- subset(seurat, celltype == &quot;CD8Tcells&quot;)
+table(seuratCD8Tcells$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+2183 1961 </code></pre>
+<pre class="r"><code>levels(seuratCD8Tcells)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesCD8Tcells &lt;- FindAllMarkers(seuratCD8Tcells,only.pos=T, logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;CD8Tcells&quot;)
+DEGenesCD8TcellsWT &lt;- DEGenesCD8Tcells %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesCD8TcellsWT100 &lt;- DEGenesCD8TcellsWT %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesCD8Tcellscko &lt;- DEGenesCD8Tcells %&gt;% filter (cluster == &quot;cko&quot;)  
+DEGenesCD8Tcellscko100 &lt;- DEGenesCD8Tcellscko %&gt;% top_n(100, avg_log2FC)
+
+DEGenesCD8TcellsWTcko &lt;- FindAllMarkers(seuratCD8Tcells, logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;CD8Tcells&quot;)
+DEGenesCD8TcellsWTcko100 &lt;- DEGenesCD8TcellsWTcko %&gt;% top_n(100, avg_log2FC) 
+
+
+#top 100 DE genes NKcells
+seuratNKcells &lt;- subset(seurat, celltype == &quot;NKcells&quot;)
+table(seuratNKcells$cond2)</code></pre>
+<pre><code>
+ WT cko 
+574 928 </code></pre>
+<pre class="r"><code>levels(seuratNKcells)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesNKcells &lt;- FindAllMarkers(seuratNKcells, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;NKcells&quot;)
+DEGenesNKcellsWT &lt;- DEGenesNKcells %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesNKcellsWT100 &lt;- DEGenesNKcellsWT %&gt;% top_n(100, avg_log2FC)
+
+DEGenesNKcellscko &lt;- DEGenesNKcells %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesNKcellscko100 &lt;- DEGenesNKcellscko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesNKcellsWTcko &lt;- FindAllMarkers(seuratNKcells,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;NKcells&quot;)
+DEGenesNKcellsWTcko100 &lt;- DEGenesNKcellsWTcko %&gt;% top_n(100, avg_log2FC) 
+
+#top 100 DE genes CD4Tcell/ILC2
+seuratCD4TcellILC2 &lt;- subset(seurat, celltype == &quot;CD4Tcell/ILC2&quot;)
+table(seuratCD4TcellILC2$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+ 782 1162 </code></pre>
+<pre class="r"><code>levels(seuratCD4TcellILC2)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesCD4TcellILC2 &lt;- FindAllMarkers(seuratCD4TcellILC2, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;CD4Tcell/ILC2&quot;)
+DEGenesCD4TcellILC2WT &lt;- DEGenesCD4TcellILC2 %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesCD4TcellILC2WT100 &lt;- DEGenesCD4TcellILC2WT %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesCD4TcellILC2cko &lt;- DEGenesCD4TcellILC2 %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesCD4TcellILC2cko100 &lt;- DEGenesCD4TcellILC2cko %&gt;% top_n(100, avg_log2FC)
+
+DEGenesCD4TcellILC2WTcko &lt;- FindAllMarkers(seuratCD4TcellILC2,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;CD4Tcell/ILC2&quot;)
+DEGenesCD4TcellILC2WTcko100 &lt;- DEGenesCD4TcellILC2WTcko %&gt;% top_n(100, avg_log2FC)
+
+#top 100 DE genes Neut
+seuratNeut &lt;- subset(seurat, celltype == &quot;Neut&quot;)
+table(seuratNeut$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+1163 1314 </code></pre>
+<pre class="r"><code>levels(seuratNeut)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesNeut &lt;- FindAllMarkers(seuratNeut, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Neut&quot;)
+DEGenesNeutWT &lt;- DEGenesNeut %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesNeutWT100 &lt;- DEGenesNeutWT %&gt;% top_n(100, avg_log2FC)
+
+DEGenesNeutcko &lt;- DEGenesNeut %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesNeutcko100 &lt;- DEGenesNeutcko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesNeutWTcko &lt;- FindAllMarkers(seuratNeut,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Neut&quot;)
+
+DEGenesNeutWTcko100 &lt;- DEGenesNeutWTcko %&gt;% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Macrophages
+seuratMacrophages &lt;- subset(seurat, celltype == &quot;Macrophages&quot;)
+table(seuratMacrophages$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+3073 3707 </code></pre>
+<pre class="r"><code>levels(seuratMacrophages)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesMacrophages &lt;- FindAllMarkers(seuratMacrophages, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Macrophages&quot;)
+DEGenesMacrophagesWT &lt;- DEGenesMacrophages %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesMacrophagesWT100 &lt;- DEGenesMacrophagesWT %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesMacrophagescko &lt;- DEGenesMacrophages %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesMacrophagescko100 &lt;- DEGenesMacrophagescko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesMacrophagesWTcko &lt;- FindAllMarkers(seuratMacrophages,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Macrophages&quot;)
+
+DEGenesMacrophagesWTcko100 &lt;- DEGenesMacrophagesWTcko %&gt;% top_n(100, avg_log2FC) 
+
+#top 100 DE genes DC
+seuratDC &lt;- subset(seurat, celltype == &quot;DC&quot;)
+table(seuratDC$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+ 963 1085 </code></pre>
+<pre class="r"><code>levels(seuratDC)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesDC &lt;- FindAllMarkers(seuratDC, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;DC&quot;)
+DEGenesDCWT &lt;- DEGenesDC %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesDCWT100 &lt;- DEGenesDCWT %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesDCcko &lt;- DEGenesDC %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesDCcko100 &lt;- DEGenesDCcko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesDCWTcko &lt;- FindAllMarkers(seuratDC, logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;DC&quot;)
+
+DEGenesDCWTcko100 &lt;- DEGenesDCWTcko %&gt;% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Bcells
+seuratBcells &lt;- subset(seurat, celltype == &quot;Bcells&quot;)
+table(seuratBcells$cond2)</code></pre>
+<pre><code>
+  WT  cko 
+1790 1715 </code></pre>
+<pre class="r"><code>levels(seuratBcells)</code></pre>
+<pre><code>[1] &quot;WT&quot;  &quot;cko&quot;</code></pre>
+<pre class="r"><code>DEGenesBcells &lt;- FindAllMarkers(seuratBcells, only.pos=T,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Bcells&quot;)
+DEGenesBcellsWT &lt;- DEGenesBcells %&gt;% filter (cluster == &quot;WT&quot;)
+DEGenesBcellsWT100 &lt;- DEGenesBcellsWT %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesBcellscko &lt;- DEGenesBcells %&gt;% filter (cluster == &quot;cko&quot;)
+DEGenesBcellscko100 &lt;- DEGenesBcellscko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesBcellsWTcko &lt;- FindAllMarkers(seuratBcells,logfc.threshold = 0.1) %&gt;% 
+  dplyr::filter(p_val_adj &lt; 0.1) %&gt;% mutate(celltype = &quot;Bcells&quot;)
+
+DEGenesBcellsWTcko100 &lt;- DEGenesBcellsWTcko %&gt;% top_n(100, avg_log2FC) 
+
+DEGenesAll100WT &lt;- full_join(DEGenesCD8TcellsWT100, DEGenesNKcellsWT100)
+DEGenesAll100WT &lt;- full_join(DEGenesAll100WT, DEGenesCD4TcellILC2WT100)
+DEGenesAll100WT &lt;- full_join(DEGenesAll100WT, DEGenesNeutWT100)
+DEGenesAll100WT &lt;- full_join(DEGenesAll100WT, DEGenesMacrophagesWT100)
+DEGenesAll100WT &lt;- full_join(DEGenesAll100WT, DEGenesDCWT100)
+DEGenesAll100WT &lt;- full_join(DEGenesAll100WT, DEGenesBcellsWT100)
+
+DEGenesAll100cko &lt;- full_join(DEGenesCD8Tcellscko100, DEGenesNKcellscko100)
+DEGenesAll100cko &lt;- full_join(DEGenesAll100cko, DEGenesCD4TcellILC2cko100)
+DEGenesAll100cko &lt;- full_join(DEGenesAll100cko, DEGenesNeutcko100)
+DEGenesAll100cko &lt;- full_join(DEGenesAll100cko, DEGenesMacrophagescko100)
+DEGenesAll100cko &lt;- full_join(DEGenesAll100cko, DEGenesDCcko100)
+DEGenesAll100cko &lt;- full_join(DEGenesAll100cko, DEGenesBcellscko100)
+
+DEGenesAll100WTcko &lt;- full_join(DEGenesCD8TcellsWTcko100, DEGenesNKcellsWTcko100)
+DEGenesAll100WTcko &lt;- full_join(DEGenesAll100WTcko, DEGenesCD4TcellILC2WTcko100)
+DEGenesAll100WTcko &lt;- full_join(DEGenesAll100WTcko, DEGenesNeutWTcko100)
+DEGenesAll100WTcko &lt;- full_join(DEGenesAll100WTcko, DEGenesMacrophagesWTcko100)
+DEGenesAll100WTcko &lt;- full_join(DEGenesAll100WTcko, DEGenesDCWTcko100)
+DEGenesAll100WTcko &lt;- full_join(DEGenesAll100WTcko, DEGenesBcellsWTcko100)</code></pre>
+</div>
+<div id="distribution-of-logfc-of-top-100-cw-de-genes-wt"
+class="section level2">
+<h2>distribution of logFC of top 100 cw DE genes WT</h2>
+<pre class="r"><code>ggdensity(DEGenesAll100WT, x = &quot;avg_log2FC&quot;, add= &quot;median&quot;, rug = TRUE, color = &quot;celltype&quot;, fill = &quot;celltype&quot;, palette = colcelltype)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20WT-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggviolin(DEGenesAll100WT, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, fill = &quot;celltype&quot;, palette = colcelltype, add = &quot;median_iqr&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20WT-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggboxplot(DEGenesAll100WT, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, color = &quot;celltype&quot;, palette = colcelltype ,add = &quot;jitter&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20WT-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="distribution-of-logfc-of-top-100-cw-de-genes-cko"
+class="section level2">
+<h2>distribution of logFC of top 100 cw DE genes cko</h2>
+<pre class="r"><code>ggdensity(DEGenesAll100cko, x = &quot;avg_log2FC&quot;, add= &quot;median&quot;, rug = TRUE, color = &quot;celltype&quot;, fill = &quot;celltype&quot;, palette = colcelltype)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20cko-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggviolin(DEGenesAll100cko, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, fill = &quot;celltype&quot;, palette = colcelltype, add = &quot;median_iqr&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20cko-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggboxplot(DEGenesAll100cko, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, color = &quot;celltype&quot;, palette = colcelltype ,add = &quot;jitter&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20cko-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="distribution-of-logfc-of-overall-top-100-cw-de-genes"
+class="section level2">
+<h2>distribution of logFC of overall top 100 cw DE genes</h2>
+<pre class="r"><code>ggdensity(DEGenesAll100WTcko, x = &quot;avg_log2FC&quot;, add= &quot;median&quot;, rug = TRUE, color = &quot;celltype&quot;, fill = &quot;celltype&quot;, palette = colcelltype)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20overall-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggviolin(DEGenesAll100WTcko, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, fill = &quot;celltype&quot;, palette = colcelltype, add = &quot;median_iqr&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20overall-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggboxplot(DEGenesAll100WTcko, x = &quot;celltype&quot;, y = &quot;avg_log2FC&quot;, color = &quot;celltype&quot;, palette = colcelltype ,add = &quot;jitter&quot;)</code></pre>
+<p><img src="figure/GranulomaAnalysis.Rmd/boxplot%20top100%20DE%20genes%20overall-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level2">
+<h2>session info</h2>
+<pre class="r"><code>date()</code></pre>
+<pre><code>[1] &quot;Wed Jun 12 17:08:30 2024&quot;</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.6.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scran_1.32.0                VennDiagram_1.7.3           futile.logger_1.4.3        
+ [4] ggupset_0.3.0               gridExtra_2.3               DOSE_3.30.1                
+ [7] enrichplot_1.24.0           msigdbr_7.5.1               org.Mm.eg.db_3.19.1        
+[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.0      multtest_2.60.0            
+[13] metap_1.10                  scater_1.32.0               scuttle_1.14.0             
+[16] destiny_3.18.0              circlize_0.4.16             muscat_1.18.0              
+[19] viridis_0.6.5               viridisLite_0.4.2           lubridate_1.9.3            
+[22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
+[25] readr_2.1.5                 tidyr_1.3.1                 tibble_3.2.1               
+[28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
+[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.0       
+[34] GenomeInfoDb_1.40.1         IRanges_2.38.0              S4Vectors_0.42.0           
+[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.3.0          
+[40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
+[43] Seurat_5.1.0                SeuratObject_5.0.2          sp_2.1-4                   
+[46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
+  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
+  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
+ [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
+ [13] pbkrtest_0.5.2            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.2                 ggplotify_0.1.2          
+ [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
+ [22] bluster_1.14.0            BiocNeighbors_1.22.0      uwot_0.2.2               
+ [25] shadowtext_0.1.3          curl_5.2.1                mime_0.12                
+ [28] evaluate_0.23             tidytree_0.4.6            leiden_0.4.3.1           
+ [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
+ [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
+ [37] magrittr_2.0.3            splines_4.4.0             ggraph_2.2.1             
+ [40] sctransform_0.4.1         ggbeeswarm_0.7.2          DBI_1.2.3                
+ [43] jquerylib_0.1.4           smoother_1.3              withr_3.0.0              
+ [46] git2r_0.33.0              corpcor_1.6.10            class_7.3-22             
+ [49] rprojroot_2.0.4           lmtest_0.9-40             tidygraph_1.3.1          
+ [52] formatR_1.14              colourpicker_1.3.0        htmlwidgets_1.6.4        
+ [55] fs_1.6.4                  ggrepel_0.9.5             labeling_0.4.3           
+ [58] fANCOVA_0.6-1             SparseArray_1.4.8         DESeq2_1.44.0            
+ [61] ranger_0.16.0             DEoptimR_1.1-3            reticulate_1.37.0        
+ [64] hexbin_1.28.3             zoo_1.8-12                XVector_0.44.0           
+ [67] knitr_1.47                ggplot.multistats_1.0.0   UCSC.utils_1.0.0         
+ [70] RhpcBLASctl_0.23-42       timechange_0.3.0          foreach_1.5.2            
+ [73] fansi_1.0.6               patchwork_1.2.0           caTools_1.18.2           
+ [76] data.table_1.15.4         ggtree_3.12.0             RSpectra_0.16-1          
+ [79] irlba_2.3.5.1             fastDummies_1.7.3         gridGraphics_0.5-1       
+ [82] lazyeval_0.2.2            yaml_2.3.8                survival_3.7-0           
+ [85] scattermore_1.2           crayon_1.5.2              RcppAnnoy_0.0.22         
+ [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
+ [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
+ [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.0          
+ [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.2             
+[100] pkgconfig_2.0.3           TMB_1.9.11                mathjaxr_1.6-0           
+[103] EnvStats_2.8.1            aplot_0.2.2               scatterplot3d_0.3-44     
+[106] spatstat.sparse_3.0-3     ape_5.8                   xtable_1.8-4             
+[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
+[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
+[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
+[118] nlme_3.1-164              lambda.r_1.2.4            HDO.db_0.99.1            
+[121] lme4_1.1-35.3             digest_0.6.35             numDeriv_2016.8-1.1      
+[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
+[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
+[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
+[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
+[136] parallelly_1.37.1         mnormt_2.1.1              statmod_1.5.0            
+[139] RcppHNSW_0.6.0            ScaledMatrix_1.12.0       carData_3.0-5            
+[142] minqa_1.2.7               pbapply_1.7-2             spam_2.10-0              
+[145] gson_0.1.0                dqrng_0.4.1               utf8_1.2.4               
+[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
+[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
+[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
+[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
+[160] Cairo_1.6-2               spatstat.data_3.0-4       rstudioapi_0.16.0        
+[163] cluster_2.1.6             mutoss_0.1-13             spatstat.utils_3.0-4     
+[166] hms_1.1.3                 fitdistrplus_1.1-11       munsell_0.5.1            
+[169] cowplot_1.1.3             colorspace_2.1-0          rlang_1.1.4              
+[172] DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0  xts_0.14.0               
+[175] dotCall64_1.1-1           shinydashboard_0.7.2      ggforce_0.4.2            
+[178] laeken_0.5.3              mgcv_1.9-1                xfun_0.44                
+[181] e1071_1.7-14              TH.data_1.1-2             iterators_1.0.14         
+[184] abind_1.4-5               GOSemSim_2.30.0           treeio_1.28.0            
+[187] futile.options_1.0.1      bitops_1.0-7              Rdpack_2.6               
+[190] promises_1.3.0            scatterpie_0.2.3          RSQLite_2.3.7            
+[193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
+[196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
+[199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.12              
+[205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
+[208] tensor_1.5                MASS_7.3-60.2             progress_1.2.3           
+[211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    
+[214] R6_2.5.1                  fastmap_1.2.0             multcomp_1.4-25          
+[217] fastmatch_1.1-4           rstatix_0.7.2             vipor_0.4.7              
+[220] TTR_0.24.4                ROCR_1.0-11               TFisher_0.2.0            
+[223] rsvd_1.0.5                vcd_1.4-12                nnet_7.3-19              
+[226] gtable_0.3.5              KernSmooth_2.23-24        miniUI_0.1.1.1           
+[229] deldir_2.0-4              htmltools_0.5.8.1         ggthemes_5.1.0           
+[232] bit64_4.0.5               spatstat.explore_3.2-7    lifecycle_1.0.4          
+[235] blme_1.0-5                nloptr_2.0.3              sass_0.4.9               
+[238] vctrs_0.6.5               robustbase_0.99-2         spatstat.geom_3.2-9      
+[241] sn_2.1.1                  ggfun_0.1.5               future.apply_1.11.2      
+[244] bslib_0.7.0               pillar_1.9.0              gplots_3.1.3.1           
+[247] pcaMethods_1.96.0         metapod_1.12.0            locfit_1.5-9.9           
+[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.6.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scran_1.32.0                VennDiagram_1.7.3           futile.logger_1.4.3        
+ [4] ggupset_0.3.0               gridExtra_2.3               DOSE_3.30.1                
+ [7] enrichplot_1.24.0           msigdbr_7.5.1               org.Mm.eg.db_3.19.1        
+[10] AnnotationDbi_1.66.0        clusterProfiler_4.12.0      multtest_2.60.0            
+[13] metap_1.10                  scater_1.32.0               scuttle_1.14.0             
+[16] destiny_3.18.0              circlize_0.4.16             muscat_1.18.0              
+[19] viridis_0.6.5               viridisLite_0.4.2           lubridate_1.9.3            
+[22] forcats_1.0.0               stringr_1.5.1               purrr_1.0.2                
+[25] readr_2.1.5                 tidyr_1.3.1                 tibble_3.2.1               
+[28] tidyverse_2.0.0             dplyr_1.1.4                 SingleCellExperiment_1.26.0
+[31] SummarizedExperiment_1.34.0 Biobase_2.64.0              GenomicRanges_1.56.0       
+[34] GenomeInfoDb_1.40.1         IRanges_2.38.0              S4Vectors_0.42.0           
+[37] BiocGenerics_0.50.0         MatrixGenerics_1.16.0       matrixStats_1.3.0          
+[40] pheatmap_1.0.12             ggpubr_0.6.0                ggplot2_3.5.1              
+[43] Seurat_5.1.0                SeuratObject_5.0.2          sp_2.1-4                   
+[46] runSeurat3_0.1.0            ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
+  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
+  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
+ [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
+ [13] pbkrtest_0.5.2            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.2                 ggplotify_0.1.2          
+ [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
+ [22] bluster_1.14.0            BiocNeighbors_1.22.0      uwot_0.2.2               
+ [25] shadowtext_0.1.3          curl_5.2.1                mime_0.12                
+ [28] evaluate_0.23             tidytree_0.4.6            leiden_0.4.3.1           
+ [31] ComplexHeatmap_2.20.0     stringi_1.8.4             backports_1.5.0          
+ [34] lmerTest_3.1-3            qqconf_1.3.2              httpuv_1.6.15            
+ [37] magrittr_2.0.3            splines_4.4.0             ggraph_2.2.1             
+ [40] sctransform_0.4.1         ggbeeswarm_0.7.2          DBI_1.2.3                
+ [43] jquerylib_0.1.4           smoother_1.3              withr_3.0.0              
+ [46] git2r_0.33.0              corpcor_1.6.10            class_7.3-22             
+ [49] rprojroot_2.0.4           lmtest_0.9-40             tidygraph_1.3.1          
+ [52] formatR_1.14              colourpicker_1.3.0        htmlwidgets_1.6.4        
+ [55] fs_1.6.4                  ggrepel_0.9.5             labeling_0.4.3           
+ [58] fANCOVA_0.6-1             SparseArray_1.4.8         DESeq2_1.44.0            
+ [61] ranger_0.16.0             DEoptimR_1.1-3            reticulate_1.37.0        
+ [64] hexbin_1.28.3             zoo_1.8-12                XVector_0.44.0           
+ [67] knitr_1.47                ggplot.multistats_1.0.0   UCSC.utils_1.0.0         
+ [70] RhpcBLASctl_0.23-42       timechange_0.3.0          foreach_1.5.2            
+ [73] fansi_1.0.6               patchwork_1.2.0           caTools_1.18.2           
+ [76] data.table_1.15.4         ggtree_3.12.0             RSpectra_0.16-1          
+ [79] irlba_2.3.5.1             fastDummies_1.7.3         gridGraphics_0.5-1       
+ [82] lazyeval_0.2.2            yaml_2.3.8                survival_3.7-0           
+ [85] scattermore_1.2           crayon_1.5.2              RcppAnnoy_0.0.22         
+ [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
+ [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
+ [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.0          
+ [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.2             
+[100] pkgconfig_2.0.3           TMB_1.9.11                mathjaxr_1.6-0           
+[103] EnvStats_2.8.1            aplot_0.2.2               scatterplot3d_0.3-44     
+[106] spatstat.sparse_3.0-3     ape_5.8                   xtable_1.8-4             
+[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
+[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
+[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
+[118] nlme_3.1-164              lambda.r_1.2.4            HDO.db_0.99.1            
+[121] lme4_1.1-35.3             digest_0.6.35             numDeriv_2016.8-1.1      
+[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
+[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
+[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
+[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
+[136] parallelly_1.37.1         mnormt_2.1.1              statmod_1.5.0            
+[139] RcppHNSW_0.6.0            ScaledMatrix_1.12.0       carData_3.0-5            
+[142] minqa_1.2.7               pbapply_1.7-2             spam_2.10-0              
+[145] gson_0.1.0                dqrng_0.4.1               utf8_1.2.4               
+[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
+[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
+[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
+[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
+[160] Cairo_1.6-2               spatstat.data_3.0-4       rstudioapi_0.16.0        
+[163] cluster_2.1.6             mutoss_0.1-13             spatstat.utils_3.0-4     
+[166] hms_1.1.3                 fitdistrplus_1.1-11       munsell_0.5.1            
+[169] cowplot_1.1.3             colorspace_2.1-0          rlang_1.1.4              
+[172] DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0  xts_0.14.0               
+[175] dotCall64_1.1-1           shinydashboard_0.7.2      ggforce_0.4.2            
+[178] laeken_0.5.3              mgcv_1.9-1                xfun_0.44                
+[181] e1071_1.7-14              TH.data_1.1-2             iterators_1.0.14         
+[184] abind_1.4-5               GOSemSim_2.30.0           treeio_1.28.0            
+[187] futile.options_1.0.1      bitops_1.0-7              Rdpack_2.6               
+[190] promises_1.3.0            scatterpie_0.2.3          RSQLite_2.3.7            
+[193] qvalue_2.36.0             sandwich_3.1-0            fgsea_1.30.0             
+[196] DelayedArray_0.30.1       proxy_0.4-27              GO.db_3.19.1             
+[199] compiler_4.4.0            prettyunits_1.2.0         boot_1.3-30              
+[202] beachmat_2.20.0           listenv_0.9.1             Rcpp_1.0.12              
+[205] edgeR_4.2.0               workflowr_1.7.1           BiocSingular_1.20.0      
+[208] tensor_1.5                MASS_7.3-60.2             progress_1.2.3           
+[211] BiocParallel_1.38.0       babelgene_22.9            spatstat.random_3.2-3    
+[214] R6_2.5.1                  fastmap_1.2.0             multcomp_1.4-25          
+[217] fastmatch_1.1-4           rstatix_0.7.2             vipor_0.4.7              
+[220] TTR_0.24.4                ROCR_1.0-11               TFisher_0.2.0            
+[223] rsvd_1.0.5                vcd_1.4-12                nnet_7.3-19              
+[226] gtable_0.3.5              KernSmooth_2.23-24        miniUI_0.1.1.1           
+[229] deldir_2.0-4              htmltools_0.5.8.1         ggthemes_5.1.0           
+[232] bit64_4.0.5               spatstat.explore_3.2-7    lifecycle_1.0.4          
+[235] blme_1.0-5                nloptr_2.0.3              sass_0.4.9               
+[238] vctrs_0.6.5               robustbase_0.99-2         spatstat.geom_3.2-9      
+[241] sn_2.1.1                  ggfun_0.1.5               future.apply_1.11.2      
+[244] bslib_0.7.0               pillar_1.9.0              gplots_3.1.3.1           
+[247] pcaMethods_1.96.0         metapod_1.12.0            locfit_1.5-9.9           
+[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
