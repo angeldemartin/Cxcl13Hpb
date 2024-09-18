@@ -13,7 +13,7 @@ Granuloma Analysis
 [link](GranulomaAnalysis.html)
 
 ## GranulomaMacrophages 
-Macrophage Analysis
+Gran Macrophage Analysis
 [link](GranulomaMacrophages.html)
 
 ## Fibroblast

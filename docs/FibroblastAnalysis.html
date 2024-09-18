@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-12
+<strong>Last updated:</strong> 2024-07-23
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -420,10 +420,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -574,14 +574,6 @@ data/merged_all_naiveANDd4_seurat.rds
 data/merged_allFb_naiveANDd4_seurat.rds
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/FbmarkerGenesclustername.txt
-</td>
-<td style="text-align:left;">
-analysis/FbmarkerGenesclustername.txt
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -590,15 +582,15 @@ analysis/FbmarkerGenesclustername.txt
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -608,7 +600,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>.
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -626,6 +618,7 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
     Ignored:    data/dataJuli2021/
     Ignored:    data/dataJuli2022/
@@ -633,16 +626,16 @@ Ignored files:
     Ignored:    data/dataSept2020/
 
 Untracked files:
-    Untracked:  analysis/DEgenesMph1vsMph3
-    Untracked:  analysis/DEgenesMph_cluster_name
-    Untracked:  analysis/FbmarkerGenesclustername.txt
-    Untracked:  analysis/FibroblastAnalysis.Rmd
-    Untracked:  analysis/GranulomaAnalysis.Rmd
-    Untracked:  analysis/markergenes_cluster_name
-    Untracked:  analysis/vorlagen.Rmd
+    Untracked:  analysis/DEGenesFbcond2.txt
+    Untracked:  analysis/FbDEGenescond3.txt
+    Untracked:  analysis/FibroblastAnalysisDEgenes.Rmd
+    Untracked:  analysis/GranDEGenescond2.txt
+    Untracked:  analysis/GranFb.Rmd
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/FibroblastAnalysis.Rmd
+    Modified:   analysis/GranulomaMacrophages.Rmd
+    Modified:   analysis/vorlagen.Rmd
 
 </code></pre>
 <p>
@@ -657,10 +650,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/FibroblastAnalysis.Rmd</code>)
+and HTML (<code>docs/FibroblastAnalysis.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/Cxcl13Hpb/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/FibroblastAnalysis.html" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+<td>
+update website2
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/8b7712dc15525bbc15349406cf1dc685c4042bf4/analysis/FibroblastAnalysis.Rmd" target="_blank">8b7712d</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+<td>
+update website
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -814,19 +871,171 @@ o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3
                                                            6909 
  o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3 
                                                            6593 </code></pre>
+<pre class="r"><code>table(seuratN$orig.ident)</code></pre>
+<pre><code>
+      
+89929 </code></pre>
 <pre class="r"><code>## plot umap
 Idents(seuratN) &lt;- seuratN$RNA_snn_res.0.25
 levels(seuratN)</code></pre>
 <pre><code> [1] &quot;0&quot;  &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot; &quot;16&quot;</code></pre>
 <pre class="r"><code>DimPlot(seuratN, reduction = &quot;umap&quot;, label = TRUE)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/plot%20umap%20all%20merged-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-umap-all-merged-1">
+Past versions of "plot umap all merged-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-plot-umap-all-merged-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/plot umap all merged-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## plot feature
 FeaturePlot(seuratN, features = &quot;ENSMUSG00000026395.Ptprc&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/plot%20umap%20all%20merged-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-umap-all-merged-2">
+Past versions of "plot umap all merged-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-plot-umap-all-merged-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/plot umap all merged-2.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratN, features = &quot;ENSMUSG00000020717.Pecam1&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/plot%20umap%20all%20merged-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-umap-all-merged-3">
+Past versions of "plot umap all merged-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-plot-umap-all-merged-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/plot umap all merged-3.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(seuratN, features = &quot;ENSMUSG00000028583.Pdpn&quot;, pt.size = 1, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/plot%20umap%20all%20merged-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-plot-umap-all-merged-4">
+Past versions of "plot umap all merged-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-plot-umap-all-merged-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/plot umap all merged-4.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="subset-fibroblasts-and-rerun-seurat" class="section level2">
 <h2>subset fibroblasts and rerun seurat</h2>
@@ -873,6 +1082,45 @@ table(seuratFb$cond2)
 seuratFb$cond2 &lt;- factor(seuratFb$cond2, levels=c(&quot;WT&quot;, &quot;cko&quot;))
 Idents(seuratFb) &lt;- seuratFb$cond2
 table(seuratFb$cond2)
+
+## mouse
+m1wtnaive &lt;- c(&quot;11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3&quot;)
+m2wtnaive &lt;- c(&quot;12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3&quot;)
+m1ckonaive &lt;- c(&quot;10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3&quot;)
+m2ckonaive &lt;- c(&quot;9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3&quot;)
+
+m1wtD4SI &lt;- c(&quot;9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3&quot;)
+m2wtD4SI &lt;- c(&quot;10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3&quot;)
+m1ckoD4SI &lt;- c(&quot;7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3&quot;)
+m2ckoD4SI &lt;- c(&quot;8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3&quot;)
+
+m1wtD4Gran &lt;- c(&quot;o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3&quot;, &quot;o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3&quot;)
+m2wtD4Gran &lt;- c(&quot;9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3&quot;)
+m1ckoD4Gran &lt;- c(&quot;o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3&quot;,&quot;o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3&quot;)
+m2ckoD4Gran &lt;- c(&quot;10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3&quot;)
+
+seuratFb$mouse &lt;- &quot;mouse&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtnaive)] &lt;- &quot;m1wtnaive&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtnaive)] &lt;- &quot;m2wtnaive&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckonaive)] &lt;- &quot;m1ckonaive&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckonaive)] &lt;- &quot;m2ckonaive&quot;
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4SI)] &lt;- &quot;m1wtD4SI&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4SI)] &lt;- &quot;m2wtD4SI&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4SI )] &lt;- &quot;m1ckoD4SI&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4SI)] &lt;- &quot;m2ckoD4SI&quot;
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4Gran)] &lt;- &quot;m1wtD4Gran&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4Gran)] &lt;- &quot;m2wtD4Gran&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4Gran)] &lt;- &quot;m1ckoD4Gran&quot;
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4Gran)] &lt;- &quot;m2ckoD4Gran&quot;
+
+## order
+seuratFb$mouse &lt;- factor(seuratFb$mouse, levels=c(&quot;m1wtnaive&quot;, &quot;m2wtnaive&quot;, &quot;m1ckonaive&quot;,&quot;m2ckonaive&quot;,&quot;m1wtD4SI&quot;, &quot;m2wtD4SI&quot;, &quot;m1ckoD4SI&quot;,&quot;m2ckoD4SI&quot;,  &quot;m1wtD4Gran&quot;, &quot;m2wtD4Gran&quot;,  &quot;m1ckoD4Gran&quot;, &quot;m2ckoD4Gran&quot;))
+Idents(seuratFb) &lt;- seuratFb$mouse
+
+table(seuratFb$mouse)
+
 
 ## Hp
 d4 &lt;- c(&quot;o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3&quot;,
@@ -945,8 +1193,9 @@ table(seuratFb$clustername)
 
 ### save seurat object
 saveRDS(seuratFb, file=&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds&quot;)</code></pre>
-<p>############################end
-pre-processing############################</p>
+<div id="end-pre-processing" class="section level28">
+<p class="heading">end pre-processing</p>
+</div>
 </div>
 <div id="load-object-merged-allfb-d4" class="section level2">
 <h2>load object merged allFb d4</h2>
@@ -1000,7 +1249,7 @@ names(colcond3) &lt;- c(&quot;infectedD4&quot;, &quot;naive&quot;, &quot;granulo
 colPal &lt;- c(&quot;#355C7D&quot;, &quot;#8E9B97&quot;,&quot;#99B898&quot;,&quot;#E84A5F&quot;,&quot;#0F1F38&quot;,&quot;#FF847C&quot;,&quot;#F8B195&quot;,&quot;#6C5B7B&quot;, &quot;#C06C84&quot;, &quot;#727077&quot;)
 names(colPal) &lt;- c(&quot;0&quot; ,&quot;1&quot;, &quot;2&quot;, &quot;3&quot;,&quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;)
 
-colclustername &lt;- c(&quot;#355C7D&quot;, &quot;#8E9B97&quot;,&quot;#99B898&quot;,&quot;#E84A5F&quot;,&quot;#0F1F38&quot;,&quot;#FF847C&quot;,&quot;#F8B195&quot;,&quot;#6C5B7B&quot;, &quot;#C06C84&quot;, &quot;#727077&quot;)
+colclustername &lt;- c(&quot;#355C7D&quot;, &quot;#8E9B97&quot;,&quot;#99B898&quot;,&quot;#E84A5F&quot;,&quot;#0F1F38&quot;,&quot;#F8B195&quot;,&quot;#727077&quot;,&quot;#FF847C&quot;,&quot;#C06C84&quot;,&quot;#904D39&quot;)
 names(colclustername) &lt;- c(&quot;PdgfraloFb1&quot; ,&quot;PdgfraloFb2&quot;, &quot;Trophocytes&quot;,&quot;PdgfraloFb3&quot;, &quot;Telocytes&quot;,&quot;Myocytes&quot;, &quot;Pdgfrahi&quot;, &quot;PdgfraloFb4&quot;, &quot;Thy1Fb&quot;, &quot;Glial&quot;)</code></pre>
 </div>
 <div id="umaps-clustername" class="section level2">
@@ -1015,8 +1264,82 @@ PdgfraloFb1 PdgfraloFb2 PdgfraloFb3 PdgfraloFb4 Trophocytes   Telocytes    Myocy
         210         154 </code></pre>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colclustername)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20clustername-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-clustername-1">
+Past versions of "umaps clustername-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-clustername-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps clustername-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20clustername-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-clustername-2">
+Past versions of "umaps clustername-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-clustername-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps clustername-2.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="umaps-conditions" class="section level2">
 <h2>umaps conditions</h2>
@@ -1024,77 +1347,803 @@ PdgfraloFb1 PdgfraloFb2 PdgfraloFb3 PdgfraloFb4 Trophocytes   Telocytes    Myocy
 Idents(seuratFb) &lt;- seuratFb$cond3
 table(seuratFb$cond3)</code></pre>
 <pre><code>
-granulomaD4  infectedD4       naive 
-       9299       29674       25245 </code></pre>
+      naive  infectedD4 granulomaD4 
+      25245       29674        9299 </code></pre>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colcond3)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-1">
+Past versions of "umaps conditions-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colcond3) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-2">
+Past versions of "umaps conditions-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-2.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colcond3, split.by = &quot;cond3&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-3">
+Past versions of "umaps conditions-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-3.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratFbgran &lt;- subset(seuratFb, cond3 == &quot;granulomaD4&quot;)
 DimPlot(seuratFbgran, reduction= &quot;umap&quot;, cols = colcond3) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-4">
+Past versions of "umaps conditions-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-4.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratFbinf &lt;- subset(seuratFb, cond3 == &quot;infectedD4&quot;)
 DimPlot(seuratFbinf, reduction= &quot;umap&quot;, cols = colcond3) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-5">
+Past versions of "umaps conditions-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-5.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>seuratFbnaive &lt;- subset(seuratFb, cond3 == &quot;naive&quot;)
 DimPlot(seuratFbnaive, reduction= &quot;umap&quot;, cols = colcond3) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-6">
+Past versions of "umaps conditions-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-6.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## cond2
 Idents(seuratFb) &lt;- seuratFb$cond2
 table(seuratFb$cond2)</code></pre>
 <pre><code>
-  cko    WT 
-32897 31321 </code></pre>
+   WT   cko 
+31321 32897 </code></pre>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colcond2)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-7">
+Past versions of "umaps conditions-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-7.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>DimPlot(seuratFb, reduction= &quot;umap&quot;, cols = colcond2, split.by = &quot;cond2&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/umaps%20conditions-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-umaps-conditions-8">
+Past versions of "umaps conditions-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-umaps-conditions-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/umaps conditions-8.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="calculate-cluster-marker-genes" class="section level2">
-<h2>calculate cluster marker genes</h2>
-<pre class="r"><code>## calculate marker genes
-Idents(seuratFb) &lt;- seuratFb$clustername
-levels(seuratFb)
-
-markerGenes &lt;- FindAllMarkers(seuratFb, only.pos=T) %&gt;% 
-  dplyr::filter(p_val_adj &lt; 0.01) 
-
-write.table(markerGenes, 
-            file= &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/FbmarkerGenesclustername.txt&quot;,
-            sep=&quot;\t&quot;,
-            quote=F,
-            row.names=F,
-            col.names=T)</code></pre>
+</div>
 </div>
 <div id="feature-plots-fb-maker-genes" class="section level2">
 <h2>feature plots fb maker genes</h2>
 <pre class="r"><code>## plot feature
-FeaturePlot(seuratFb, features = &quot;ENSMUSG00000028583.Pdpn&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+FeaturePlot(seuratFb, features = &quot;ENSMUSG00000028583.Pdpn&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;Rosa26eyfp.Rosa26eyfp&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-1">
+Past versions of "feature plots fb-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;Rosa26eyfp.Rosa26eyfp&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000035783.Acta2&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-2">
+Past versions of "feature plots fb-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-2.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000035783.Acta2&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000016494.Cd34&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-3">
+Past versions of "feature plots fb-3.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-3.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000016494.Cd34&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000029231.Pdgfra&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-4">
+Past versions of "feature plots fb-4.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-4.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000029231.Pdgfra&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000023078.Cxcl13&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-5">
+Past versions of "feature plots fb-5.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-5.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000023078.Cxcl13&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000071005.Ccl19&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-6">
+Past versions of "feature plots fb-6.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-6.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000071005.Ccl19&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000039542.Ncam1&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-7">
+Past versions of "feature plots fb-7.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-7.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000039542.Ncam1&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000075602.Ly6a&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-8">
+Past versions of "feature plots fb-8.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-8.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000075602.Ly6a&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-9.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000037706.Cd81&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-9">
+Past versions of "feature plots fb-9.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-9.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000037706.Cd81&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-10.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000020717.Pecam1&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-10">
+Past versions of "feature plots fb-10.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-10.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000020717.Pecam1&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-11.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000045394.Epcam&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;))</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-11">
+Past versions of "feature plots fb-11.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-11.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000045394.Epcam&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-feature-plots-fb-12">
+Past versions of "feature plots fb-12.png"
+</button>
+</p>
+<div id="fig-no-spaces-feature-plots-fb-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/feature plots fb-12.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>FeaturePlot(seuratFb, features = &quot;ENSMUSG00000024810.Il33&quot;, cols = c(&quot;lightgrey&quot;, &quot;#BE3144&quot;), pt.size = 1)</code></pre>
+<p><img src="figure/FibroblastAnalysis.Rmd/feature%20plots%20fb-13.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="average-heatmap---fb-top5-cluster-marker"
 class="section level2">
@@ -1180,6 +2229,53 @@ levels(seurat)</code></pre>
 # colVec &lt;- c(&quot;blue&quot;, &quot;red&quot;)
 avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/avg%20heatmap-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-avg-heatmap-1">
+Past versions of "avg heatmap-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-avg-heatmap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/avg heatmap-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="dotplot-fb" class="section level3">
+<h3>dotplot fb</h3>
+<pre class="r"><code>genes &lt;- data.frame(gene=rownames(seuratFb)) %&gt;% 
+  mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene))
+
+selGenes &lt;- data.frame(geneID=c(&quot;Ly6a&quot;,&quot;Acta2&quot;,&quot;Cd81&quot;,&quot;Cd34&quot;,&quot;Pdgfra&quot;,&quot;Pdpn&quot;)) %&gt;% left_join(., genes, by=&quot;geneID&quot;)
+
+DotPlot(seuratFb, features = selGenes, group.by= &quot;cluster_name&quot;) + RotatedAxis() + scale_color_viridis(option=&quot;D&quot;) + coord_flip()</code></pre>
+<p><img src="figure/FibroblastAnalysis.Rmd/dotplot%20fb-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="rel-abundance-fb-subsets" class="section level2">
 <h2>Rel Abundance Fb subsets</h2>
@@ -1203,6 +2299,43 @@ ordX &lt;-  c(&quot;naive&quot;, &quot;infectedD4&quot;, &quot;granulomaD4&quot;
 ## plot abundance
 ggbarplot(dat_all, x= &quot;cond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;clustername&quot;, ylab = &quot;frequency&quot;, palette = colclustername) + scale_x_discrete(limits=ordX)</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/Fb%20abundance%20plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Fb-abundance-plot-1">
+Past versions of "Fb abundance plot-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-Fb-abundance-plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/Fb abundance plot-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## make count list according to cond2 plus cond3
 datList &lt;- NULL
 for(con in unique(seuratFb$cond2_plus_cond3)){
@@ -1226,6 +2359,195 @@ ordX &lt;-  c(&quot;WT_naive&quot;, &quot;cko_naive&quot;, &quot;WT_infectedD4&q
 ## plot abundance
 ggbarplot(dat_all, x= &quot;cond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;clustername&quot;, ylab = &quot;frequency&quot;, palette = colclustername) + scale_x_discrete(limits=ordX) + theme(axis.text.x = element_text(angle = 20, hjust=1))</code></pre>
 <p><img src="figure/FibroblastAnalysis.Rmd/Fb%20abundance%20plot-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Fb-abundance-plot-2">
+Past versions of "Fb abundance plot-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-Fb-abundance-plot-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/FibroblastAnalysis.Rmd/Fb abundance plot-2.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>## make count list according to mouse
+datList &lt;- NULL
+for(con in unique(seuratFb$mouse)){
+  seuratSub &lt;- subset(seuratFb, mouse==con)
+  print(dim(seuratSub))
+  dat_con &lt;- as.data.frame(table(seuratSub$clustername)) %&gt;%
+  mutate(percent=Freq/ncol(seuratSub)) %&gt;% mutate(cond=con)
+  datList[[con]] &lt;- dat_con
+}</code></pre>
+<pre><code>[1] 30749   627
+[1] 30749  1177
+[1] 30749  2323
+[1] 30749  5172
+[1] 30749  6591
+[1] 30749  4561
+[1] 30749  7301
+[1] 30749  6792
+[1] 30749  7409
+[1] 30749  7816
+[1] 30749  5899
+[1] 30749  8550</code></pre>
+<pre class="r"><code>dat_all &lt;- do.call(&quot;rbind&quot;, datList)
+
+##order x
+ordX &lt;- c(&quot;m1wtnaive&quot;, &quot;m2wtnaive&quot;, &quot;m1ckonaive&quot;,&quot;m2ckonaive&quot;,&quot;m1wtD4SI&quot;, &quot;m2wtD4SI&quot;, &quot;m1ckoD4SI&quot;,&quot;m2ckoD4SI&quot;,  &quot;m1wtD4Gran&quot;, &quot;m2wtD4Gran&quot;,  &quot;m1ckoD4Gran&quot;, &quot;m2ckoD4Gran&quot;)
+
+## plot abundance
+ggbarplot(dat_all, x= &quot;cond&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;clustername&quot;, ylab = &quot;frequency&quot;, palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) </code></pre>
+<p><img src="figure/FibroblastAnalysis.Rmd/Fb%20abundance%20plot-3.png" width="672" style="display: block; margin: auto;" />
+## session info</p>
+<pre class="r"><code>date()</code></pre>
+<pre><code>[1] &quot;Tue Jul 23 11:57:08 2024&quot;</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.6.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
+ [4] gridExtra_2.3               DOSE_3.30.1                 enrichplot_1.24.0          
+ [7] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
+[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.11                 
+[13] scater_1.32.0               scuttle_1.14.0              destiny_3.18.0             
+[16] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
+[19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
+[22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
+[25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
+[28] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
+[31] Biobase_2.64.0              GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+[34] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
+[37] MatrixGenerics_1.16.0       matrixStats_1.3.0           pheatmap_1.0.12            
+[40] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
+[43] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
+[46] ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] igraph_2.0.3              ica_1.0-3                 plotly_4.10.4            
+  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
+  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
+ [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
+ [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
+ [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
+ [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
+ [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
+ [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
+ [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
+ [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
+ [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
+ [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
+ [43] smoother_1.3              withr_3.0.0               git2r_0.33.0             
+ [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
+ [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
+ [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
+ [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
+ [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
+ [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
+ [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
+ [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
+ [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
+ [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
+ [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
+ [79] fastDummies_1.7.3         gridGraphics_0.5-1        lazyeval_0.2.2           
+ [82] yaml_2.3.9                survival_3.7-0            scattermore_1.2          
+ [85] crayon_1.5.3              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
+ [88] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
+ [91] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
+ [94] aod_1.3.3                 KEGGREST_1.44.1           Rtsne_0.17               
+ [97] shape_1.4.6.1             limma_3.60.3              pkgconfig_2.0.3          
+[100] TMB_1.9.14                mathjaxr_1.6-0            EnvStats_2.8.1           
+[103] aplot_0.2.3               scatterplot3d_0.3-44      spatstat.sparse_3.1-0    
+[106] ape_5.8                   xtable_1.8-4              car_3.1-2                
+[109] highr_0.11                plyr_1.8.9                httr_1.4.7               
+[112] rbibutils_2.2.16          tools_4.4.0               globals_0.16.3           
+[115] beeswarm_0.4.0            broom_1.0.6               nlme_3.1-165             
+[118] lambda.r_1.2.4            HDO.db_0.99.1             lme4_1.1-35.5            
+[121] digest_0.6.36             numDeriv_2016.8-1.1       Matrix_1.7-0             
+[124] farver_2.1.2              tzdb_0.4.0                remaCor_0.0.18           
+[127] reshape2_1.4.4            yulab.utils_0.1.4         glue_1.7.0               
+[130] cachem_1.1.0              polyclip_1.10-6           generics_0.1.3           
+[133] Biostrings_2.72.1         mvtnorm_1.2-5             parallelly_1.37.1        
+[136] mnormt_2.1.1              statmod_1.5.0             RcppHNSW_0.6.0           
+[139] ScaledMatrix_1.12.0       carData_3.0-5             minqa_1.2.7              
+[142] pbapply_1.7-2             spam_2.10-0               gson_0.1.0               
+[145] utf8_1.2.4                graphlayouts_1.1.1        gtools_3.9.5             
+[148] ggsignif_0.6.4            RcppEigen_0.3.4.0.0       shiny_1.8.1.1            
+[151] GenomeInfoDbData_1.2.12   glmmTMB_1.1.9             memoise_2.0.1            
+[154] rmarkdown_2.27            scales_1.3.0              future_1.33.2            
+[157] RANN_2.6.1                Cairo_1.6-2               spatstat.data_3.1-2      
+[160] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[163] mutoss_0.1-13             spatstat.utils_3.0-5      hms_1.1.3                
+[166] fitdistrplus_1.1-11       munsell_0.5.1             cowplot_1.1.3            
+[169] colorspace_2.1-0          rlang_1.1.4               DelayedMatrixStats_1.26.0
+[172] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[175] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[178] mgcv_1.9-1                xfun_0.45                 e1071_1.7-14             
+[181] TH.data_1.1-2             iterators_1.0.14          abind_1.4-5              
+[184] GOSemSim_2.30.0           treeio_1.28.0             futile.options_1.0.1     
+[187] bitops_1.0-7              Rdpack_2.6                promises_1.3.0           
+[190] scatterpie_0.2.3          RSQLite_2.3.7             qvalue_2.36.0            
+[193] sandwich_3.1-0            fgsea_1.30.0              DelayedArray_0.30.1      
+[196] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
+[199] prettyunits_1.2.0         boot_1.3-30               beachmat_2.20.0          
+[202] listenv_0.9.1             Rcpp_1.0.12               edgeR_4.2.0              
+[205] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
+[208] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
+[211] babelgene_22.9            spatstat.random_3.2-3     R6_2.5.1                 
+[214] fastmap_1.2.0             multcomp_1.4-25           fastmatch_1.1-4          
+[217] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
+[220] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
+[223] vcd_1.4-12                nnet_7.3-19               gtable_0.3.5             
+[226] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
+[229] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.0.5              
+[232] spatstat.explore_3.2-7    lifecycle_1.0.4           blme_1.0-5               
+[235] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
+[238] robustbase_0.99-3         spatstat.geom_3.2-9       sn_2.1.1                 
+[241] ggfun_0.1.5               future.apply_1.11.2       bslib_0.7.0              
+[244] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[247] locfit_1.5-9.10           jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1253,18 +2575,18 @@ attached base packages:
 [1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.3.0              
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
  [4] gridExtra_2.3               DOSE_3.30.1                 enrichplot_1.24.0          
  [7] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
-[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.10                 
+[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.11                 
 [13] scater_1.32.0               scuttle_1.14.0              destiny_3.18.0             
 [16] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
 [19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
 [22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
 [25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
 [28] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
-[31] Biobase_2.64.0              GenomicRanges_1.56.0        GenomeInfoDb_1.40.1        
-[34] IRanges_2.38.0              S4Vectors_0.42.0            BiocGenerics_0.50.0        
+[31] Biobase_2.64.0              GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+[34] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
 [37] MatrixGenerics_1.16.0       matrixStats_1.3.0           pheatmap_1.0.12            
 [40] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
 [43] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
@@ -1275,11 +2597,11 @@ loaded via a namespace (and not attached):
   [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
   [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
  [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
- [13] pbkrtest_0.5.2            parallel_4.4.0            png_0.1-8                
- [16] plotrix_3.8-4             cli_3.6.2                 ggplotify_0.1.2          
+ [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
  [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
  [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
- [25] curl_5.2.1                mime_0.12                 evaluate_0.23            
+ [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
  [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
  [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
  [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
@@ -1291,27 +2613,27 @@ loaded via a namespace (and not attached):
  [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
  [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
  [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
- [61] DEoptimR_1.1-3            reticulate_1.37.0         hexbin_1.28.3            
- [64] zoo_1.8-12                XVector_0.44.0            knitr_1.47               
+ [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
+ [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
  [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
  [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
  [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
  [79] fastDummies_1.7.3         gridGraphics_0.5-1        lazyeval_0.2.2           
- [82] yaml_2.3.8                survival_3.7-0            scattermore_1.2          
- [85] crayon_1.5.2              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
+ [82] yaml_2.3.9                survival_3.7-0            scattermore_1.2          
+ [85] crayon_1.5.3              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
  [88] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
  [91] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
- [94] aod_1.3.3                 KEGGREST_1.44.0           Rtsne_0.17               
- [97] shape_1.4.6.1             limma_3.60.2              pkgconfig_2.0.3          
-[100] TMB_1.9.11                mathjaxr_1.6-0            EnvStats_2.8.1           
-[103] aplot_0.2.2               scatterplot3d_0.3-44      spatstat.sparse_3.0-3    
+ [94] aod_1.3.3                 KEGGREST_1.44.1           Rtsne_0.17               
+ [97] shape_1.4.6.1             limma_3.60.3              pkgconfig_2.0.3          
+[100] TMB_1.9.14                mathjaxr_1.6-0            EnvStats_2.8.1           
+[103] aplot_0.2.3               scatterplot3d_0.3-44      spatstat.sparse_3.1-0    
 [106] ape_5.8                   xtable_1.8-4              car_3.1-2                
 [109] highr_0.11                plyr_1.8.9                httr_1.4.7               
 [112] rbibutils_2.2.16          tools_4.4.0               globals_0.16.3           
-[115] beeswarm_0.4.0            broom_1.0.6               nlme_3.1-164             
-[118] lambda.r_1.2.4            HDO.db_0.99.1             lme4_1.1-35.3            
-[121] digest_0.6.35             numDeriv_2016.8-1.1       Matrix_1.7-0             
+[115] beeswarm_0.4.0            broom_1.0.6               nlme_3.1-165             
+[118] lambda.r_1.2.4            HDO.db_0.99.1             lme4_1.1-35.5            
+[121] digest_0.6.36             numDeriv_2016.8-1.1       Matrix_1.7-0             
 [124] farver_2.1.2              tzdb_0.4.0                remaCor_0.0.18           
 [127] reshape2_1.4.4            yulab.utils_0.1.4         glue_1.7.0               
 [130] cachem_1.1.0              polyclip_1.10-6           generics_0.1.3           
@@ -1323,37 +2645,37 @@ loaded via a namespace (and not attached):
 [148] ggsignif_0.6.4            RcppEigen_0.3.4.0.0       shiny_1.8.1.1            
 [151] GenomeInfoDbData_1.2.12   glmmTMB_1.1.9             memoise_2.0.1            
 [154] rmarkdown_2.27            scales_1.3.0              future_1.33.2            
-[157] RANN_2.6.1                Cairo_1.6-2               spatstat.data_3.0-4      
-[160] rstudioapi_0.16.0         cluster_2.1.6             mutoss_0.1-13            
-[163] spatstat.utils_3.0-4      hms_1.1.3                 fitdistrplus_1.1-11      
-[166] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
-[169] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
-[172] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
-[175] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
-[178] xfun_0.44                 e1071_1.7-14              TH.data_1.1-2            
-[181] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
-[184] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
-[187] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
-[190] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
-[193] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
-[196] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
-[199] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
-[202] Rcpp_1.0.12               edgeR_4.2.0               workflowr_1.7.1          
-[205] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-60.2            
-[208] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
-[211] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
-[214] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
-[217] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
-[220] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
-[223] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
-[226] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
-[229] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
-[232] lifecycle_1.0.4           blme_1.0-5                nloptr_2.0.3             
-[235] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-2        
-[238] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
-[241] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
-[244] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.9           
-[247] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+[157] RANN_2.6.1                Cairo_1.6-2               spatstat.data_3.1-2      
+[160] rstudioapi_0.16.0         cluster_2.1.6             whisker_0.4.1            
+[163] mutoss_0.1-13             spatstat.utils_3.0-5      hms_1.1.3                
+[166] fitdistrplus_1.1-11       munsell_0.5.1             cowplot_1.1.3            
+[169] colorspace_2.1-0          rlang_1.1.4               DelayedMatrixStats_1.26.0
+[172] sparseMatrixStats_1.16.0  xts_0.14.0                dotCall64_1.1-1          
+[175] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[178] mgcv_1.9-1                xfun_0.45                 e1071_1.7-14             
+[181] TH.data_1.1-2             iterators_1.0.14          abind_1.4-5              
+[184] GOSemSim_2.30.0           treeio_1.28.0             futile.options_1.0.1     
+[187] bitops_1.0-7              Rdpack_2.6                promises_1.3.0           
+[190] scatterpie_0.2.3          RSQLite_2.3.7             qvalue_2.36.0            
+[193] sandwich_3.1-0            fgsea_1.30.0              DelayedArray_0.30.1      
+[196] proxy_0.4-27              GO.db_3.19.1              compiler_4.4.0           
+[199] prettyunits_1.2.0         boot_1.3-30               beachmat_2.20.0          
+[202] listenv_0.9.1             Rcpp_1.0.12               edgeR_4.2.0              
+[205] workflowr_1.7.1           BiocSingular_1.20.0       tensor_1.5               
+[208] MASS_7.3-61               progress_1.2.3            BiocParallel_1.38.0      
+[211] babelgene_22.9            spatstat.random_3.2-3     R6_2.5.1                 
+[214] fastmap_1.2.0             multcomp_1.4-25           fastmatch_1.1-4          
+[217] rstatix_0.7.2             vipor_0.4.7               TTR_0.24.4               
+[220] ROCR_1.0-11               TFisher_0.2.0             rsvd_1.0.5               
+[223] vcd_1.4-12                nnet_7.3-19               gtable_0.3.5             
+[226] KernSmooth_2.23-24        miniUI_0.1.1.1            deldir_2.0-4             
+[229] htmltools_0.5.8.1         ggthemes_5.1.0            bit64_4.0.5              
+[232] spatstat.explore_3.2-7    lifecycle_1.0.4           blme_1.0-5               
+[235] nloptr_2.1.1              sass_0.4.9                vctrs_0.6.5              
+[238] robustbase_0.99-3         spatstat.geom_3.2-9       sn_2.1.1                 
+[241] ggfun_0.1.5               future.apply_1.11.2       bslib_0.7.0              
+[244] pillar_1.9.0              gplots_3.1.3.1            pcaMethods_1.96.0        
+[247] locfit_1.5-9.10           jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
 </div>
 </div>
 

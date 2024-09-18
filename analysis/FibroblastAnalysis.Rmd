@@ -140,6 +140,7 @@ saveRDS(seuratN, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/mer
 fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_all_naiveANDd4_seurat.rds"
 seuratN <- readRDS(fileNam)
 table(seuratN$dataset)
+table(seuratN$orig.ident)
 ```
 
 ```{r plot umap all merged}
@@ -202,6 +203,45 @@ table(seuratFb$cond2)
 seuratFb$cond2 <- factor(seuratFb$cond2, levels=c("WT", "cko"))
 Idents(seuratFb) <- seuratFb$cond2
 table(seuratFb$cond2)
+
+## mouse
+m1wtnaive <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3")
+m2wtnaive <- c("12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3")
+m1ckonaive <- c("10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+m2ckonaive <- c("9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+
+m1wtD4SI <- c("9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3")
+m2wtD4SI <- c("10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3")
+m1ckoD4SI <- c("7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3")
+m2ckoD4SI <- c("8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3")
+
+m1wtD4Gran <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3", "o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3")
+m2wtD4Gran <- c("9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3")
+m1ckoD4Gran <- c("o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3","o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3")
+m2ckoD4Gran <- c("10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+
+seuratFb$mouse <- "mouse"
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtnaive)] <- "m1wtnaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtnaive)] <- "m2wtnaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckonaive)] <- "m1ckonaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckonaive)] <- "m2ckonaive"
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4SI)] <- "m1wtD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4SI)] <- "m2wtD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4SI )] <- "m1ckoD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4SI)] <- "m2ckoD4SI"
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4Gran)] <- "m1wtD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4Gran)] <- "m2wtD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4Gran)] <- "m1ckoD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4Gran)] <- "m2ckoD4Gran"
+
+## order
+seuratFb$mouse <- factor(seuratFb$mouse, levels=c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD4SI", "m1ckoD4SI","m2ckoD4SI",  "m1wtD4Gran", "m2wtD4Gran",  "m1ckoD4Gran", "m2ckoD4Gran"))
+Idents(seuratFb) <- seuratFb$mouse
+
+table(seuratFb$mouse)
+
 
 ## Hp
 d4 <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3",
@@ -276,7 +316,7 @@ table(seuratFb$clustername)
 saveRDS(seuratFb, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds")
 ```
 
-############################end pre-processing############################
+############################ end pre-processing############################
 
 ## load object merged allFb d4
 ```{r load object merged allFb d4}
@@ -302,7 +342,7 @@ names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
 colPal <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
 names(colPal) <- c("0" ,"1", "2", "3","4", "5", "6", "7", "8", "9")
 
-colclustername <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
+colclustername <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#F8B195","#727077","#FF847C","#C06C84","#904D39")
 names(colclustername) <- c("PdgfraloFb1" ,"PdgfraloFb2", "Trophocytes","PdgfraloFb3", "Telocytes","Myocytes", "Pdgfrahi", "PdgfraloFb4", "Thy1Fb", "Glial")
 ```
 
@@ -340,37 +380,22 @@ DimPlot(seuratFb, reduction= "umap", cols = colcond2)
 DimPlot(seuratFb, reduction= "umap", cols = colcond2, split.by = "cond2") + theme(legend.position = "none")
 ```
 
-## calculate cluster marker genes
-```{r marker gens, include=TRUE, eval=FALSE}
-## calculate marker genes
-Idents(seuratFb) <- seuratFb$clustername
-levels(seuratFb)
-
-markerGenes <- FindAllMarkers(seuratFb, only.pos=T) %>% 
-  dplyr::filter(p_val_adj < 0.01) 
-
-write.table(markerGenes, 
-            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/FbmarkerGenesclustername.txt",
-            sep="\t",
-            quote=F,
-            row.names=F,
-            col.names=T)
-```
 ## feature plots fb maker genes
 ```{r feature plots fb}
 ## plot feature
-FeaturePlot(seuratFb, features = "ENSMUSG00000028583.Pdpn", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "Rosa26eyfp.Rosa26eyfp", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000035783.Acta2", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000016494.Cd34", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000029231.Pdgfra", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000071005.Ccl19", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000039542.Ncam1", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000075602.Ly6a", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000037706.Cd81", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000020717.Pecam1", cols = c("lightgrey", "#BE3144"))
-FeaturePlot(seuratFb, features = "ENSMUSG00000045394.Epcam", cols = c("lightgrey", "#BE3144"))
+FeaturePlot(seuratFb, features = "ENSMUSG00000028583.Pdpn", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "Rosa26eyfp.Rosa26eyfp", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000035783.Acta2", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000016494.Cd34", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000029231.Pdgfra", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000071005.Ccl19", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000039542.Ncam1", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000075602.Ly6a", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000037706.Cd81", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000020717.Pecam1", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000045394.Epcam", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000024810.Il33", cols = c("lightgrey", "#BE3144"), pt.size = 1)
 ```
 
 ## average Heatmap - Fb top5 cluster marker
@@ -454,6 +479,16 @@ colVec <- colPal
 avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
 ```
 
+### dotplot fb
+```{r dotplot fb, fig.height=4, fig.width=7}
+genes <- data.frame(gene=rownames(seuratFb)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFb, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
+
 ## Rel Abundance Fb subsets
 ```{r Fb abundance plot}
 ## make count list according to cond3
@@ -489,6 +524,23 @@ ordX <-  c("WT_naive", "cko_naive", "WT_infectedD4", "cko_infectedD4", "WT_granu
 
 ## plot abundance
 ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX) + theme(axis.text.x = element_text(angle = 20, hjust=1))
+
+## make count list according to mouse
+datList <- NULL
+for(con in unique(seuratFb$mouse)){
+  seuratSub <- subset(seuratFb, mouse==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <- c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD4SI", "m1ckoD4SI","m2ckoD4SI",  "m1wtD4Gran", "m2wtD4Gran",  "m1ckoD4Gran", "m2ckoD4Gran")
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) 
 ```
 ## session info
 ```{r date and session info}

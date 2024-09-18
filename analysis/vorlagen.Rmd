@@ -300,7 +300,85 @@ ordX <- c("WT","cko")
 ggbarplot(dat_all, x= "cond2", y= "percent", fill = "Var1", palette = colPal, legend = "right", legend.titel = "cluster", ylab = "frequency")  + scale_x_discrete(limits=ordX)
 ```
 
-## create Venn Diagram
+## create ## plot VSMC / FRC gene signatures onto UMAP
+```{r plot gene signature onto umap}
+##convert seurat object to sce object
+sce <- as.SingleCellExperiment(seurat)
+
+##define signature for FRCs
+FRCs <- data.frame(gene=c("CCL19", "CCL21", "CXCL13", "LUM", "THY1", "PDGFRA", "PDGFRB", "COL1A1", "COL1A2", "COL3A1"))
+##define signature for VSMC
+VSMC <- data.frame(gene=c("ACTA2", "TAGLN", "TPM1", "MYH11", "MCAM"))
+
+##define signature for BEC
+BEC <- data.frame(gene=c("CLDN5", "PECAM1", "CD34", "CDH5", "ENG"))
+##define signature for LEC
+LEC <- data.frame(gene=c("PDPN", "TFF3", "PROX1", "LYVE1", "FLT4"))
+##define signature for EpC
+EpC <- data.frame(gene=c("KRT5", "KRT19", "CLDN1", "CDH1", "KRT14"))
+
+genes <- data.frame(geneID=rownames(sce)) %>% mutate(gene=gsub(".*\\.", "", geneID))
+
+## color palette 
+library(RColorBrewer)
+#pal = colorRampPalette(rev(brewer.pal(11, "RdBu")))
+pal = colorRampPalette(c("#053061", "#2166ac", "#f7f7f7", "#f4a582", "#b2183c", "#85122d"))
+#sf <- scale_fill_gradientn(colours = pal(100), limits=c(0, 5))
+
+##make a count matrix of signature genes
+signGenes <- genes %>% dplyr::filter(gene %in% FRCs$gene)
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2.5))
+sceSub$sign2[which(sceSub$sign > 2.5)] <- 2.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc + theme(legend.position = "none")
+
+signGenes <- genes %>% dplyr::filter(gene %in% VSMC$gene)
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 4.5))
+sceSub$sign2[which(sceSub$sign > 4.5)] <- 4.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc + theme(legend.position = "none")
+
+signGenes <- genes %>% dplyr::filter(gene %in% BEC$gene)
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2.5))
+sceSub$sign2[which(sceSub$sign > 2.5)] <- 2.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc + theme(legend.position = "none")
+
+signGenes <- genes %>% dplyr::filter(gene %in% LEC$gene)
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2.5))
+sceSub$sign2[which(sceSub$sign > 2.5)] <- 2.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc + theme(legend.position = "none")
+
+signGenes <- genes %>% dplyr::filter(gene %in% EpC$gene)
+sceSub <- sce[which(rownames(sce) %in% signGenes$geneID),]
+cntMat <- rowSums(t(as.matrix(
+    sceSub@assays@data$logcounts)))/nrow(signGenes)
+sceSub$sign <- cntMat
+sceSub$sign2 <- sceSub$sign
+sc <- scale_colour_gradientn(colours = pal(100), limits=c(0, 2.5))
+sceSub$sign2[which(sceSub$sign > 2.5)] <- 2.5
+plotUMAP(sceSub, colour_by = "sign2", point_size = 1) + sc + theme(legend.position = "none")
+
+##check max and min values
+max(sceSub$sign)
+``` Diagram
 ```{r venn diagram}
 ##calculate DEGenes
 seurat1 <- subset(seuratFb2, cond3 %in% c("naive", "infectedD4"))

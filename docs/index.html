@@ -282,7 +282,7 @@ granuloma formation</h1>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -293,8 +293,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -303,13 +303,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-12
+<strong>Last updated:</strong> 2024-09-18
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Cxcl13Hpb/</code> <span
@@ -332,33 +332,36 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree8b7712dc15525bbc15349406cf1dc685c4042bf4targetblank8b7712da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/8b7712dc15525bbc15349406cf1dc685c4042bf4" target="_blank">8b7712d</a>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree8b7712dc15525bbc15349406cf1dc685c4042bf4targetblank8b7712da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -368,7 +371,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/8b7712dc15525bbc15349406cf1dc685c4042bf4" target="_blank">8b7712d</a>.
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -386,11 +389,26 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
     Ignored:    data/dataJuli2021/
     Ignored:    data/dataJuli2022/
     Ignored:    data/dataJune2019/
     Ignored:    data/dataSept2020/
+
+Untracked files:
+    Untracked:  analysis/DEGenesFbcond2.txt
+    Untracked:  analysis/FbDEGenescond3.txt
+    Untracked:  analysis/FibroblastAnalysisDEgenes.Rmd
+    Untracked:  analysis/GranDEGenescond2.txt
+    Untracked:  analysis/GranFb.Rmd
+
+Unstaged changes:
+    Modified:   analysis/FibroblastAnalysis.Rmd
+    Modified:   analysis/GranulomaAnalysis.Rmd
+    Modified:   analysis/GranulomaMacrophages.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/vorlagen.Rmd
 
 </code></pre>
 <p>
@@ -435,6 +453,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/Cxcl13Hpb/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/index.html" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+<td>
+update website2
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -499,7 +534,8 @@ Start workflowr project.
 </div>
 <div id="granulomamacrophages" class="section level2">
 <h2>GranulomaMacrophages</h2>
-<p>Macrophage Analysis <a href="GranulomaMacrophages.html">link</a></p>
+<p>Gran Macrophage Analysis <a
+href="GranulomaMacrophages.html">link</a></p>
 </div>
 <div id="fibroblast" class="section level2">
 <h2>Fibroblast</h2>

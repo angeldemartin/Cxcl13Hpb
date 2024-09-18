@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-12
+<strong>Last updated:</strong> 2024-09-18
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -420,10 +420,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -550,6 +550,14 @@ analysis/DEgenesMph_cluster_name
 analysis/DEgenesMph1vsMph3
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/mphDCrerun_seurat.rds
+</td>
+<td style="text-align:left;">
+data/mphDCrerun_seurat.rds
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -558,15 +566,15 @@ analysis/DEgenesMph1vsMph3
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647targetblank3d5dd42a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtreeec7c6bec70c56e0309db01e553bafc129c6e968ctargetblankec7c6bea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -576,7 +584,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/3d5dd42d4a98d26681a2c95ebf9d626ca1ca4647" target="_blank">3d5dd42</a>.
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/ec7c6bec70c56e0309db01e553bafc129c6e968c" target="_blank">ec7c6be</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -594,6 +602,7 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
     Ignored:    data/dataJuli2021/
     Ignored:    data/dataJuli2022/
@@ -601,17 +610,17 @@ Ignored files:
     Ignored:    data/dataSept2020/
 
 Untracked files:
-    Untracked:  analysis/DEgenesMph1vsMph3
-    Untracked:  analysis/DEgenesMph_cluster_name
-    Untracked:  analysis/FbmarkerGenesclustername.txt
-    Untracked:  analysis/FibroblastAnalysis.Rmd
-    Untracked:  analysis/GranulomaAnalysis.Rmd
-    Untracked:  analysis/GranulomaMacrophages.Rmd
-    Untracked:  analysis/markergenes_cluster_name
-    Untracked:  analysis/vorlagen.Rmd
+    Untracked:  analysis/DEGenesFbcond2.txt
+    Untracked:  analysis/FbDEGenescond3.txt
+    Untracked:  analysis/FibroblastAnalysisDEgenes.Rmd
+    Untracked:  analysis/GranDEGenescond2.txt
+    Untracked:  analysis/GranFb.Rmd
 
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/FibroblastAnalysis.Rmd
+    Modified:   analysis/GranulomaAnalysis.Rmd
+    Modified:   analysis/GranulomaMacrophages.Rmd
+    Modified:   analysis/vorlagen.Rmd
 
 </code></pre>
 <p>
@@ -626,10 +635,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/GranulomaMacrophages.Rmd</code>)
+and HTML (<code>docs/GranulomaMacrophages.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/angeldemartin/Cxcl13Hpb/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/GranulomaMacrophages.html" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+<td>
+update website2
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/8b7712dc15525bbc15349406cf1dc685c4042bf4/analysis/GranulomaMacrophages.Rmd" target="_blank">8b7712d</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+<td>
+update website
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -710,6 +783,43 @@ levels(seuratMph)</code></pre>
 <pre><code>[1] &quot;Mph1&quot; &quot;Mph2&quot; &quot;Mph3&quot;</code></pre>
 <pre class="r"><code>DimPlot(seuratMph, reduction = &quot;umap&quot;, cols = colclustername) </code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/subset%20mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-subset-mph-1">
+Past versions of "subset mph-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-subset-mph-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/subset mph-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="relative-abundance-macrophages" class="section level2">
 <h2>relative abundance macrophages</h2>
@@ -732,6 +842,43 @@ ordXcond2 &lt;- c(&quot;WT&quot;, &quot;cko&quot;)
 ## plot abundance
 ggbarplot(dat_all, x= &quot;cond2&quot;, y= &quot;percent&quot;, fill = &quot;Var1&quot;, legend = &quot;right&quot;, legend.titel = &quot;cluster_name&quot;, ylab = &quot;frequency&quot;, palette = colclustername, order = ordXcond2) + theme(legend.position = &quot;null&quot;)</code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/relative%20abundance%20mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-relative-abundance-mph-1">
+Past versions of "relative abundance mph-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-relative-abundance-mph-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/relative abundance mph-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="de-genes-mph" class="section level2">
 <h2>DE genes mph</h2>
@@ -745,7 +892,12 @@ DEGenesMph &lt;- FindAllMarkers(seuratMph, only.pos=T, logfc.threshold = 0.2) %&
             #sep=&quot;\t&quot;,
             #quote=F,
             #row.names=F,
-            #col.names=T)</code></pre>
+            #col.names=T)
+
+##calculate DE genes Mph cond2
+Idents(seuratMph) &lt;- seuratMph$cond2
+levels(seuratMph)
+DEGenesMphcond2 &lt;- FindAllMarkers(seuratMph, only.pos=T, logfc.threshold = 0.2) %&gt;% filter(p_val_adj &lt; 0.01) </code></pre>
 </div>
 <div id="mph1-vs-mph3" class="section level2">
 <h2>mph1 vs mph3</h2>
@@ -756,6 +908,43 @@ levels(seuratMph1and3)</code></pre>
 <pre><code>[1] &quot;Mph1&quot; &quot;Mph3&quot;</code></pre>
 <pre class="r"><code>DimPlot(seuratMph1and3, reduction = &quot;umap&quot;, pt.size = 0.1, cols = colclustername) </code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/filter%20mph1%20and%20mph3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-filter-mph1-and-mph3-1">
+Past versions of "filter mph1 and mph3-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-filter-mph1-and-mph3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/filter mph1 and mph3-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="de-genes-mph1-vs-mph3" class="section level2">
 <h2>DE genes mph1 vs mph3</h2>
@@ -809,6 +998,44 @@ p_allID &lt;- ggscatter(avg.allID, x=&quot;Mph1&quot;, y=&quot;Mph3&quot;,
                      size=2,)
 p_allID</code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/scatter%20plot%20DEgenesMph1vsMph3-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-scatter-plot-DEgenesMph1vsMph3-1">
+Past versions of "scatter plot DEgenesMph1vsMph3-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-scatter-plot-DEgenesMph1vsMph3-1"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/scatter plot DEgenesMph1vsMph3-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="gsea-mph1" class="section level2">
 <h2>GSEA Mph1</h2>
@@ -830,6 +1057,43 @@ egoMph1 &lt;- enrichGO(gene = unique(DEGenesMph1$EnsID),
 egoMph1 &lt;- setReadable(egoMph1, OrgDb = org.Mm.eg.db)
 dotplot(egoMph1, showCategory=30)</code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/GSEA%20Mph1-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-GSEA-Mph1-1">
+Past versions of "GSEA Mph1-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-GSEA-Mph1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/GSEA Mph1-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="gsea-mph3" class="section level2">
 <h2>GSEA Mph3</h2>
@@ -851,15 +1115,515 @@ egoMph3 &lt;- enrichGO(gene = unique(DEGenesMph3$EnsID),
 egoMph3 &lt;- setReadable(egoMph3, OrgDb = org.Mm.eg.db)
 dotplot(egoMph3, showCategory=30)</code></pre>
 <p><img src="figure/GranulomaMacrophages.Rmd/GSEA%20Mph3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-GSEA-Mph3-1">
+Past versions of "GSEA Mph3-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-GSEA-Mph3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/blob/ec7c6bec70c56e0309db01e553bafc129c6e968c/docs/figure/GranulomaMacrophages.Rmd/GSEA Mph3-1.png" target="_blank">ec7c6be</a>
+</td>
+<td>
+angeldemartin
+</td>
+<td>
+2024-06-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="barplot-gsea" class="section level2">
+<h2>barplot GSEA</h2>
+<pre class="r"><code>#select pahtways and filter file
+selMph1 &lt;- c(&quot;GO:0045088&quot;,&quot;GO:0019221&quot;, &quot;GO:0032640&quot;, &quot;GO:0034341&quot;)
+egoMph1_fil &lt;- egoMph1%&gt;% filter(egoMph1@result$ID %in% selMph1)
+
+egoMph1_fil_2 &lt;- pairwise_termsim(egoMph1_fil)
+#make ggbarplot
+p &lt;- ggbarplot(egoMph1_fil_2@result, x = &quot;Description&quot;, y = &quot;Count&quot;, fill = &quot;#B1746FFF&quot;, color=&quot;#B1746FFF&quot;, sort.val = &quot;asc&quot;, orientation = &quot;horizontal&quot;)
+p</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/barplot%20GSEA-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="average-heatmap-sel-genes-cytokine-mediated-signaling-pathway"
+class="section level2">
+<h2>average Heatmap sel genes cytokine-mediated signaling pathway</h2>
+</div>
+<div id="subset-cd45-positives" class="section level2">
+<h2>subset CD45 positives</h2>
+<pre class="r"><code>##subset CD45+ cells
+seuratCD45pos &lt;- subset(seurat, cluster_name %in% c(&quot;CD8Tcell1&quot;,&quot;CD8Tcell2&quot;,&quot;NKcell&quot;,&quot;CD4Tcell/ILC2&quot;,&quot;Neut&quot;,&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Mph3&quot;,&quot;DC&quot;,&quot;IgABcell1&quot;,&quot;IgABcell2&quot;,&quot;IgDBcell&quot;))
+table(seuratCD45pos$cluster_name)</code></pre>
+<pre><code>
+        CD8Tcell1         CD8Tcell2            NKcell     CD4Tcell/ILC2              Neut 
+             3007              1137              1502              1944              2477 
+             Mph1              Mph2              Mph3                DC         IgABcell1 
+             4144              1766               870              2048              2382 
+        IgABcell2          IgDBcell       PdgfraloFb1       PdgfraloFb2       Trophocytes 
+              766               357                 0                 0                 0 
+        Telocytes          Myocytes PdgfrahiLy6anegFb                NC               LEC 
+                0                 0                 0                 0                 0 
+              ICC 
+                0 </code></pre>
+<pre class="r"><code>Idents(seuratCD45pos) &lt;- seuratCD45pos$cluster_name
+seurat &lt;- seuratCD45pos
+levels(seurat)</code></pre>
+<pre><code> [1] &quot;CD8Tcell1&quot;     &quot;CD8Tcell2&quot;     &quot;NKcell&quot;        &quot;CD4Tcell/ILC2&quot; &quot;Neut&quot;          &quot;Mph1&quot;         
+ [7] &quot;Mph2&quot;          &quot;Mph3&quot;          &quot;DC&quot;            &quot;IgABcell1&quot;     &quot;IgABcell2&quot;     &quot;IgDBcell&quot;     </code></pre>
+<pre class="r"><code>avgHeatmap &lt;- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes &lt;- selGenes$gene
+  
+  ## assay data
+  clusterAssigned &lt;- as.data.frame(Idents(seurat)) %&gt;%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] &lt;- &quot;ident&quot;
+  seuratDat &lt;- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes &lt;- data.frame(gene=rownames(seurat)) %&gt;% 
+    mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene)) %&gt;% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres &lt;- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres &lt;- logNormExpres %&gt;% dplyr::mutate(cell=rownames(.)) %&gt;%
+    dplyr::left_join(.,clusterAssigned, by=c(&quot;cell&quot;)) %&gt;%
+    dplyr::select(-cell) %&gt;% dplyr::group_by(ident) %&gt;%
+    dplyr::summarise_all(mean)
+  logNormExpresMa &lt;- logNormExpres %&gt;% dplyr::select(-ident) %&gt;% as.matrix()
+  rownames(logNormExpresMa) &lt;- logNormExpres$ident
+  logNormExpresMa &lt;- t(logNormExpresMa)
+  rownames(logNormExpresMa) &lt;- gsub(&quot;^.*?\\.&quot;,&quot;&quot;,rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind &lt;- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa &lt;- logNormExpresMa[!ind,]
+  genes &lt;- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col &lt;- as.data.frame(gsub(&quot;(^.*?_)&quot;,&quot;&quot;,
+                                       colnames(logNormExpresMa)))%&gt;%
+    dplyr::mutate(celltype=gsub(&quot;(_.*$)&quot;,&quot;&quot;,colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] &lt;- &quot;col1&quot;
+  annotation_col &lt;- annotation_col %&gt;%
+    dplyr::mutate(cond = gsub(&quot;(^[0-9]_?)&quot;,&quot;&quot;,col1)) %&gt;%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) &lt;- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colclustername)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond &lt;- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa &lt;- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec &lt;- levels(seurat)
+  }
+  logNormExpresMa &lt;- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale=&quot;row&quot; ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c(&quot;#2166AC&quot;, &quot;#F7F7F7&quot;, &quot;#B2182B&quot;))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot &lt;- data.frame(gene=c(&quot;Ccr1&quot;, &quot;Ccr2&quot; ,&quot;Ccr5&quot;))
+
+levels(seurat)</code></pre>
+<pre><code> [1] &quot;CD8Tcell1&quot;     &quot;CD8Tcell2&quot;     &quot;NKcell&quot;        &quot;CD4Tcell/ILC2&quot; &quot;Neut&quot;          &quot;Mph1&quot;         
+ [7] &quot;Mph2&quot;          &quot;Mph3&quot;          &quot;DC&quot;            &quot;IgABcell1&quot;     &quot;IgABcell2&quot;     &quot;IgDBcell&quot;     </code></pre>
+<pre class="r"><code>colVec &lt;- colclustername
+# colVec &lt;- c(colPal, colPal, colPal)
+# colVec &lt;- c(&quot;blue&quot;, &quot;red&quot;)
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/avg%20heatmap%20chemokine%20receptors-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div
+id="average-heatmap-sel-genes-cytokine-mediated-signaling-pathway-1"
+class="section level2">
+<h2>average Heatmap sel genes cytokine-mediated signaling pathway</h2>
+<pre class="r"><code>Idents(seuratMph) &lt;- seuratMph$cluster_name
+seurat &lt;- seuratMph
+levels(seurat)</code></pre>
+<pre><code>[1] &quot;Mph1&quot; &quot;Mph2&quot; &quot;Mph3&quot;</code></pre>
+<pre class="r"><code>avgHeatmap &lt;- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes &lt;- selGenes$gene
+  
+  ## assay data
+  clusterAssigned &lt;- as.data.frame(Idents(seurat)) %&gt;%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] &lt;- &quot;ident&quot;
+  seuratDat &lt;- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes &lt;- data.frame(gene=rownames(seurat)) %&gt;% 
+    mutate(geneID=gsub(&quot;^.*\\.&quot;, &quot;&quot;, gene)) %&gt;% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres &lt;- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres &lt;- logNormExpres %&gt;% dplyr::mutate(cell=rownames(.)) %&gt;%
+    dplyr::left_join(.,clusterAssigned, by=c(&quot;cell&quot;)) %&gt;%
+    dplyr::select(-cell) %&gt;% dplyr::group_by(ident) %&gt;%
+    dplyr::summarise_all(mean)
+  logNormExpresMa &lt;- logNormExpres %&gt;% dplyr::select(-ident) %&gt;% as.matrix()
+  rownames(logNormExpresMa) &lt;- logNormExpres$ident
+  logNormExpresMa &lt;- t(logNormExpresMa)
+  rownames(logNormExpresMa) &lt;- gsub(&quot;^.*?\\.&quot;,&quot;&quot;,rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind &lt;- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa &lt;- logNormExpresMa[!ind,]
+  genes &lt;- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col &lt;- as.data.frame(gsub(&quot;(^.*?_)&quot;,&quot;&quot;,
+                                       colnames(logNormExpresMa)))%&gt;%
+    dplyr::mutate(celltype=gsub(&quot;(_.*$)&quot;,&quot;&quot;,colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] &lt;- &quot;col1&quot;
+  annotation_col &lt;- annotation_col %&gt;%
+    dplyr::mutate(cond = gsub(&quot;(^[0-9]_?)&quot;,&quot;&quot;,col1)) %&gt;%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) &lt;- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colclustername)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond &lt;- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa &lt;- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec &lt;- levels(seurat)
+  }
+  logNormExpresMa &lt;- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale=&quot;row&quot; ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c(&quot;#2166AC&quot;, &quot;#F7F7F7&quot;, &quot;#B2182B&quot;))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot &lt;- data.frame(gene=c(&quot;Osm&quot;, &quot;Il1b&quot;, &quot;Ccl6&quot;, &quot;Ccl9&quot;, &quot;Ccl2&quot;, &quot;Ccr1&quot;, &quot;Cxcl2&quot;, &quot;Ccl7&quot;, &quot;Ccl4&quot;, &quot;Il1rn&quot;,&quot;Myd88&quot;, &quot;Cxcl10&quot;, &quot;Cxcl3&quot;))
+
+levels(seurat)</code></pre>
+<pre><code>[1] &quot;Mph1&quot; &quot;Mph2&quot; &quot;Mph3&quot;</code></pre>
+<pre class="r"><code>colVec &lt;- colclustername
+# colVec &lt;- c(colPal, colPal, colPal)
+# colVec &lt;- c(&quot;blue&quot;, &quot;red&quot;)
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/avg%20heatmap-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="violin-plots-mph" class="section level2">
+<h2>violin plots mph</h2>
+<pre class="r"><code>Idents(seuratMph) &lt;- seuratMph$cluster_name
+VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058755.Osm&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058755.Osm&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027398.Il1b&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027398.Il1b&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025746.Il6&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025746.Il6&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018927.Ccl6&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018927.Ccl6&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000019122.Ccl9&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000019122.Ccl9&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035385.Ccl2&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035385.Ccl2&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000079227.Ccr5&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000049103.Ccr2&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-16.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035385.Ccl2&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-17.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058427.Cxcl2&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-19.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035373.Ccl7&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-20.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018930.Ccl4&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-21.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030748.Il4ra&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-22.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000032508.Myd88&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-23.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000034855.Cxcl10&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-24.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000029379.Cxcl3&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-25.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026981.Il1rn&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-26.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027399.Il1a&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000060586.H2-Eb1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-28.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000073421.H2-Ab1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-29.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036594.H2-Aa&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-30.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036322.H2-Ea&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-31.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030786.Itgam&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-32.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030789.Itgax&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-33.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000004730.Adgre1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-34.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000015947.Fcgr1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-35.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026712.Mrc1&quot;, pt.size = 0, cols = colclustername) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot%20mph-36.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="violin-plots-mph-cond" class="section level2">
+<h2>violin plots mph cond</h2>
+<pre class="r"><code>Idents(seuratMph) &lt;- seuratMph$cond2
+VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058755.Osm&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027398.Il1b&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025746.Il6&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018927.Ccl6&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000019122.Ccl9&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035385.Ccl2&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058427.Cxcl2&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035373.Ccl7&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018930.Ccl4&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030748.Il4ra&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000032508.Myd88&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000034855.Cxcl10&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000029379.Cxcl3&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026981.Il1rn&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-16.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027399.Il1a&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-17.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000079227.Ccr5&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000049103.Ccr2&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-19.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000060586.H2-Eb1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-20.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000073421.H2-Ab1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-21.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036594.H2-Aa&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-22.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036322.H2-Ea&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-23.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030786.Itgam&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-24.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030789.Itgax&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-25.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000004730.Adgre1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-26.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000015947.Fcgr1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026712.Mrc1&quot;, pt.size = 0, cols = colcond2) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20violin%20plot-2%20mph-28.png" width="672" style="display: block; margin: auto;" />
+## violin plots mph cond</p>
+<pre class="r"><code>Idents(seuratMph) &lt;- seuratMph$orig.ident
+VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058755.Osm&quot;, pt.size = 0, cols = colcond2, split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027398.Il1b&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025746.Il6&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018927.Ccl6&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000019122.Ccl9&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035385.Ccl2&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000025804.Ccr1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000058427.Cxcl2&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000035373.Ccl7&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000018930.Ccl4&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030748.Il4ra&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000032508.Myd88&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000034855.Cxcl10&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000029379.Cxcl3&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026981.Il1rn&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-16.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000027399.Il1a&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-17.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000079227.Ccr5&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000049103.Ccr2&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-19.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000060586.H2-Eb1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-20.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000073421.H2-Ab1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-21.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036594.H2-Aa&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-22.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000036322.H2-Ea&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-23.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030786.Itgam&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-24.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000030789.Itgax&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-25.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000004730.Adgre1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-26.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000015947.Fcgr1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(object=seuratMph, features = &quot;ENSMUSG00000026712.Mrc1&quot;, pt.size = 0, cols = colcond2,split.by = &quot;cond2&quot;, split.plot = &quot;TRUE&quot;) + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/make%20split%20violin%20plot%20mph-28.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subset-mph-and-dc" class="section level2">
+<h2>subset Mph and DC</h2>
+<pre class="r"><code>##subset macrophages and DCs
+seuratMphDC &lt;- subset(seurat, cluster_name %in% c(&quot;Mph1&quot;,&quot;Mph2&quot;,&quot;Mph3&quot;, &quot;DC&quot;))
+Idents(seuratMphDC) &lt;- seuratMphDC$cluster_name
+levels(seuratMphDC)</code></pre>
+<pre><code>[1] &quot;Mph1&quot; &quot;Mph2&quot; &quot;Mph3&quot;</code></pre>
+<pre class="r"><code>DimPlot(seuratMphDC, reduction = &quot;umap&quot;, cols = colclustername) </code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/subset%20mphDC-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="rerun-seurat-mphdc" class="section level2">
+<h2>rerun seurat mphDC</h2>
+<pre class="r"><code>#rerun seurat
+seuratMphDC &lt;- NormalizeData (object = seuratMphDC)
+seuratMphDC &lt;- FindVariableFeatures(object = seuratMphDC)
+seuratMphDC &lt;- ScaleData(object = seuratMphDC, verbose = TRUE)
+seuratMphDC &lt;- RunPCA(object=seuratMphDC, npcs = 30, verbose = FALSE)
+seuratMphDC &lt;- RunTSNE(object=seuratMphDC, reduction=&quot;pca&quot;, dims = 1:20)
+seuratMphDC &lt;- RunUMAP(object=seuratMphDC, reduction=&quot;pca&quot;, dims = 1:20)
+seuratMphDC &lt;- FindNeighbors(object = seuratMphDC, reduction = &quot;pca&quot;, dims= 1:20)
+
+res &lt;- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratMphDC &lt;- FindClusters(object = seuratMphDC, resolution = res[i], random.seed = 1234)
+}</code></pre>
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 6780
+Number of edges: 225655
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9213
+Number of communities: 10
+Elapsed time: 0 seconds
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 6780
+Number of edges: 225655
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.8734
+Number of communities: 15
+Elapsed time: 0 seconds
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 6780
+Number of edges: 225655
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.8559
+Number of communities: 17
+Elapsed time: 0 seconds
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 6780
+Number of edges: 225655
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.8982
+Number of communities: 13
+Elapsed time: 0 seconds</code></pre>
+<pre class="r"><code>saveRDS(seuratMphDC, file=&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/mphDCrerun_seurat.rds&quot;)</code></pre>
+</div>
+<div id="umaps-clustername" class="section level2">
+<h2>umaps clustername</h2>
+<pre class="r"><code>### umaps
+Idents(seuratMphDC) &lt;- seuratMphDC$cluster_name
+DimPlot(seuratMphDC, reduction = &quot;umap&quot;, cols = colclustername)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/plot%20umaps%20clustername%20MphDC%20embedded-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Idents(seuratMphDC) &lt;- seuratMphDC$RNA_snn_res.0.25
+DimPlot(seuratMphDC, reduction = &quot;umap&quot;)</code></pre>
+<p><img src="figure/GranulomaMacrophages.Rmd/plot%20umaps%20clustername%20MphDC%20embedded-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level2">
 <h2>session info</h2>
 <pre class="r"><code>date()</code></pre>
-<pre><code>[1] &quot;Wed Jun 12 17:48:53 2024&quot;</code></pre>
+<pre><code>[1] &quot;Wed Sep 18 16:15:07 2024&quot;</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.7
+Running under: macOS Ventura 13.6.9
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -875,18 +1639,18 @@ attached base packages:
 [1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.3.0              
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
  [4] gridExtra_2.3               DOSE_3.30.1                 enrichplot_1.24.0          
  [7] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
-[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.10                 
+[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.11                 
 [13] scater_1.32.0               scuttle_1.14.0              destiny_3.18.0             
 [16] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
 [19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
 [22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
 [25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
 [28] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
-[31] Biobase_2.64.0              GenomicRanges_1.56.0        GenomeInfoDb_1.40.1        
-[34] IRanges_2.38.0              S4Vectors_0.42.0            BiocGenerics_0.50.0        
+[31] Biobase_2.64.0              GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+[34] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
 [37] MatrixGenerics_1.16.0       matrixStats_1.3.0           pheatmap_1.0.12            
 [40] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
 [43] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
@@ -897,85 +1661,86 @@ loaded via a namespace (and not attached):
   [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
   [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
  [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
- [13] pbkrtest_0.5.2            parallel_4.4.0            png_0.1-8                
- [16] plotrix_3.8-4             cli_3.6.2                 ggplotify_0.1.2          
+ [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
  [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
  [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
- [25] curl_5.2.1                mime_0.12                 evaluate_0.23            
+ [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
  [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
  [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
  [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
  [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
  [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.0               git2r_0.33.0             
+ [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
  [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
  [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
  [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
  [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
- [61] DEoptimR_1.1-3            reticulate_1.37.0         hexbin_1.28.3            
- [64] zoo_1.8-12                XVector_0.44.0            knitr_1.47               
+ [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
+ [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
  [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
+ [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
  [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
- [79] fastDummies_1.7.3         gridGraphics_0.5-1        lazyeval_0.2.2           
- [82] yaml_2.3.8                survival_3.7-0            scattermore_1.2          
- [85] crayon_1.5.2              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
- [88] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
- [91] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
- [94] aod_1.3.3                 KEGGREST_1.44.0           Rtsne_0.17               
- [97] shape_1.4.6.1             limma_3.60.2              pkgconfig_2.0.3          
-[100] TMB_1.9.11                mathjaxr_1.6-0            EnvStats_2.8.1           
-[103] aplot_0.2.2               scatterplot3d_0.3-44      spatstat.sparse_3.0-3    
-[106] ape_5.8                   xtable_1.8-4              car_3.1-2                
-[109] highr_0.11                plyr_1.8.9                httr_1.4.7               
-[112] rbibutils_2.2.16          tools_4.4.0               globals_0.16.3           
-[115] beeswarm_0.4.0            broom_1.0.6               nlme_3.1-164             
-[118] lambda.r_1.2.4            HDO.db_0.99.1             lme4_1.1-35.3            
-[121] digest_0.6.35             numDeriv_2016.8-1.1       Matrix_1.7-0             
-[124] farver_2.1.2              tzdb_0.4.0                remaCor_0.0.18           
-[127] reshape2_1.4.4            yulab.utils_0.1.4         glue_1.7.0               
-[130] cachem_1.1.0              polyclip_1.10-6           generics_0.1.3           
-[133] Biostrings_2.72.1         mvtnorm_1.2-5             parallelly_1.37.1        
-[136] mnormt_2.1.1              statmod_1.5.0             RcppHNSW_0.6.0           
-[139] ScaledMatrix_1.12.0       carData_3.0-5             minqa_1.2.7              
-[142] pbapply_1.7-2             spam_2.10-0               gson_0.1.0               
-[145] utf8_1.2.4                graphlayouts_1.1.1        gtools_3.9.5             
-[148] ggsignif_0.6.4            RcppEigen_0.3.4.0.0       shiny_1.8.1.1            
-[151] GenomeInfoDbData_1.2.12   glmmTMB_1.1.9             memoise_2.0.1            
-[154] rmarkdown_2.27            scales_1.3.0              future_1.33.2            
-[157] RANN_2.6.1                Cairo_1.6-2               spatstat.data_3.0-4      
-[160] rstudioapi_0.16.0         cluster_2.1.6             mutoss_0.1-13            
-[163] spatstat.utils_3.0-4      hms_1.1.3                 fitdistrplus_1.1-11      
-[166] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
-[169] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
-[172] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
-[175] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
-[178] xfun_0.44                 e1071_1.7-14              TH.data_1.1-2            
-[181] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
-[184] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
-[187] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
-[190] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
-[193] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
-[196] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
-[199] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
-[202] Rcpp_1.0.12               edgeR_4.2.0               workflowr_1.7.1          
-[205] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-60.2            
-[208] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
-[211] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
-[214] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
-[217] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
-[220] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
-[223] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
-[226] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
-[229] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
-[232] lifecycle_1.0.4           blme_1.0-5                nloptr_2.0.3             
-[235] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-2        
-[238] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
-[241] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
-[244] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.9           
-[247] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+ [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
+ [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
+ [85] scattermore_1.2           crayon_1.5.3              RcppAnnoy_0.0.22         
+ [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
+ [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
+ [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.1          
+ [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.3             
+[100] pkgconfig_2.0.3           TMB_1.9.14                mathjaxr_1.6-0           
+[103] EnvStats_2.8.1            aplot_0.2.3               scatterplot3d_0.3-44     
+[106] spatstat.sparse_3.1-0     ape_5.8                   xtable_1.8-4             
+[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
+[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
+[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
+[118] nlme_3.1-165              lambda.r_1.2.4            HDO.db_0.99.1            
+[121] lme4_1.1-35.5             digest_0.6.36             numDeriv_2016.8-1.1      
+[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
+[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
+[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
+[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
+[136] presto_1.0.0              parallelly_1.37.1         mnormt_2.1.1             
+[139] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
+[142] carData_3.0-5             minqa_1.2.7               pbapply_1.7-2            
+[145] spam_2.10-0               gson_0.1.0                utf8_1.2.4               
+[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
+[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
+[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
+[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
+[160] Cairo_1.6-2               spatstat.data_3.1-2       rstudioapi_0.16.0        
+[163] cluster_2.1.6             whisker_0.4.1             mutoss_0.1-13            
+[166] spatstat.utils_3.0-5      hms_1.1.3                 fitdistrplus_1.1-11      
+[169] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
+[172] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
+[175] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
+[178] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
+[181] xfun_0.45                 e1071_1.7-14              TH.data_1.1-2            
+[184] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
+[187] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
+[190] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
+[193] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
+[196] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
+[199] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
+[202] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
+[205] Rcpp_1.0.13               edgeR_4.2.0               workflowr_1.7.1          
+[208] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
+[211] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
+[214] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
+[217] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
+[220] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
+[223] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
+[226] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
+[229] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
+[232] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
+[235] lifecycle_1.0.4           blme_1.0-5                nloptr_2.1.1             
+[238] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-3        
+[241] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
+[244] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
+[247] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.10          
+[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -987,7 +1752,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.4.0 (2024-04-24)
 Platform: x86_64-apple-darwin20
-Running under: macOS Ventura 13.6.7
+Running under: macOS Ventura 13.6.9
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
@@ -1003,18 +1768,18 @@ attached base packages:
 [1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.3.0              
+ [1] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
  [4] gridExtra_2.3               DOSE_3.30.1                 enrichplot_1.24.0          
  [7] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
-[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.10                 
+[10] clusterProfiler_4.12.0      multtest_2.60.0             metap_1.11                 
 [13] scater_1.32.0               scuttle_1.14.0              destiny_3.18.0             
 [16] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
 [19] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
 [22] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
 [25] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
 [28] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
-[31] Biobase_2.64.0              GenomicRanges_1.56.0        GenomeInfoDb_1.40.1        
-[34] IRanges_2.38.0              S4Vectors_0.42.0            BiocGenerics_0.50.0        
+[31] Biobase_2.64.0              GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+[34] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
 [37] MatrixGenerics_1.16.0       matrixStats_1.3.0           pheatmap_1.0.12            
 [40] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
 [43] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
@@ -1025,85 +1790,86 @@ loaded via a namespace (and not attached):
   [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.0.5                
   [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
  [10] rjson_0.2.21              blob_1.2.4                S4Arrays_1.4.1           
- [13] pbkrtest_0.5.2            parallel_4.4.0            png_0.1-8                
- [16] plotrix_3.8-4             cli_3.6.2                 ggplotify_0.1.2          
+ [13] pbkrtest_0.5.3            parallel_4.4.0            png_0.1-8                
+ [16] plotrix_3.8-4             cli_3.6.3                 ggplotify_0.1.2          
  [19] goftest_1.2-3             VIM_6.2.2                 variancePartition_1.34.0 
  [22] BiocNeighbors_1.22.0      uwot_0.2.2                shadowtext_0.1.3         
- [25] curl_5.2.1                mime_0.12                 evaluate_0.23            
+ [25] curl_5.2.1                mime_0.12                 evaluate_0.24.0          
  [28] tidytree_0.4.6            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
  [31] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
  [34] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
  [37] splines_4.4.0             ggraph_2.2.1              sctransform_0.4.1        
  [40] ggbeeswarm_0.7.2          DBI_1.2.3                 jquerylib_0.1.4          
- [43] smoother_1.3              withr_3.0.0               git2r_0.33.0             
+ [43] smoother_1.3              withr_3.0.1               git2r_0.33.0             
  [46] corpcor_1.6.10            class_7.3-22              rprojroot_2.0.4          
  [49] lmtest_0.9-40             tidygraph_1.3.1           formatR_1.14             
  [52] colourpicker_1.3.0        htmlwidgets_1.6.4         fs_1.6.4                 
  [55] ggrepel_0.9.5             labeling_0.4.3            fANCOVA_0.6-1            
  [58] SparseArray_1.4.8         DESeq2_1.44.0             ranger_0.16.0            
- [61] DEoptimR_1.1-3            reticulate_1.37.0         hexbin_1.28.3            
- [64] zoo_1.8-12                XVector_0.44.0            knitr_1.47               
+ [61] DEoptimR_1.1-3            reticulate_1.38.0         hexbin_1.28.3            
+ [64] zoo_1.8-12                XVector_0.44.0            knitr_1.48               
  [67] ggplot.multistats_1.0.0   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
  [70] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
- [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.15.4        
+ [73] patchwork_1.2.0           caTools_1.18.2            data.table_1.16.0        
  [76] ggtree_3.12.0             RSpectra_0.16-1           irlba_2.3.5.1            
- [79] fastDummies_1.7.3         gridGraphics_0.5-1        lazyeval_0.2.2           
- [82] yaml_2.3.8                survival_3.7-0            scattermore_1.2          
- [85] crayon_1.5.2              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
- [88] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
- [91] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
- [94] aod_1.3.3                 KEGGREST_1.44.0           Rtsne_0.17               
- [97] shape_1.4.6.1             limma_3.60.2              pkgconfig_2.0.3          
-[100] TMB_1.9.11                mathjaxr_1.6-0            EnvStats_2.8.1           
-[103] aplot_0.2.2               scatterplot3d_0.3-44      spatstat.sparse_3.0-3    
-[106] ape_5.8                   xtable_1.8-4              car_3.1-2                
-[109] highr_0.11                plyr_1.8.9                httr_1.4.7               
-[112] rbibutils_2.2.16          tools_4.4.0               globals_0.16.3           
-[115] beeswarm_0.4.0            broom_1.0.6               nlme_3.1-164             
-[118] lambda.r_1.2.4            HDO.db_0.99.1             lme4_1.1-35.3            
-[121] digest_0.6.35             numDeriv_2016.8-1.1       Matrix_1.7-0             
-[124] farver_2.1.2              tzdb_0.4.0                remaCor_0.0.18           
-[127] reshape2_1.4.4            yulab.utils_0.1.4         glue_1.7.0               
-[130] cachem_1.1.0              polyclip_1.10-6           generics_0.1.3           
-[133] Biostrings_2.72.1         mvtnorm_1.2-5             parallelly_1.37.1        
-[136] mnormt_2.1.1              statmod_1.5.0             RcppHNSW_0.6.0           
-[139] ScaledMatrix_1.12.0       carData_3.0-5             minqa_1.2.7              
-[142] pbapply_1.7-2             spam_2.10-0               gson_0.1.0               
-[145] utf8_1.2.4                graphlayouts_1.1.1        gtools_3.9.5             
-[148] ggsignif_0.6.4            RcppEigen_0.3.4.0.0       shiny_1.8.1.1            
-[151] GenomeInfoDbData_1.2.12   glmmTMB_1.1.9             memoise_2.0.1            
-[154] rmarkdown_2.27            scales_1.3.0              future_1.33.2            
-[157] RANN_2.6.1                Cairo_1.6-2               spatstat.data_3.0-4      
-[160] rstudioapi_0.16.0         cluster_2.1.6             mutoss_0.1-13            
-[163] spatstat.utils_3.0-4      hms_1.1.3                 fitdistrplus_1.1-11      
-[166] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
-[169] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
-[172] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
-[175] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
-[178] xfun_0.44                 e1071_1.7-14              TH.data_1.1-2            
-[181] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
-[184] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
-[187] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
-[190] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
-[193] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
-[196] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
-[199] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
-[202] Rcpp_1.0.12               edgeR_4.2.0               workflowr_1.7.1          
-[205] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-60.2            
-[208] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
-[211] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
-[214] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
-[217] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
-[220] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
-[223] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
-[226] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
-[229] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
-[232] lifecycle_1.0.4           blme_1.0-5                nloptr_2.0.3             
-[235] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-2        
-[238] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
-[241] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
-[244] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.9           
-[247] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
+ [79] ggrastr_1.0.2             fastDummies_1.7.3         gridGraphics_0.5-1       
+ [82] lazyeval_0.2.2            yaml_2.3.9                survival_3.7-0           
+ [85] scattermore_1.2           crayon_1.5.3              RcppAnnoy_0.0.22         
+ [88] RColorBrewer_1.1-3        progressr_0.14.0          tweenr_2.0.3             
+ [91] later_1.3.2               ggridges_0.5.6            codetools_0.2-20         
+ [94] GlobalOptions_0.1.2       aod_1.3.3                 KEGGREST_1.44.1          
+ [97] Rtsne_0.17                shape_1.4.6.1             limma_3.60.3             
+[100] pkgconfig_2.0.3           TMB_1.9.14                mathjaxr_1.6-0           
+[103] EnvStats_2.8.1            aplot_0.2.3               scatterplot3d_0.3-44     
+[106] spatstat.sparse_3.1-0     ape_5.8                   xtable_1.8-4             
+[109] car_3.1-2                 highr_0.11                plyr_1.8.9               
+[112] httr_1.4.7                rbibutils_2.2.16          tools_4.4.0              
+[115] globals_0.16.3            beeswarm_0.4.0            broom_1.0.6              
+[118] nlme_3.1-165              lambda.r_1.2.4            HDO.db_0.99.1            
+[121] lme4_1.1-35.5             digest_0.6.36             numDeriv_2016.8-1.1      
+[124] Matrix_1.7-0              farver_2.1.2              tzdb_0.4.0               
+[127] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.4        
+[130] glue_1.7.0                cachem_1.1.0              polyclip_1.10-6          
+[133] generics_0.1.3            Biostrings_2.72.1         mvtnorm_1.2-5            
+[136] presto_1.0.0              parallelly_1.37.1         mnormt_2.1.1             
+[139] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
+[142] carData_3.0-5             minqa_1.2.7               pbapply_1.7-2            
+[145] spam_2.10-0               gson_0.1.0                utf8_1.2.4               
+[148] graphlayouts_1.1.1        gtools_3.9.5              ggsignif_0.6.4           
+[151] RcppEigen_0.3.4.0.0       shiny_1.8.1.1             GenomeInfoDbData_1.2.12  
+[154] glmmTMB_1.1.9             memoise_2.0.1             rmarkdown_2.27           
+[157] scales_1.3.0              future_1.33.2             RANN_2.6.1               
+[160] Cairo_1.6-2               spatstat.data_3.1-2       rstudioapi_0.16.0        
+[163] cluster_2.1.6             whisker_0.4.1             mutoss_0.1-13            
+[166] spatstat.utils_3.0-5      hms_1.1.3                 fitdistrplus_1.1-11      
+[169] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-0         
+[172] rlang_1.1.4               DelayedMatrixStats_1.26.0 sparseMatrixStats_1.16.0 
+[175] xts_0.14.0                dotCall64_1.1-1           shinydashboard_0.7.2     
+[178] ggforce_0.4.2             laeken_0.5.3              mgcv_1.9-1               
+[181] xfun_0.45                 e1071_1.7-14              TH.data_1.1-2            
+[184] iterators_1.0.14          abind_1.4-5               GOSemSim_2.30.0          
+[187] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-7             
+[190] Rdpack_2.6                promises_1.3.0            scatterpie_0.2.3         
+[193] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-0           
+[196] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
+[199] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
+[202] boot_1.3-30               beachmat_2.20.0           listenv_0.9.1            
+[205] Rcpp_1.0.13               edgeR_4.2.0               workflowr_1.7.1          
+[208] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
+[211] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
+[214] spatstat.random_3.2-3     R6_2.5.1                  fastmap_1.2.0            
+[217] multcomp_1.4-25           fastmatch_1.1-4           rstatix_0.7.2            
+[220] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
+[223] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-12               
+[226] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
+[229] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
+[232] ggthemes_5.1.0            bit64_4.0.5               spatstat.explore_3.2-7   
+[235] lifecycle_1.0.4           blme_1.0-5                nloptr_2.1.1             
+[238] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-3        
+[241] spatstat.geom_3.2-9       sn_2.1.1                  ggfun_0.1.5              
+[244] future.apply_1.11.2       bslib_0.7.0               pillar_1.9.0             
+[247] gplots_3.1.3.1            pcaMethods_1.96.0         locfit_1.5-9.10          
+[250] jsonlite_1.8.8            GetoptLong_1.0.5         </code></pre>
 </div>
 </div>
 

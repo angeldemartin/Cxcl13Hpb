@@ -7,7 +7,7 @@ output:
     keep_md: true
     toc: true
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -126,17 +126,6 @@ table(seurat1$RNA_snn_res.0.25)
 saveRDS(seurat, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds")
 ```
 
-############################### end pre processing ###################################
-
-## load merged file granuloma
-```{r load merged file granuloma}
-##load merged file 
-fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds"
-seurat <- readRDS(fileNam)
-table(seurat$dataset)
-table(seurat$RNA_snn_res.0.25)
-table(seurat$orig.ident)
-```
 ## add metadata
 ```{r add metadata, eval=FALSE, include=TRUE}
 ### add any type of metadata
@@ -192,6 +181,18 @@ table(seurat$cond2)
 
 ### save seurat object
 saveRDS(seurat, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds")
+```
+
+############################### end pre processing ###################################
+
+## load merged file granuloma
+```{r load merged file granuloma}
+##load merged file 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds"
+seurat <- readRDS(fileNam)
+table(seurat$dataset)
+table(seurat$RNA_snn_res.0.25)
+table(seurat$orig.ident)
 ```
 
 ## set color vectors
@@ -251,12 +252,95 @@ selGenes <- data.frame(geneID=c("Cpe","Ano1","Pecam1","Prox1","Lyve1","Sostdc1",
 DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
 ```
 
-## relative abundance CD45+
-```{r abundance CD45-}
+## subset CD45 negatives
+```{r subset CD45neg}
 ##subset CD45- cells
 seuratCD45neg <- subset(seurat, cluster_name %in% c("PdgfraloFb1","PdgfraloFb2", "Trophocytes", "Telocytes", "Myocytes", "PdgfrahiLy6anegFb", "NC", "LEC", "ICC"))
 table(seuratCD45neg$cluster_name)
+```
 
+## average Heatmap - Fb top5 cluster marker stroma
+```{r avg heatmap, fig.height=12, fig.width=8}
+##order
+Idents(seuratCD45neg) <- seuratCD45neg$cluster_name
+levels(seuratCD45neg)
+
+avgHeatmap <- function(seuratCD45neg, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seuratCD45neg)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seuratCD45neg)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seuratCD45neg)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(^.*?_)","",
+                                       colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=gsub("(_.*$)","",colnames(logNormExpresMa)))
+  colnames(annotation_col)[1] <- "col1"
+  annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^[0-9]_?)","",col1)) %>%
+    dplyr::select(cond, celltype)
+  rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colVecCond,
+      celltype=colclustername)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seuratCD45neg)
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+genesPlot <- data.frame(gene=c("Sfrp1", "Clec3b", "Fbln1", "Adamdec1", "C4b", "P2rx1", "Itga8", "Fgfr2", "Cxcl14", "Tmem178", "Cpxm1", "Ccdc80", "Cd34", "Ogn", "Lgi2", "Bmp5", "Tagln", "Tmem158", "Col4a5", "Smoc2", "Myh11", "Actg2", "Acta2", "Myl9", "Tpm2", "Ptn", "Rgs5", "Dpt", "Lum", "Timp1", "Plp1", "Lgi4", "Cryab", "Sostdc1", "Postn", "Mmrn1", "Flt4", "Egfl7", "Lyve1", "Aqp1", "Cpe", "Ano1", "Pde3a", "Pcp4l1", "Grem2"))
+
+levels(seuratCD45neg)
+colVec <- colclustername
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seuratCD45neg, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## relative abundance CD45+
+```{r abundance CD45-}
 ## Abundance plot CD45neg
 ## make count list
 datList <- NULL

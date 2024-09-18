@@ -1,0 +1,110 @@
+---
+title: "GranFb"
+author: "A.DeMartin"
+date: "2024-07-17"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+```
+
+## load object merged allFb d4
+```{r load object merged allFb d4}
+##load object merged allFb naive and d4
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds"
+seuratFb <- readRDS(fileNam)
+table(seuratFb$dataset)
+```
+
+## set color vectors 
+```{r colors}
+## set vector for cond2
+colcond2 <- c("#202547","#BE3144")
+names(colcond2) <- c("WT", "cko")
+
+## set vector for cond2
+colcond3 <- c("#202547","#628395","#BE3144")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+
+#colPal <- c("#355C7D", "#8E9B97","#779d8d","#0F1F38","#E84A5F","#FF847C","#F8B195", "#727077", "#C06C84","#2A363B", "#6C5B7B")
+#names(colPal) <- c("0" ,"1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+
+colPal <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
+names(colPal) <- c("0" ,"1", "2", "3","4", "5", "6", "7", "8", "9")
+
+colclustername <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
+names(colclustername) <- c("PdgfraloFb1" ,"PdgfraloFb2", "Trophocytes","PdgfraloFb3", "Telocytes","Myocytes", "Pdgfrahi", "PdgfraloFb4", "Thy1Fb", "Glial")
+```
+
+## subset Granuloma Fibroblasts
+```{r subset GranFb}
+seuratFbGran <- subset(seuratFb, cond3 == "granulomaD4")
+table(seuratFb$cond3)
+table(seuratFbGran$cond3)
+```
+
+## Rel Abundance Fb Gran
+```{r Fb abundance plot}
+## make count list according to cond2
+datList <- NULL
+for(con in unique(seuratFbGran$cond2)){
+  seuratSub <- subset(seuratFbGran, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT", "cko") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
+```
+## violin plots GranFb
+```{r violin plot GranFb}
+Idents(seuratFbGran) <- seuratFbGran$cond2
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+```
