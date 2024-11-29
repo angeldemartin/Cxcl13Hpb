@@ -7,7 +7,7 @@ output:
     keep_md: true
     toc: true
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -214,6 +214,7 @@ DimPlot(seurat, reduction = "umap", cols = colclustername)
 DimPlot(seurat, reduction = "umap", cols = colclustername) + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 0.5) + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 1) + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", cols = colclustername) + theme(legend.position = "none")
 ```
 ## umaps condition
 ```{r plot umaps condition}
@@ -224,6 +225,8 @@ DimPlot(seurat, reduction = "umap", cols = colcond2, order = "WT")
 DimPlot(seurat, reduction = "umap", cols = colcond2, order="WT") + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", pt.size = 0.5, cols = colcond2, order="WT") + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", pt.size = 1, cols = colcond2, order="WT") + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", cols = colcond2, order="WT") + theme(legend.position = "none")
+DimPlot(seurat, reduction = "umap", cols = colcond2) + theme(legend.position = "none")
 ```
 
 ```{r calculate marker genes, eval=FALSE, include=TRUE}
@@ -249,7 +252,25 @@ genes <- data.frame(gene=rownames(seurat)) %>%
 
 selGenes <- data.frame(geneID=c("Cpe","Ano1","Pecam1","Prox1","Lyve1","Sostdc1","Plp1","Ly6a","Acta2","Cd81","Cd34","Ncam1","Pdgfra","Pdpn", "Cd79a", "Cd79b", "Cd19", "Ighm", "Ighd", "Igha","Itgax","H2-Eb1","H2-Ab1","Cd74","Siglech", "Cx3cr1","Lyz2","Itgam","Msr1", "Arg1", "S100a8", "S100a9", "Il1b", "Rora", "Gata3", "Icos", "Cd4", "Klre1", "Klrk1", "Nkg7", "Gzmb","Cd8b1","Cd8a", "Trbc2", "Cd3d", "Trbc1")) %>% left_join(., genes, by="geneID")
 
-DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
+```
+### dotplot3
+```{r dotplot3, fig.height=5, fig.width=9}
+genes <- data.frame(gene=rownames(seurat)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Ccl11","Il1rap","Il1r1","Il6st","Lifr","Osmr", "Il33", "Il1rl1", "Osm", "Il1b")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+```
+### dotplot2
+```{r dotplot2, fig.height=4, fig.width=15}
+genes <- data.frame(gene=rownames(seurat)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Ccl11","Il1rap","Il1r1","Il6st","Lifr","Osmr", "Il33", "Il1rl1", "Osm", "Il1b")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seurat, features = selGenes, group.by= "cluster_plus_cond2") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
 ```
 
 ## subset CD45 negatives
@@ -257,6 +278,7 @@ DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() +
 ##subset CD45- cells
 seuratCD45neg <- subset(seurat, cluster_name %in% c("PdgfraloFb1","PdgfraloFb2", "Trophocytes", "Telocytes", "Myocytes", "PdgfrahiLy6anegFb", "NC", "LEC", "ICC"))
 table(seuratCD45neg$cluster_name)
+table(seuratCD45neg$orig.ident)
 ```
 
 ## average Heatmap - Fb top5 cluster marker stroma
@@ -339,8 +361,8 @@ colVec <- colclustername
 avgHeatmap(seuratCD45neg, selGenes = genesPlot, colVecIdent = colVec)
 ```
 
-## relative abundance CD45+
-```{r abundance CD45-}
+## relative abundance CD45neg
+```{r abundance CD45neg}
 ## Abundance plot CD45neg
 ## make count list
 datList <- NULL
@@ -359,11 +381,12 @@ ordX <-  c("WT", "cko")
 ## plot abundance
 ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "cluster", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
 ```
-## relative abundance CD45-
-```{r relative abundance CD45-}
+## relative abundance CD45pos
+```{r relative abundance CD45pos}
 ##subset CD45+ cells
 seuratCD45pos <- subset(seurat, cluster_name %in% c("CD8Tcell1","CD8Tcell2","NKcell","CD4Tcell/ILC2","Neut","Mph1","Mph2","Mph3","DC","IgABcell1","IgABcell2","IgDBcell"))
 table(seuratCD45pos$cluster_name)
+table(seuratCD45pos$orig.ident)
 
 ## Abundance plot CD45neg
 ## make count list

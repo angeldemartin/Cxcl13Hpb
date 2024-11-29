@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="A.DeMartin" />
+
+<meta name="date" content="2024-02-21" />
+
+<title>CellChatGranuloma</title>
+
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cxcl13Hpb</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">CellChatGranuloma</h1>
+<h4 class="author">A.DeMartin</h4>
+<h4 class="date">2024-02-21</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-11-19
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 2
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Cxcl13Hpb/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240311code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240311)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240311code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240311)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it
+difficult for you and others to run your code on a different machine.
+Change the absolute path(s) below to the suggested relative path(s) to
+make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds
+</td>
+<td style="text-align:left;">
+data/merged_allgranuloma_wofilter_seurat_wocl21.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_allext.rds
+</td>
+<td style="text-align:left;">
+data/cellchat_allext.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_cko.rds
+</td>
+<td style="text-align:left;">
+data/cellchat_cko.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_wt.rds
+</td>
+<td style="text-align:left;">
+data/cellchat_wt.rds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_merged.rds
+</td>
+<td style="text-align:left;">
+data/cellchat_merged.rds
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree4a5925de2fc1d27f0f8e52596c9dd197814d1830targetblank4a5925da">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/4a5925de2fc1d27f0f8e52596c9dd197814d1830" target="_blank">4a5925d</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomangeldemartinCxcl13Hpbtree4a5925de2fc1d27f0f8e52596c9dd197814d1830targetblank4a5925da"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/angeldemartin/Cxcl13Hpb/tree/4a5925de2fc1d27f0f8e52596c9dd197814d1830" target="_blank">4a5925d</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/figure/
+    Ignored:    analysis/venn-4-diagram.png
+    Ignored:    data/dataJuli2021/
+    Ignored:    data/dataJuli2022/
+    Ignored:    data/dataJune2019/
+    Ignored:    data/dataSept2020/
+
+Untracked files:
+    Untracked:  VennDiagram.2024-10-31_11-39-59.947645.log
+    Untracked:  VennDiagram.2024-10-31_11-40-00.051591.log
+    Untracked:  VennDiagram.2024-11-05_10-11-25.44274.log
+    Untracked:  VennDiagram.2024-11-05_10-11-25.547813.log
+    Untracked:  VennDiagram.2024-11-06_15-24-54.279223.log
+    Untracked:  VennDiagram.2024-11-06_15-24-54.452047.log
+    Untracked:  VennDiagram.2024-11-06_17-12-48.197799.log
+    Untracked:  VennDiagram.2024-11-06_17-12-48.395735.log
+    Untracked:  VennDiagram.2024-11-07_10-08-58.750646.log
+    Untracked:  VennDiagram.2024-11-07_10-08-58.9271.log
+    Untracked:  VennDiagram.2024-11-14_09-49-49.434352.log
+    Untracked:  VennDiagram.2024-11-14_09-49-52.440516.log
+    Untracked:  analysis/All Fb for collab.Rmd
+    Untracked:  analysis/CellChatGranuloma.Rmd
+    Untracked:  analysis/DEGenesD4cond2.txt
+    Untracked:  analysis/DEGenesD4cond3.txt
+    Untracked:  analysis/DEGenesFbcond3.txt
+    Untracked:  analysis/VennDiagram.2024-10-31_10-50-52.974723.log
+    Untracked:  analysis/VennDiagram.2024-10-31_10-50-53.217425.log
+    Untracked:  analysis/VennDiagram.2024-10-31_10-57-36.962004.log
+    Untracked:  analysis/VennDiagram.2024-10-31_10-57-37.222721.log
+    Untracked:  analysis/VennDiagram.2024-11-05_17-55-53.319942.log
+    Untracked:  analysis/VennDiagram.2024-11-05_17-56-51.857181.log
+    Untracked:  analysis/VennDiagram.2024-11-05_17-58-51.041464.log
+    Untracked:  analysis/VennDiagram.2024-11-05_18-11-03.857729.log
+    Untracked:  analysis/VennDiagram.2024-11-05_18-11-04.444298.log
+    Untracked:  analysis/VennDiagram.2024-11-05_18-11-23.73444.log
+    Untracked:  analysis/VennDiagram.2024-11-05_18-11-47.701381.log
+    Untracked:  analysis/VennDiagram.2024-11-05_18-12-32.811219.log
+    Untracked:  analysis/VennDiagram.2024-11-06_09-49-15.442491.log
+    Untracked:  analysis/VennDiagram.2024-11-06_09-49-15.722922.log
+    Untracked:  analysis/venn-4-diagram.png.2024-10-31_10-50-52.235534.log
+    Untracked:  analysis/venn-4-diagram.png.2024-10-31_10-57-36.682727.log
+    Untracked:  analysis/venn-4-diagram.png.2024-11-05_17-55-44.5672.log
+    Untracked:  analysis/venn-4-diagram.png.2024-11-05_17-56-50.692121.log
+    Untracked:  analysis/venn-4-diagram.png.2024-11-05_18-11-02.553084.log
+    Untracked:  analysis/venn-4-diagram.png.2024-11-05_18-11-45.645438.log
+    Untracked:  analysis/venn-4-diagram.png.2024-11-06_09-49-15.110858.log
+    Untracked:  venn-4-diagram.png
+    Untracked:  venn-4-diagram.png.2024-10-31_11-39-59.707438.log
+    Untracked:  venn-4-diagram.png.2024-11-05_10-11-25.152376.log
+    Untracked:  venn-4-diagram.png.2024-11-06_15-24-53.969918.log
+    Untracked:  venn-4-diagram.png.2024-11-06_17-12-47.831621.log
+    Untracked:  venn-4-diagram.png.2024-11-07_10-08-58.426677.log
+    Untracked:  venn-4-diagram.png.2024-11-14_09-49-49.019768.log
+
+Unstaged changes:
+    Modified:   analysis/DEGenesFbcond2.txt
+    Modified:   analysis/FbmarkerGenesclustername.txt
+    Modified:   analysis/FibroblastAnalysis.Rmd
+    Modified:   analysis/FibroblastAnalysisDEgenes.Rmd
+    Modified:   analysis/GranulomaAnalysis.Rmd
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packages" class="section level2">
+<h2>load packages</h2>
+<pre class="r"><code>library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)</code></pre>
+</div>
+<div id="load-merged-file-granuloma" class="section level2">
+<h2>load merged file granuloma</h2>
+<pre class="r"><code>##load merged file 
+fileNam &lt;- &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allgranuloma_wofilter_seurat_wocl21.rds&quot;
+seurat &lt;- readRDS(fileNam)
+table(seurat$dataset)</code></pre>
+<pre><code>
+        10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3 
+                                                           5988 
+                 9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3 
+                                                           4278 
+       o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3 
+                                                           8013 
+        o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3 
+                                                           3008 
+o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3 
+                                                           6909 
+ o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3 
+                                                           6472 </code></pre>
+<pre class="r"><code>table(seurat$RNA_snn_res.0.25)</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19 
+4607 4144 3007 2477 2382 2201 2173 2048 1944 1766 1502 1137  870  848  798  766  653  639  357  180 
+  20   21 
+ 169    0 </code></pre>
+<pre class="r"><code>table(seurat$orig.ident)</code></pre>
+<pre><code>
+      
+34668 </code></pre>
+</div>
+<div id="set-color-vectors" class="section level2">
+<h2>set color vectors</h2>
+<pre class="r"><code>### col clustername
+colclustername &lt;- c(&quot;#355C7D&quot;,&quot;#B1746FFF&quot;,&quot;#202547&quot;,&quot;#B09C85&quot;, &quot;#4e5a4c&quot;,&quot;#53354A&quot;,&quot;#2A363B&quot;,&quot;#8491B4FF&quot;,&quot;#00A087FF&quot;,&quot;#DC9989&quot;,&quot;#84ad83&quot;, &quot;#628395&quot;,&quot;#D33B44&quot;,&quot;#779d8d&quot;,&quot;#727077&quot;,&quot;#868686FF&quot;,&quot;#F8B195&quot;,&quot;#FF847C&quot;,&quot;#725663FF&quot;,&quot;#904D39&quot;,&quot;#91D1C2&quot;)
+names(colclustername) &lt;- c(&quot;PdgfraloFb1&quot;,&quot;Mph1&quot;, &quot;CD8Tcell1&quot;,&quot;Neut&quot;, &quot;IgABcell1&quot;, &quot;LEC&quot;, &quot;Telocytes&quot;, &quot;DC&quot;, &quot;CD4Tcell/ILC2&quot;, &quot;Mph2&quot;,  &quot;NKcell&quot;, &quot;CD8Tcell2&quot;, &quot;Mph3&quot;, &quot;Trophocytes&quot;, &quot;PdgfrahiLy6anegFb&quot;, &quot;IgABcell2&quot;, &quot;Myocytes&quot;, &quot;PdgfraloFb2&quot;, &quot;IgDBcell&quot;, &quot;NC&quot;, &quot;ICC&quot;)
+
+### col cond2
+colcond2 &lt;- c(&quot;#202547&quot;,&quot;#BE3144&quot;)
+names(colcond2) &lt;- c(&quot;WT&quot;, &quot;cko&quot;)
+
+table(seurat$cluster_name)</code></pre>
+<pre><code>
+        CD8Tcell1         CD8Tcell2            NKcell     CD4Tcell/ILC2              Neut 
+             3007              1137              1502              1944              2477 
+             Mph1              Mph2              Mph3                DC         IgABcell1 
+             4144              1766               870              2048              2382 
+        IgABcell2          IgDBcell       PdgfraloFb1       PdgfraloFb2       Trophocytes 
+              766               357              4607               639               848 
+        Telocytes          Myocytes PdgfrahiLy6anegFb                NC               LEC 
+             2173               653               798               180              2201 
+              ICC 
+              169 </code></pre>
+<div id="cellchat-interaction-analysis" class="section level34">
+<p class="heading">Cellchat interaction analysis</p>
+</div>
+</div>
+<div id="load-packages-cellchat" class="section level2">
+<h2>load packages cellchat</h2>
+<pre class="r"><code>#devtools::install_github(&quot;sqjin/CellChat&quot;)
+library(CellChat)
+library(patchwork)
+options(stringsAsFactors = FALSE)</code></pre>
+</div>
+<div id="assign-clusterlabel" class="section level2">
+<h2>assign clusterLabel</h2>
+<pre class="r"><code>seurat$clusterNameext &lt;- &quot;allCells&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;CD8Tcell1&quot;)] &lt;- &quot;a_CD8Tcell1&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;CD8Tcell2&quot;)] &lt;- &quot;b_CD8Tcell2&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;NKcell&quot;)] &lt;- &quot;c_NKcell&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;CD4Tcell/ILC2&quot;)] &lt;- &quot;d_CD4Tcell/ILC2&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Neut&quot;)] &lt;- &quot;e_Neut&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Mph1&quot;)] &lt;- &quot;f_Mph1&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Mph2&quot;)] &lt;- &quot;g_Mph2&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Mph3&quot;)] &lt;- &quot;h_Mph3&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;DC&quot;)] &lt;- &quot;i_DC&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;IgABcell1&quot;)] &lt;- &quot;j_IgABcell1&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;IgABcell2&quot;)] &lt;- &quot;k_IgABcell2&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;IgDBcell&quot;)] &lt;- &quot;l_IgDBcell&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;PdgfraloFb1&quot;)] &lt;- &quot;m_PdgfraloFb1&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;PdgfraloFb2&quot;)] &lt;- &quot;n_PdgfraloFb2&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Trophocytes&quot;)] &lt;- &quot;o_Trophocytes&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Telocytes&quot;)] &lt;- &quot;p_Telocytes&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;Myocytes&quot;)] &lt;- &quot;q_Myocytes&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;PdgfrahiLy6anegFb&quot;)] &lt;- &quot;r_PdgfrahiLy6anegFb&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;NC&quot;)] &lt;- &quot;s_NC&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;LEC&quot;)] &lt;- &quot;t_LEC&quot;
+seurat$clusterNameext[which(seurat$cluster_name == &quot;ICC&quot;)] &lt;- &quot;u_ICC&quot;
+table(seurat$clusterNameext)
+
+#separate cko and wt for further CellChat analysis
+seuratcko &lt;- subset(seurat, cond2 == &quot;cko&quot;)
+seuratwt &lt;- subset(seurat, cond2 == &quot;WT&quot;)</code></pre>
+<p>convert to sce to change rownames</p>
+<pre class="r"><code>sce &lt;- as.SingleCellExperiment(seurat)
+scecko &lt;- as.SingleCellExperiment(seuratcko)
+scewt &lt;- as.SingleCellExperiment(seuratwt)
+#rownames(sce) = gsub(&quot;\\..*&quot;,&quot;&quot;,rownames(sce))
+rownames(sce) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(sce))
+rownames(scecko) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(scecko))
+rownames(scewt) = gsub(&quot;^.*\\.&quot;,&quot;&quot;,rownames(scewt))</code></pre>
+<p>create a CellChat object</p>
+<pre class="r"><code>cellchat &lt;- createCellChat(object = sce, group.by = &quot;clusterNameext&quot;)
+cellchatcko &lt;- createCellChat(object = scecko, group.by = &quot;clusterNameext&quot;)
+cellchatwt &lt;- createCellChat(object = scewt, group.by = &quot;clusterNameext&quot;)
+#&gt; Create a CellChat object from a data matrix
+#&gt; Set cell identities for the new CellChat object</code></pre>
+<p>add cell information into metaslot (optional)</p>
+<pre class="r"><code>#cellchat &lt;- addMeta(cellchat, meta = meta)
+#cellchat &lt;- setIdent(cellchat, ident.use = &quot;labels&quot;) # set &quot;labels&quot; as default cell identity
+#levels(cellchat@idents) # show factor levels of the cell labels
+#groupSize &lt;- as.numeric(table(cellchat@idents)) # number of cells in each cell group</code></pre>
+<p>set the ligand receptor interaction database</p>
+<pre class="r"><code>CellChatDB &lt;- CellChatDB.mouse # use CellChatDB.human if running on mouse data
+showDatabaseCategory(CellChatDB)
+# Show the structure of the database
+dplyr::glimpse(CellChatDB$interaction)
+
+# use a subset of CellChatDB for cell-cell communication analysis
+#CellChatDB.use &lt;- subsetDB(CellChatDB, search = &quot;Secreted Signaling&quot;) # use Secreted Signaling
+
+# use all CellChatDB for cell-cell communication analysis
+CellChatDB.use &lt;- CellChatDB # simply use the default CellChatDB
+
+# set the used database in the object
+cellchat@DB &lt;- CellChatDB.use
+cellchatcko@DB &lt;- CellChatDB.use
+cellchatwt@DB &lt;- CellChatDB.use</code></pre>
+<p>processing expression data for cellcell communication analysis</p>
+<pre class="r"><code># subset the expression data of signaling genes for saving computation cost
+cellchat &lt;- subsetData(cellchat) # This step is necessary even if using the whole database
+future::plan(&quot;multisession&quot;, workers = 4) # do parallel
+options(future.globals.maxSize = 10000 * 1024^2)
+#&gt; Warning: [ONE-TIME WARNING] Forked processing (&#39;multicore&#39;) is disabled
+#&gt; in future (&gt;= 1.13.0) when running R from RStudio, because it is
+#&gt; considered unstable. Because of this, plan(&quot;multicore&quot;) will fall
+#&gt; back to plan(&quot;sequential&quot;), and plan(&quot;multiprocess&quot;) will fall back to
+#&gt; plan(&quot;multisession&quot;) - not plan(&quot;multicore&quot;) as in the past. For more details,
+#&gt; how to control forked processing or not, and how to silence this warning in
+#&gt; future R sessions, see ?future::supportsMulticore
+cellchat &lt;- identifyOverExpressedGenes(cellchat)
+cellchat &lt;- identifyOverExpressedInteractions(cellchat)
+# project gene expression data onto PPI network (optional)
+# cellchat &lt;- projectData(cellchat, PPI.human)
+
+
+##same for cko
+cellchatcko &lt;- subsetData(cellchatcko) # This step is necessary even if using the whole database
+future::plan(&quot;multisession&quot;, workers = 4) # do parallel
+options(future.globals.maxSize = 10000 * 1024^2)
+
+cellchatcko &lt;- identifyOverExpressedGenes(cellchatcko)
+cellchatcko &lt;- identifyOverExpressedInteractions(cellchatcko)
+
+##same for wt
+cellchatwt &lt;- subsetData(cellchatwt)
+future::plan(&quot;multisession&quot;, workers = 4) 
+options(future.globals.maxSize = 10000 * 1024^2)
+
+cellchatwt &lt;- identifyOverExpressedGenes(cellchatwt)
+cellchatwt &lt;- identifyOverExpressedInteractions(cellchatwt)</code></pre>
+<p>Compute the communication probability and infer cellular
+communication network</p>
+<pre class="r"><code>cellchat &lt;- computeCommunProb(cellchat, type =  &quot;truncatedMean&quot;, trim= 0.1) #set truncated mean to 10% - average gene expression is zero if less than 10% of cell in one group express gene (default is 25%)
+# Filter out the cell-cell communication if there are only few number of cells in certain cell groups
+# cellchat &lt;- filterCommunication(cellchat, min.cells = 35)
+
+cellchatcko &lt;- computeCommunProb(cellchatcko, type =  &quot;truncatedMean&quot;, trim= 0.1) 
+cellchatwt &lt;- computeCommunProb(cellchatwt, type =  &quot;truncatedMean&quot;, trim= 0.1) </code></pre>
+<p>Infer the cell-cell communication at a signaling pathway level
+CellChat computes the communication probability on signaling pathway
+level by summarizing the communication probabilities of all
+ligands-receptors interactions associated with each signaling
+pathway.</p>
+<pre class="r"><code>cellchat &lt;- computeCommunProbPathway(cellchat)
+cellchatcko &lt;- computeCommunProbPathway(cellchatcko)
+cellchatwt &lt;- computeCommunProbPathway(cellchatwt)</code></pre>
+<pre class="r"><code>cellchat &lt;- aggregateNet(cellchat)
+cellchatcko &lt;- aggregateNet(cellchatcko)
+cellchatwt &lt;- aggregateNet(cellchatwt)</code></pre>
+<p>Compute the network centrality scores</p>
+<pre class="r"><code>future.seed=TRUE
+cellchat &lt;- netAnalysis_computeCentrality(cellchat, slot.name = &quot;netP&quot;) # the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways
+future.seed=TRUE
+cellchatcko &lt;- netAnalysis_computeCentrality(cellchatcko, slot.name = &quot;netP&quot;) # the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways
+future.seed=TRUE
+cellchatwt &lt;- netAnalysis_computeCentrality(cellchatwt, slot.name = &quot;netP&quot;) # the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways</code></pre>
+<pre class="r"><code>saveRDS(cellchat, file = &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_allext.rds&quot;)
+saveRDS(cellchatcko, file = &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_cko.rds&quot;)
+saveRDS(cellchatwt, file = &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_wt.rds&quot;)</code></pre>
+<p>#####################################analysis dataset with
+all#######################################</p>
+<pre class="r"><code>cellchat.all &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_allext.rds&quot;)</code></pre>
+<pre class="r"><code>colclusterName &lt;- c(&quot;#202547&quot;,&quot;#628395&quot;,&quot;#84ad83&quot;,&quot;#779d8d&quot;,&quot;#B09C85&quot;,&quot;#B1746FFF&quot;,&quot;#DC9989&quot;,&quot;#D33B44&quot;,&quot;#8491B4FF&quot;,&quot;#4e5a4c&quot;,&quot;#727077&quot;,&quot;#725663FF&quot;,&quot;#355C7D&quot;,&quot;#FF847C&quot;,&quot;#779d8d&quot;,&quot;#2A363B&quot;,&quot;#F8B195&quot;,&quot;#868686FF&quot;,&quot;#904D39&quot;,&quot;#53354A&quot;,&quot;#91D1C2&quot;)</code></pre>
+<p>Extract the inferred cellular communication network as a data frame
+We provide a function subsetCommunication to easily access the inferred
+cell-cell communications of interest</p>
+<pre class="r"><code>df.net &lt;- subsetCommunication(cellchat.all) #returns a data frame consisting of all the inferred cell-cell communications at the level of ligands/receptors. Set slot.name = &quot;netP&quot; to access the the inferred communications at the level of signaling pathways
+#interactions immunecells to stroma only
+df.net &lt;- subsetCommunication(cellchat.all) 
+#sources.use = c(1:11), targets.use = c(12:20)
+#sources.use=c(&quot;tPI16RC2&quot;,&quot;TRC3&quot;,&quot;ACTA2PRC2&quot;,&quot;ACTA2PRC3&quot;,&quot;tPI16RC1&quot;,&quot;ACTA2PRC1&quot;,&quot;TRC2&quot;,&quot;TRC1&quot;,&quot;PI16RC&quot;,&quot;FDC&quot;), targets.use = c(&quot;naiveCD4&quot;,&quot;Tcm&quot;,&quot;CTL&quot;,&quot;Treg&quot;,&quot;GCBcells&quot;,&quot;Tfh&quot;,&quot;naiveBcells&quot;,&quot;plasmaCells&quot;))
+df.net &lt;- subsetCommunication(cellchat.all, signaling = c(&quot;BMP&quot;, &quot;TGFb&quot;)) #gives the inferred cell-cell communications mediated by signaling WNT and TGFb.</code></pre>
+<p>Calculate the aggregated cell-cell communication network We can
+calculate the aggregated cell-cell communication network by counting the
+number of links or summarizing the communication probability. USER can
+also calculate the aggregated network among a subset of cell groups by
+setting sources.use and targets.use.</p>
+<pre class="r"><code># Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+gg1 &lt;- netAnalysis_signalingRole_scatter(cellchat.all, color.use = colclusterName)
+gg1</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20role-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow=c(1,1))
+netVisual_heatmap(cellchat.all, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;count&quot;)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>netVisual_heatmap(cellchat.all, color.heatmap = &quot;GnBu&quot;, color.use = colclusterName, measure = &quot;weight&quot;)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#&gt; Do heatmap based on a single object</code></pre>
+<pre class="r"><code>#Identify signals contributing most to outgoing or incoming signaling of certain cell groups
+#We can also answer the question on which signals contributing most to outgoing or incoming signaling of certain cell groups.
+# Signaling role analysis on the aggregated cell-cell communication network from all signaling pathways
+ht1 &lt;- netAnalysis_signalingRole_heatmap(cellchat.all, pattern = &quot;outgoing&quot;, color.use = colclusterName, height = 17)
+ht2 &lt;- netAnalysis_signalingRole_heatmap(cellchat.all, pattern = &quot;incoming&quot;, color.use = colclusterName, height = 17)
+ht1 + ht2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/contributing%20signals-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cellchat.all &lt;- aggregateNet(cellchat.all)
+#We can also visualize the aggregated cell-cell communication network. For example, showing the number of interactions or the total interaction strength (weights) between any two cell groups using circle plot.
+groupSize &lt;- as.numeric(table(cellchat.all@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat.all@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Number of interactions&quot;, targets.use = 13:18, sources.use = 1:12, color.use = colclusterName)
+netVisual_circle(cellchat.all@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Interaction weights/strength&quot;, targets.use = 13:18, sources.use = 1:12, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/interaction%20btw%20immune%20cells%20and%20fibroblats-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>groupSize &lt;- as.numeric(table(cellchat.all@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat.all@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Number of interactions&quot;, targets.use = 13:21, sources.use = 1:4, color.use = colclusterName)
+netVisual_circle(cellchat.all@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Interaction weights/strength&quot;, targets.use = 13:21, sources.use = 1:4, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/interaction%20btw%20Tcells%20and%20fibroblats-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>groupSize &lt;- as.numeric(table(cellchat.all@idents))
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_circle(cellchat.all@net$count, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Number of interactions&quot;, targets.use = 13:21, sources.use = 6:8, color.use = colclusterName)
+netVisual_circle(cellchat.all@net$weight, vertex.weight = groupSize, weight.scale = T, label.edge= F, title.name = &quot;Interaction weights/strength&quot;, targets.use = 13:21, sources.use = 6:8, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/interaction%20btw%20Macrophages%20and%20fibroblats-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;OSM&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)
+
+pairLR &lt;- extractEnrichedLR(cellchat.all, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[1,] # second in list shown
+## Circle plot
+netVisual_individual(cellchat.all, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>pairLR &lt;- extractEnrichedLR(cellchat.all, signaling = pathways.show, geneLR.return = FALSE)
+LR.show &lt;- pairLR[2,] # second in list shown
+## Circle plot
+netVisual_individual(cellchat.all, signaling = pathways.show, pairLR.use = LR.show,layout = &quot;circle&quot;, color.use = colclusterName, weight.scale = T)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[[1]]</code></pre>
+<pre class="r"><code>netVisual_heatmap(cellchat.all, signaling = pathways.show, color.heatmap = &quot;Reds&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) associated with certain signaling pathways
+netVisual_chord_gene(cellchat.all,signaling = c(&quot;OSM&quot;), color.use = colclusterName, show.legend = FALSE)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## show all the significant interactions (L-R pairs) associated with certain signaling pathways 
+## between macrophages (6-8) and fibroblasts (13:18)
+netVisual_bubble(cellchat.all, sources.use = c(6:8), targets.use = c(13:18), remove.isolate = FALSE, pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#&gt; Comparing communications on a single object
+
+## Chord diagram
+par(mfrow=c(1,1))
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;chord&quot;, color.use = colclusterName )</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20OSM-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;IL1&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;TGFb&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TGFb-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TGFb-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TGFb-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;THBS&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20THBS-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20THBS-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20THBS-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;IL6&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL6-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20IL6-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;SPP1&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SPP1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SPP1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SPP1-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;LIGHT&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20LIGHT-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20LIGHT-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20LIGHT-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;ACTIVIN&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20ACTIVIN-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20ACTIVIN-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20ACTIVIN-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;VISFATIN&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20VISFATIN-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20VISFATIN-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20VISFATIN-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;SELL&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SELL-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SELL-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SELL-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;SEMA4&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SEMA4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SEMA4-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20SEMA4-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;GDF&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GDF-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GDF-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GDF-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;TNF&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TNF-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TNF-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20TNF-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##show all the significant interactions (L-R pairs) from some cell groups (defined by &#39;sources.use&#39;) to other cell groups (defined by &#39;targets.use&#39;)
+#netVisual_bubble(cellchat.all, sources.use = c(10:12), targets.use = c(13:21), remove.isolate = FALSE)
+pathways.show &lt;- c(&quot;GRN&quot;)
+# Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups
+netAnalysis_signalingRole_network(cellchat.all, signaling = pathways.show, width = 8, height = 2.5, font.size = 10, color.heatmap = &quot;Blues&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GRN-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##Hierarchy plot
+##Here we define `vertex.receive` so that the left portion of the hierarchy plot shows signaling to fibroblast and the right portion shows signaling to immune cells 
+vertex.receiver = c(1:12) # a numeric vector. 
+netVisual_aggregate(cellchat.all, signaling = pathways.show, vertex.receiver = vertex.receiver, layout = &quot;hierarchy&quot;, color.use = colclusterName)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GRN-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##circle plot with pathway
+netVisual_aggregate(cellchat.all, signaling = pathways.show, layout = &quot;circle&quot;, color.use = colclusterName)
+##plot contributing interactions
+netAnalysis_contribution(cellchat.all, signaling = pathways.show)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/sender%20receiver%20GRN-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>#####################################compare wt vs
+cko#######################################</p>
+<pre class="r"><code>cellchat.cko &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_cko.rds&quot;)
+cellchat.wt &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_wt.rds&quot;)</code></pre>
+<p>load and merge CellChat objects</p>
+<pre class="r"><code>##lift cell CellChat objects to same lables
+#define labels 
+cellchat.all@idents
+cellchat.cko@idents
+cellchat.wt@idents
+#labels.new = c(&quot;a_ACTA2PRC1&quot;, &quot;b_ACTA2PRC2&quot;,&quot;c_ACTA2PRC3&quot;,&quot;d_ACTA2PRC4&quot;,&quot;e_ACTA2PRC5&quot;,&quot;f_FDC&quot;,&quot;g_TRC1&quot;,&quot;h_TRC2&quot;,&quot;i_TRC3&quot;,&quot;j_PI161&quot;,&quot;k_PI162&quot;,&quot;l_PI163&quot;,&quot;m_naiveCD4&quot;,&quot;n_Tcm&quot;,&quot;o_Treg&quot;,&quot;p_Tfh&quot;,&quot;q_CTL&quot;,&quot;r_naiveBcells&quot;,&quot;s_GCBcells&quot;,&quot;t_MBCs&quot;,&quot;u_plasmaCells&quot;)
+#cellchat.tonsillitis &lt;- liftCellChat(cellchat.tonsillitis, labels.new)
+#cellchat.adult &lt;- liftCellChat(cellchat.adult, labels.new)
+
+object.list &lt;- list(wt = cellchat.wt, cko = cellchat.cko)
+cellchat &lt;- mergeCellChat(object.list, add.names = names(object.list))</code></pre>
+<pre class="r"><code>saveRDS(cellchat, file = &quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_merged.rds&quot;)</code></pre>
+<pre class="r"><code>cellchat &lt;- readRDS(&quot;/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/cellchat_merged.rds&quot;)
+object.list &lt;- list(wt = cellchat.wt, cko = cellchat.cko)
+df.net.wt &lt;- subsetCommunication(cellchat.wt)
+df.net.cko &lt;- subsetCommunication(cellchat.cko)</code></pre>
+<pre class="r"><code>#set color vector
+colCond &lt;- c(&quot;#202547&quot;,&quot;#BE3144&quot;)
+
+gg1 &lt;- compareInteractions(cellchat, show.legend = F, group = c(1,2), color.use = colCond,)
+gg2 &lt;- compareInteractions(cellchat, show.legend = F, group = c(1,2), measure = &quot;weight&quot;, color.use = colCond)
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/ggplotr%20overall%20number%20and%20strenght-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Differential number of interactions or interaction strength among
+different cell populations The differential number of interactions or
+interaction strength in the cell-cell communication network between two
+datasets can be visualized using circle plot, where red(or blue) colored
+edges represent increased (or decreased ) signaling in the second
+dataset compared to the first one.</p>
+<pre class="r"><code>##circleplot interaction numbers strenght in diff subsets
+par(mfrow = c(1,2), xpd=TRUE)
+netVisual_diffInteraction(cellchat, weight.scale = T, sources.use = 6:8, targets.use = 13:18, color.use = colclusterName, color.edge = c(&quot;#BE3144&quot;, &quot;#202547&quot;),  vertex.weight = groupSize)
+netVisual_diffInteraction(cellchat, weight.scale = T, measure = &quot;weight&quot;, sources.use = 6:8, targets.use = 13:18, color.use = colclusterName, color.edge = c(&quot;#BE3144&quot;, &quot;#202547&quot;),  vertex.weight = groupSize)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/differential%20number%20of%20interactions%20mph%20to%20fibroblasts-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,2), xpd=TRUE)
+netVisual_diffInteraction(cellchat, weight.scale = T, color.use = colclusterName, sources.use = 1:12, targets.use = 13:21)
+netVisual_diffInteraction(cellchat, weight.scale = T, measure = &quot;weight&quot;, color.use = colclusterName, sources.use = 1:12, targets.use = 13:21)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/differential%20number%20of%20interactions%20immune%20cells%20to%20fibroblasts-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,2), xpd=TRUE)
+netVisual_diffInteraction(cellchat, weight.scale = T, color.use = colclusterName, sources.use = 13:21, targets.use = 1:12)
+netVisual_diffInteraction(cellchat, weight.scale = T, measure = &quot;weight&quot;, color.use = colclusterName, sources.use = 13:21, targets.use = 1:12)</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/differential%20number%20of%20interactions%20fibroblasts%20to%20immune%20cells-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Furthermore, we can identify the specific signaling changes of Inflam.DC and cDC1 between NL and LS. ## Identify signaling changes associated with one cell group
+gg1 &lt;- netAnalysis_signalingChanges_scatter(cellchat, idents.use = &quot;f_Mph1&quot;)
+gg2 &lt;- netAnalysis_signalingChanges_scatter(cellchat, idents.use = &quot;g_Mph2&quot;)
+gg3 &lt;- netAnalysis_signalingChanges_scatter(cellchat, idents.use = &quot;h_Mph3&quot;)
+patchwork::wrap_plots(plots = list(gg1))</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20changes-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>patchwork::wrap_plots(plots = list(gg2))</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20changes-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>patchwork::wrap_plots(plots = list(gg3))</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/signaling%20changes-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##heatmap interaction numbers strenght in diff subsets
+gg1 &lt;- netVisual_heatmap(cellchat, color.use = colclusterName)
+##&gt; Do heatmap based on a merged object
+gg2 &lt;- netVisual_heatmap(cellchat, measure = &quot;weight&quot;, color.use = colclusterName)
+##&gt; Do heatmap based on a merged object
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/heatmap%20differential%20interaction%20strnght-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#relative information flow 
+gg1 &lt;- rankNet(cellchat, mode = &quot;comparison&quot;, stacked = T, do.stat = TRUE, color.use = colCond)
+gg2 &lt;- rankNet(cellchat, mode = &quot;comparison&quot;, stacked = F, do.stat = TRUE, color.use = colCond)
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/rel%20information%20flow-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#relative information flow between Mph (6:8) and fibroblasts (13-18)
+gg1 &lt;- rankNet(cellchat, mode = &quot;comparison&quot;, do.stat = TRUE,stacked = T, sources.use = 6:8, targets.use = 13:18, color.use = colCond)
+gg2 &lt;- rankNet(cellchat, mode = &quot;comparison&quot;, do.stat = TRUE,stacked = F, sources.use = 6:8, targets.use = 13:18, color.use = colCond)
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/rel%20information%20flow%20mph1%20to%20fb-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>##compare pathways bt. wt and cko
+pathways.show &lt;- c(&quot;OSM&quot;) 
+weight.max &lt;- getMaxWeight(object.list, slot.name = c(&quot;netP&quot;), attribute = pathways.show) # control the edge weights across different datasets
+par(mfrow = c(1,2), xpd=TRUE)
+for (i in 1:length(object.list)) {
+  netVisual_aggregate(object.list[[i]], signaling = pathways.show, color.use = colclusterName ,layout = &quot;circle&quot;, edge.weight.max = weight.max[1], edge.width.max = 10, signaling.name = paste(pathways.show, names(object.list)[i]))
+}</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/compare%20OSM%20pathway-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Moreover, we can identify the upgulated (increased) and down-regulated (decreased) signaling ligand-receptor pairs in one dataset compared to the other dataset. This can be done by specifying max.dataset and min.dataset in the function netVisual_bubble. The increased signaling means these signaling have higher communication probability (strength) in one dataset compared to the other dataset.
+
+gg1 &lt;- netVisual_bubble(cellchat, sources.use = 6:8, targets.use = 13:18,  comparison = c(1, 2), max.dataset = 1, title.name = &quot;increased in wt&quot;, angle.x = 45, remove.isolate = T)
+#&gt; Comparing communications on a merged object
+gg2 &lt;- netVisual_bubble(cellchat, sources.use = 6:8, targets.use = 13:18,  comparison = c(1, 2), max.dataset = 2, title.name = &quot;increased in cko&quot;, angle.x = 45, remove.isolate = T)
+#&gt; Comparing communications on a merged object
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/bubble%20upregulated%20signlinag%20ligand-receptor%20pairs-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#The above method for identifying the upgulated and down-regulated signaling is perfomed by comparing the communication probability between two datasets for each L-R pair and each pair of cell groups. Alternative, we can identify the upgulated and down-regulated signaling ligand-receptor pairs based on the differential gene expression analysis. Specifically, we perform differential expression analysis between two biological conditions (i.e., NL and LS) for each cell group, and then obtain the upgulated and down-regulated signaling based on the fold change of ligands in the sender cells and receptors in the receiver cells. Such analysis can be done as follows.
+
+# define a positive dataset, i.e., the dataset with positive fold change against the other dataset
+pos.dataset = &quot;wt&quot;
+# define a char name used for storing the results of differential expression analysis
+features.name = pos.dataset
+# perform differential expression analysis
+cellchat &lt;- identifyOverExpressedGenes(cellchat, group.dataset = &quot;datasets&quot;, pos.dataset = pos.dataset, features.name = features.name, only.pos = FALSE, thresh.pc = 0.1, thresh.fc = 0.1, thresh.p = 1)
+#&gt; Use the joint cell labels from the merged CellChat object
+# map the results of differential expression analysis onto the inferred cell-cell communications to easily manage/subset the ligand-receptor pairs of interest
+net &lt;- netMappingDEG(cellchat, features.name = features.name)
+# extract the ligand-receptor pairs with upregulated ligands in wt
+net.up &lt;- subsetCommunication(cellchat, net = net, datasets = &quot;wt&quot;,ligand.logFC = 0.2, receptor.logFC = NULL)
+# extract the ligand-receptor pairs with upregulated ligands and upregulated recetptors in cko, i.e.,downregulated in wt
+net.down &lt;- subsetCommunication(cellchat, net = net, datasets = &quot;cko&quot;,ligand.logFC = -0.1, receptor.logFC = -0.1)
+#Since the signaling genes in the net.up and net.down might be complex with multi-subunits, we can do further deconvolution to obtain the individual signaling genes.
+
+gene.up &lt;- extractGeneSubsetFromPair(net.up, cellchat)
+gene.down &lt;- extractGeneSubsetFromPair(net.down, cellchat)
+
+#We then visualize the upgulated and down-regulated signaling ligand-receptor pairs using bubble plot or chord diagram.
+pairLR.use.up = net.up[, &quot;interaction_name&quot;, drop = F]
+gg1 &lt;- netVisual_bubble(cellchat, pairLR.use = pairLR.use.up, sources.use = c(6:8), targets.use = c(13:18), comparison = c(1, 2),  angle.x = 90, remove.isolate = T,title.name = paste0(&quot;Up-regulated signaling in &quot;, names(object.list)[2]))
+#&gt; Comparing communications on a merged object
+pairLR.use.down = net.down[, &quot;interaction_name&quot;, drop = F]
+gg2 &lt;- netVisual_bubble(cellchat, pairLR.use = pairLR.use.down, sources.use = c(6:8), targets.use = c(13:18), comparison = c(1, 2),  angle.x = 90, remove.isolate = T,title.name = paste0(&quot;Down-regulated signaling in &quot;, names(object.list)[2]))
+#&gt; Comparing communications on a merged object
+gg1 + gg2</code></pre>
+<p><img src="figure/CellChatGranuloma.Rmd/up%20and%20down%20regulated%20interactions-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level2">
+<h2>session info</h2>
+<pre class="r"><code>date()</code></pre>
+<pre><code>[1] &quot;Tue Nov 19 16:24:52 2024&quot;</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.7.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.3.0             CellChat_1.6.1              igraph_2.1.1               
+ [4] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
+ [7] gridExtra_2.3               DOSE_3.30.5                 enrichplot_1.24.4          
+[10] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
+[13] clusterProfiler_4.12.6      multtest_2.60.0             metap_1.11                 
+[16] scater_1.32.1               scuttle_1.14.0              destiny_3.18.0             
+[19] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
+[22] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
+[25] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
+[28] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
+[31] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
+[34] Biobase_2.64.0              GenomicRanges_1.56.2        GenomeInfoDb_1.40.1        
+[37] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
+[40] MatrixGenerics_1.16.0       matrixStats_1.4.1           pheatmap_1.0.12            
+[43] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
+[46] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
+[49] ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] ica_1.0-3                 plotly_4.10.4             Formula_1.2-5            
+  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.5.0                
+  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
+ [10] rjson_0.2.23              blob_1.2.4                rngtools_1.5.2           
+ [13] S4Arrays_1.4.1            pbkrtest_0.5.3            parallel_4.4.0           
+ [16] png_0.1-8                 plotrix_3.8-4             registry_0.5-1           
+ [19] cli_3.6.3                 ggplotify_0.1.2           goftest_1.2-3            
+ [22] VIM_6.2.2                 variancePartition_1.34.0  ggnetwork_0.5.13         
+ [25] BiocNeighbors_1.22.0      shadowtext_0.1.4          uwot_0.2.2               
+ [28] curl_5.2.3                tidytree_0.4.6            mime_0.12                
+ [31] evaluate_1.0.1            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
+ [34] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
+ [37] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
+ [40] rappdirs_0.3.3            splines_4.4.0             ggraph_2.2.1             
+ [43] sctransform_0.4.1         ggbeeswarm_0.7.2          DBI_1.2.3                
+ [46] jquerylib_0.1.4           smoother_1.3              withr_3.0.1              
+ [49] git2r_0.35.0              corpcor_1.6.10            systemfonts_1.1.0        
+ [52] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
+ [55] lmtest_0.9-40             tidygraph_1.3.1           BiocManager_1.30.25      
+ [58] formatR_1.14              colourpicker_1.3.0        htmlwidgets_1.6.4        
+ [61] fs_1.6.4                  ggrepel_0.9.6             statnet.common_4.10.0    
+ [64] labeling_0.4.3            fANCOVA_0.6-1             SparseArray_1.4.8        
+ [67] DESeq2_1.44.0             ranger_0.16.0             DEoptimR_1.1-3           
+ [70] reticulate_1.39.0         hexbin_1.28.4             zoo_1.8-12               
+ [73] XVector_0.44.0            knitr_1.48                network_1.18.2           
+ [76] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
+ [79] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
+ [82] caTools_1.18.3            ggtree_3.12.0             data.table_1.16.2        
+ [85] R.oo_1.26.0               RSpectra_0.16-2           irlba_2.3.5.1            
+ [88] gridGraphics_0.5-1        fastDummies_1.7.4         lazyeval_0.2.2           
+ [91] yaml_2.3.10               survival_3.7-0            scattermore_1.2          
+ [94] crayon_1.5.3              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
+ [97] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
+[100] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
+[103] aod_1.3.3                 KEGGREST_1.44.1           Rtsne_0.17               
+[106] shape_1.4.6.1             limma_3.60.6              pkgconfig_2.0.3          
+[109] TMB_1.9.15                spatstat.univar_3.0-1     mathjaxr_1.6-0           
+[112] EnvStats_3.0.0            aplot_0.2.3               scatterplot3d_0.3-44     
+[115] gridBase_0.4-7            ape_5.8                   spatstat.sparse_3.1-0    
+[118] xtable_1.8-4              car_3.1-3                 highr_0.11               
+[121] plyr_1.8.9                httr_1.4.7                rbibutils_2.3            
+[124] tools_4.4.0               globals_0.16.3            beeswarm_0.4.0           
+[127] broom_1.0.7               nlme_3.1-166              lambda.r_1.2.4           
+[130] lme4_1.1-35.5             digest_0.6.37             numDeriv_2016.8-1.1      
+[133] Matrix_1.7-1              farver_2.1.2              tzdb_0.4.0               
+[136] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.7        
+[139] glue_1.8.0                cachem_1.1.0              polyclip_1.10-7          
+[142] generics_0.1.3            Biostrings_2.72.1         ggalluvial_0.12.5        
+[145] mvtnorm_1.3-1             parallelly_1.38.0         mnormt_2.1.1             
+[148] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
+[151] carData_3.0-5             minqa_1.2.8               pbapply_1.7-2            
+[154] httr2_1.0.5               spam_2.11-0               gson_0.1.0               
+[157] utf8_1.2.4                graphlayouts_1.2.0        gtools_3.9.5             
+[160] ggsignif_0.6.4            RcppEigen_0.3.4.0.2       shiny_1.9.1              
+[163] GenomeInfoDbData_1.2.12   glmmTMB_1.1.10            R.utils_2.12.3           
+[166] memoise_2.0.1             rmarkdown_2.28            scales_1.3.0             
+[169] R.methodsS3_1.8.2         svglite_2.1.3             future_1.34.0            
+[172] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
+[175] rstudioapi_0.17.1         cluster_2.1.6             mutoss_0.1-13            
+[178] spatstat.utils_3.1-0      hms_1.1.3                 fitdistrplus_1.2-1       
+[181] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-1         
+[184] FNN_1.1.4.1               rlang_1.1.4               DelayedMatrixStats_1.26.0
+[187] sparseMatrixStats_1.16.0  xts_0.14.1                dotCall64_1.2            
+[190] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[193] mgcv_1.9-1                xfun_0.48                 coda_0.19-4.1            
+[196] sna_2.8                   e1071_1.7-16              TH.data_1.1-2            
+[199] iterators_1.0.14          abind_1.4-8               GOSemSim_2.30.2          
+[202] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-9             
+[205] Rdpack_2.6.1              promises_1.3.0            scatterpie_0.2.4         
+[208] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-1           
+[211] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
+[214] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
+[217] boot_1.3-31               beachmat_2.20.0           listenv_0.9.1            
+[220] Rcpp_1.0.13               edgeR_4.2.2               workflowr_1.7.1          
+[223] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
+[226] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
+[229] spatstat.random_3.3-2     R6_2.5.1                  fastmap_1.2.0            
+[232] multcomp_1.4-26           fastmatch_1.1-4           rstatix_0.7.2            
+[235] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
+[238] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-13               
+[241] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
+[244] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
+[247] ggthemes_5.1.0            bit64_4.5.2               spatstat.explore_3.3-3   
+[250] lifecycle_1.0.4           blme_1.0-6                nloptr_2.1.1             
+[253] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-4-1      
+[256] spatstat.geom_3.3-3       NMF_0.28                  sn_2.1.1                 
+[259] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
+[262] pillar_1.9.0              gplots_3.2.0              pcaMethods_1.96.0        
+[265] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.0 (2024-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.7.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Zurich
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.3.0             CellChat_1.6.1              igraph_2.1.1               
+ [4] VennDiagram_1.7.3           futile.logger_1.4.3         ggupset_0.4.0              
+ [7] gridExtra_2.3               DOSE_3.30.5                 enrichplot_1.24.4          
+[10] msigdbr_7.5.1               org.Mm.eg.db_3.19.1         AnnotationDbi_1.66.0       
+[13] clusterProfiler_4.12.6      multtest_2.60.0             metap_1.11                 
+[16] scater_1.32.1               scuttle_1.14.0              destiny_3.18.0             
+[19] circlize_0.4.16             muscat_1.18.0               viridis_0.6.5              
+[22] viridisLite_0.4.2           lubridate_1.9.3             forcats_1.0.0              
+[25] stringr_1.5.1               purrr_1.0.2                 readr_2.1.5                
+[28] tidyr_1.3.1                 tibble_3.2.1                tidyverse_2.0.0            
+[31] dplyr_1.1.4                 SingleCellExperiment_1.26.0 SummarizedExperiment_1.34.0
+[34] Biobase_2.64.0              GenomicRanges_1.56.2        GenomeInfoDb_1.40.1        
+[37] IRanges_2.38.1              S4Vectors_0.42.1            BiocGenerics_0.50.0        
+[40] MatrixGenerics_1.16.0       matrixStats_1.4.1           pheatmap_1.0.12            
+[43] ggpubr_0.6.0                ggplot2_3.5.1               Seurat_5.1.0               
+[46] SeuratObject_5.0.2          sp_2.1-4                    runSeurat3_0.1.0           
+[49] ExploreSCdataSeurat3_0.1.0 
+
+loaded via a namespace (and not attached):
+  [1] ica_1.0-3                 plotly_4.10.4             Formula_1.2-5            
+  [4] zlibbioc_1.50.0           tidyselect_1.2.1          bit_4.5.0                
+  [7] doParallel_1.0.17         clue_0.3-65               lattice_0.22-6           
+ [10] rjson_0.2.23              blob_1.2.4                rngtools_1.5.2           
+ [13] S4Arrays_1.4.1            pbkrtest_0.5.3            parallel_4.4.0           
+ [16] png_0.1-8                 plotrix_3.8-4             registry_0.5-1           
+ [19] cli_3.6.3                 ggplotify_0.1.2           goftest_1.2-3            
+ [22] VIM_6.2.2                 variancePartition_1.34.0  ggnetwork_0.5.13         
+ [25] BiocNeighbors_1.22.0      shadowtext_0.1.4          uwot_0.2.2               
+ [28] curl_5.2.3                tidytree_0.4.6            mime_0.12                
+ [31] evaluate_1.0.1            leiden_0.4.3.1            ComplexHeatmap_2.20.0    
+ [34] stringi_1.8.4             backports_1.5.0           lmerTest_3.1-3           
+ [37] qqconf_1.3.2              httpuv_1.6.15             magrittr_2.0.3           
+ [40] rappdirs_0.3.3            splines_4.4.0             ggraph_2.2.1             
+ [43] sctransform_0.4.1         ggbeeswarm_0.7.2          DBI_1.2.3                
+ [46] jquerylib_0.1.4           smoother_1.3              withr_3.0.1              
+ [49] git2r_0.35.0              corpcor_1.6.10            systemfonts_1.1.0        
+ [52] reformulas_0.3.0          class_7.3-22              rprojroot_2.0.4          
+ [55] lmtest_0.9-40             tidygraph_1.3.1           BiocManager_1.30.25      
+ [58] formatR_1.14              colourpicker_1.3.0        htmlwidgets_1.6.4        
+ [61] fs_1.6.4                  ggrepel_0.9.6             statnet.common_4.10.0    
+ [64] labeling_0.4.3            fANCOVA_0.6-1             SparseArray_1.4.8        
+ [67] DESeq2_1.44.0             ranger_0.16.0             DEoptimR_1.1-3           
+ [70] reticulate_1.39.0         hexbin_1.28.4             zoo_1.8-12               
+ [73] XVector_0.44.0            knitr_1.48                network_1.18.2           
+ [76] ggplot.multistats_1.0.1   UCSC.utils_1.0.0          RhpcBLASctl_0.23-42      
+ [79] timechange_0.3.0          foreach_1.5.2             fansi_1.0.6              
+ [82] caTools_1.18.3            ggtree_3.12.0             data.table_1.16.2        
+ [85] R.oo_1.26.0               RSpectra_0.16-2           irlba_2.3.5.1            
+ [88] gridGraphics_0.5-1        fastDummies_1.7.4         lazyeval_0.2.2           
+ [91] yaml_2.3.10               survival_3.7-0            scattermore_1.2          
+ [94] crayon_1.5.3              RcppAnnoy_0.0.22          RColorBrewer_1.1-3       
+ [97] progressr_0.14.0          tweenr_2.0.3              later_1.3.2              
+[100] ggridges_0.5.6            codetools_0.2-20          GlobalOptions_0.1.2      
+[103] aod_1.3.3                 KEGGREST_1.44.1           Rtsne_0.17               
+[106] shape_1.4.6.1             limma_3.60.6              pkgconfig_2.0.3          
+[109] TMB_1.9.15                spatstat.univar_3.0-1     mathjaxr_1.6-0           
+[112] EnvStats_3.0.0            aplot_0.2.3               scatterplot3d_0.3-44     
+[115] gridBase_0.4-7            ape_5.8                   spatstat.sparse_3.1-0    
+[118] xtable_1.8-4              car_3.1-3                 highr_0.11               
+[121] plyr_1.8.9                httr_1.4.7                rbibutils_2.3            
+[124] tools_4.4.0               globals_0.16.3            beeswarm_0.4.0           
+[127] broom_1.0.7               nlme_3.1-166              lambda.r_1.2.4           
+[130] lme4_1.1-35.5             digest_0.6.37             numDeriv_2016.8-1.1      
+[133] Matrix_1.7-1              farver_2.1.2              tzdb_0.4.0               
+[136] remaCor_0.0.18            reshape2_1.4.4            yulab.utils_0.1.7        
+[139] glue_1.8.0                cachem_1.1.0              polyclip_1.10-7          
+[142] generics_0.1.3            Biostrings_2.72.1         ggalluvial_0.12.5        
+[145] mvtnorm_1.3-1             parallelly_1.38.0         mnormt_2.1.1             
+[148] statmod_1.5.0             RcppHNSW_0.6.0            ScaledMatrix_1.12.0      
+[151] carData_3.0-5             minqa_1.2.8               pbapply_1.7-2            
+[154] httr2_1.0.5               spam_2.11-0               gson_0.1.0               
+[157] utf8_1.2.4                graphlayouts_1.2.0        gtools_3.9.5             
+[160] ggsignif_0.6.4            RcppEigen_0.3.4.0.2       shiny_1.9.1              
+[163] GenomeInfoDbData_1.2.12   glmmTMB_1.1.10            R.utils_2.12.3           
+[166] memoise_2.0.1             rmarkdown_2.28            scales_1.3.0             
+[169] R.methodsS3_1.8.2         svglite_2.1.3             future_1.34.0            
+[172] RANN_2.6.2                Cairo_1.6-2               spatstat.data_3.1-2      
+[175] rstudioapi_0.17.1         cluster_2.1.6             mutoss_0.1-13            
+[178] spatstat.utils_3.1-0      hms_1.1.3                 fitdistrplus_1.2-1       
+[181] munsell_0.5.1             cowplot_1.1.3             colorspace_2.1-1         
+[184] FNN_1.1.4.1               rlang_1.1.4               DelayedMatrixStats_1.26.0
+[187] sparseMatrixStats_1.16.0  xts_0.14.1                dotCall64_1.2            
+[190] shinydashboard_0.7.2      ggforce_0.4.2             laeken_0.5.3             
+[193] mgcv_1.9-1                xfun_0.48                 coda_0.19-4.1            
+[196] sna_2.8                   e1071_1.7-16              TH.data_1.1-2            
+[199] iterators_1.0.14          abind_1.4-8               GOSemSim_2.30.2          
+[202] treeio_1.28.0             futile.options_1.0.1      bitops_1.0-9             
+[205] Rdpack_2.6.1              promises_1.3.0            scatterpie_0.2.4         
+[208] RSQLite_2.3.7             qvalue_2.36.0             sandwich_3.1-1           
+[211] fgsea_1.30.0              DelayedArray_0.30.1       proxy_0.4-27             
+[214] GO.db_3.19.1              compiler_4.4.0            prettyunits_1.2.0        
+[217] boot_1.3-31               beachmat_2.20.0           listenv_0.9.1            
+[220] Rcpp_1.0.13               edgeR_4.2.2               workflowr_1.7.1          
+[223] BiocSingular_1.20.0       tensor_1.5                MASS_7.3-61              
+[226] progress_1.2.3            BiocParallel_1.38.0       babelgene_22.9           
+[229] spatstat.random_3.3-2     R6_2.5.1                  fastmap_1.2.0            
+[232] multcomp_1.4-26           fastmatch_1.1-4           rstatix_0.7.2            
+[235] vipor_0.4.7               TTR_0.24.4                ROCR_1.0-11              
+[238] TFisher_0.2.0             rsvd_1.0.5                vcd_1.4-13               
+[241] nnet_7.3-19               gtable_0.3.5              KernSmooth_2.23-24       
+[244] miniUI_0.1.1.1            deldir_2.0-4              htmltools_0.5.8.1        
+[247] ggthemes_5.1.0            bit64_4.5.2               spatstat.explore_3.3-3   
+[250] lifecycle_1.0.4           blme_1.0-6                nloptr_2.1.1             
+[253] sass_0.4.9                vctrs_0.6.5               robustbase_0.99-4-1      
+[256] spatstat.geom_3.3-3       NMF_0.28                  sn_2.1.1                 
+[259] ggfun_0.1.6               future.apply_1.11.2       bslib_0.8.0              
+[262] pillar_1.9.0              gplots_3.2.0              pcaMethods_1.96.0        
+[265] locfit_1.5-9.10           jsonlite_1.8.9            GetoptLong_1.0.5         </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

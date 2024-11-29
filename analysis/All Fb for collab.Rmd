@@ -1,0 +1,182 @@
+---
+title: "all Fb for collab"
+author: "A.DeMartin"
+date: "2024-10-21"
+output: html_document
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+```
+
+## load object all Fb
+```{r load object AllFb d4}
+##load object merged allFb 
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_all_subsetFb_seurat.rds"
+seurat <- readRDS(fileNam)
+table(seurat$dataset)
+```
+
+
+```{r filter}
+##filer 
+seuratN <- subset(seurat, dataset %in% c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3", "o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3"), invert = T)
+table(seuratN$dataset)
+```
+
+```{r add metadata, eval=FALSE, include=TRUE}
+## add any type of metadata
+
+## cond
+SI <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+         "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3",
+         "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+         "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+gran <- c("o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3",
+        "o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+         "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+seuratN$cond <- "cond"
+seuratN$cond[which(seuratN$dataset %in% SI)] <- "SI"
+seuratN$cond[which(seuratN$dataset %in% gran)] <- "gran"
+table(seuratN$cond)
+
+## cond2
+WT <- c("o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3", 
+        "11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3")
+cko <- c("o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+         "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3",
+         "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+         "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3",
+         "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+         "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+seuratN$cond2 <- "cond2"
+seuratN$cond2[which(seuratN$dataset %in% WT)] <- "WT"
+seuratN$cond2[which(seuratN$dataset %in% cko)] <- "cko"
+table(seuratN$cond2)
+
+## cond3
+SID4 <- c("9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+        "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3")
+SID8 <- c("15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+        "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+granD4 <- c("o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3",
+        "o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+        "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+naive <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3",
+        "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+        "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+seuratN$cond3 <- "cond3"
+seuratN$cond3[which(seuratN$dataset %in% SID4)] <- "SID4"
+seuratN$cond3[which(seuratN$dataset %in% SID8)] <- "SID8"
+seuratN$cond3[which(seuratN$dataset %in% granD4)] <- "granD4"
+seuratN$cond3[which(seuratN$dataset %in% naive)] <- "naive"
+table(seuratN$cond3)
+
+## combine slots
+seuratN$cond2_plus_cond3 <- paste0(seuratN$cond2, "_", seuratN$cond3)
+table(seuratN$cond2_plus_cond3)
+
+seuratN$cond2_plus_cond <- paste0(seuratN$cond2, "_", seuratN$cond)
+table(seuratN$cond2_plus_cond)
+
+### save seurat object
+saveRDS(seuratN, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_all_subsetFb_seurat.rds")
+```
+
+## umaps 
+```{r umaps}
+## cluster
+seurat <- seuratN
+Idents(seurat) <- seurat$RNA_snn_res.0.25
+DimPlot(seurat, reduction= "umap")
+DimPlot(seurat, reduction= "umap", split.by = "cond3")
+
+table(seurat$Hp)
+table(seurat$cond)
+table(seurat$cond2)
+table(seurat$cond3)
+table(seurat$cond2_plus_cond3)
+table(seurat$cond2_plus_cond)
+
+seuratgranD4 <- subset(seurat, cond3 == "granD4")
+table(seuratgranD4$dataset)
+
+seuratSID4 <- subset(seurat, cond3 == "SID4")
+table(seuratSID4$dataset)
+
+seuratSID8 <- subset(seurat, cond3 == "SID8")
+table(seuratSID8$dataset)
+
+seuratnaive <- subset(seurat, cond3 == "naive")
+table(seuratnaive$dataset)
+
+seuratcko <- subset(seurat, cond2 == "cko")
+table(seuratcko$dataset)
+
+seuratWT <- subset(seurat, cond2 == "WT")
+table(seuratWT$dataset)
+```
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

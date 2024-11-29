@@ -12,6 +12,10 @@ editor_options:
 Granuloma Analysis
 [link](GranulomaAnalysis.html)
 
+## InteractionGranuloma
+Cellchat
+[link](CellChatGranuloma.html)
+
 ## GranulomaMacrophages 
 Gran Macrophage Analysis
 [link](GranulomaMacrophages.html)
