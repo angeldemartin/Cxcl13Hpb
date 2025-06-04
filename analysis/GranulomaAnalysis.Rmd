@@ -216,6 +216,7 @@ DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 0.5) + them
 DimPlot(seurat, reduction = "umap", cols = colclustername, pt.size = 1) + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", cols = colclustername) + theme(legend.position = "none")
 ```
+
 ## umaps condition
 ```{r plot umaps condition}
 ### umaps
@@ -250,10 +251,11 @@ write.table(markerGenes,
 genes <- data.frame(gene=rownames(seurat)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("Cpe","Ano1","Pecam1","Prox1","Lyve1","Sostdc1","Plp1","Ly6a","Acta2","Cd81","Cd34","Ncam1","Pdgfra","Pdpn", "Cd79a", "Cd79b", "Cd19", "Ighm", "Ighd", "Igha","Itgax","H2-Eb1","H2-Ab1","Cd74","Siglech", "Cx3cr1","Lyz2","Itgam","Msr1", "Arg1", "S100a8", "S100a9", "Il1b", "Rora", "Gata3", "Icos", "Cd4", "Klre1", "Klrk1", "Nkg7", "Gzmb","Cd8b1","Cd8a", "Trbc2", "Cd3d", "Trbc1")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("Cpe","Ano1","Pecam1","Prox1","Lyve1","Sostdc1","Plp1","Ly6a","Acta2","Cd81","Cd34","Ncam1","Pdgfra","Pdpn", "Cd79a", "Cd79b", "Cd19", "Ighm", "Ighd", "Igha","Itgax","H2-Eb1","H2-Ab1","Cd74","Siglech","Ly6c1","Adgre1","Cx3cr1","Lyz2","Itgam","Msr1", "Arg1", "Ly6g","S100a8", "S100a9", "Il1b", "Rora", "Gata3", "Icos", "Cd4", "Klre1", "Klrk1", "Nkg7", "Gzmb","Cd8b1","Cd8a", "Trbc2", "Cd3d", "Trbc1")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
 ```
+
 ### dotplot3
 ```{r dotplot3, fig.height=5, fig.width=9}
 genes <- data.frame(gene=rownames(seurat)) %>% 
@@ -263,6 +265,16 @@ selGenes <- data.frame(geneID=c("Ccl11","Il1rap","Il1r1","Il6st","Lifr","Osmr", 
 
 DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
 ```
+### dotplot4
+```{r dotplot4, fig.height=5, fig.width=9}
+genes <- data.frame(gene=rownames(seurat)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Ccr7", "Ltb", "Il7r", "Tnfrsf11a", "Ccr2", "Il1rl1", "Osm", "Il1b", "Kit", "Hmgb1", "Nod2", "Tnfsf15", "Il10ra")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seurat, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+```
+
 ### dotplot2
 ```{r dotplot2, fig.height=4, fig.width=15}
 genes <- data.frame(gene=rownames(seurat)) %>% 
@@ -381,6 +393,7 @@ ordX <-  c("WT", "cko")
 ## plot abundance
 ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "cluster", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
 ```
+
 ## relative abundance CD45pos
 ```{r relative abundance CD45pos}
 ##subset CD45+ cells
@@ -446,6 +459,7 @@ DimPlot(seurat, reduction = "umap", cols = colcelltype) + theme(legend.position 
 DimPlot(seurat, reduction = "umap", pt.size = 0.5, cols = colcelltype) + theme(legend.position = "none")
 DimPlot(seurat, reduction = "umap", pt.size = 1, cols = colcelltype) + theme(legend.position = "none")
 ```
+
 ## DE genes for each cell type according to WT/cko
 ```{r DE genes celltypes}
 Idents(seurat) <- seurat$cond2

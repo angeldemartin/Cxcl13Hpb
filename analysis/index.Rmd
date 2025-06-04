@@ -7,19 +7,15 @@ output:
 editor_options:
   chunk_output_type: console
 ---
-
-## GranulomaAllcells
+## Granuloma Cells
+### GranulomaAllcells
 Granuloma Analysis
 [link](GranulomaAnalysis.html)
 
-## InteractionGranuloma
+### InteractionGranuloma
 Cellchat
 [link](CellChatGranuloma.html)
 
-## GranulomaMacrophages 
+### GranulomaMacrophages 
 Gran Macrophage Analysis
 [link](GranulomaMacrophages.html)
-
-## Fibroblast
-Fibroblast Analysis 
-[link](FibroblastAnalysis.html)

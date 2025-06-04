@@ -1,0 +1,873 @@
+---
+title: "FibroblastAnalysisincl.D8"
+author: "A.DeMartin"
+date: "2025-03-20"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+```
+
+# pre-processing 
+
+## load files and merge
+```{r load indiviual files, eval=FALSE, include=TRUE}
+##load objects juli2021 and merge all 
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2021/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+    cat("Merged", i, "of", length(fileNamList), "files - Total cells:", ncol(seuratN), "\n")
+  }else{
+    seuratN <- seuratS
+    cat("Initialized with first Seurat object:", fileNamList[i], "\n")
+  }
+}
+remove(seuratS)
+unique(seuratN$dataset)
+
+##load objects juli2022 and merge all
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJuli2022/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+    cat("Merged", i, "of", length(fileNamList), "files - Total cells:", ncol(seuratN), "\n")
+  }else{
+    seuratN <- seuratS
+    cat("Initialized with first Seurat object:", fileNamList[i], "\n")
+  }
+}
+remove(seuratS)
+unique(seuratN$dataset)
+
+##load objects June2019 dataNaive and merge all
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJune2019/dataNaive/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+    cat("Merged", i, "of", length(fileNamList), "files - Total cells:", ncol(seuratN), "\n")
+  }else{
+    seuratN <- seuratS
+     cat("Initialized with first Seurat object:", fileNamList[i], "\n")
+  }
+}
+remove(seuratS)
+unique(seuratN$dataset)
+
+##load objects Sept2020 and merge all
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataSept2020/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+    cat("Merged", i, "of", length(fileNamList), "files - Total cells:", ncol(seuratN), "\n")
+  }else{
+    seuratN <- seuratS
+  }
+}
+remove(seuratS)
+unique(seuratN$dataset)
+
+##load objects June2019 dataD8 and merge all
+basedir <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/dataJune2019/dataD8/"
+fileNamList <- list.files(path = basedir)
+
+for(i in 1:length(fileNamList)){
+  seuratS <- readRDS(paste0(basedir, fileNamList[i]))
+  if(exists("seuratN")){
+    seuratN <- merge(x = seuratN, y = seuratS)
+    cat("Merged", i, "of", length(fileNamList), "files - Total cells:", ncol(seuratN), "\n")
+  }else{
+    seuratN <- seuratS
+  }
+}
+remove(seuratS)
+unique(seuratN$dataset)
+table(seuratN$dataset)
+table(seuratN$orig.ident)
+
+##filer off adjacent and beads pool file
+seuratN <- subset(seuratN, dataset %in% c("11_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4__beads_pool_v3"), invert = T)
+table(seuratN$dataset)
+table(seuratN$orig.ident)
+
+#rerun seurat
+seuratN <- NormalizeData (object = seuratN)
+seuratN <- FindVariableFeatures(object = seuratN)
+seuratN <- ScaleData(object = seuratN, verbose = TRUE)
+seuratN <- RunPCA(object=seuratN, npcs = 30, verbose = FALSE)
+seuratN <- RunTSNE(object=seuratN, reduction="pca", dims = 1:20)
+seuratN <- RunUMAP(object=seuratN, reduction="pca", dims = 1:20)
+seuratN <- FindNeighbors(object = seuratN, reduction = "pca", dims= 1:20)
+
+res <- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratN <- FindClusters(object = seuratN, resolution = res[i], random.seed = 1234)
+}
+
+saveRDS(seuratN, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_all_naiveANDd4ANDd8_seurat.rds")
+```
+
+## load object merged all
+```{r load object merged all}
+##load object merged all naive and d4 and d8
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_all_naiveANDd4ANDd8_seurat.rds"
+seuratN <- readRDS(fileNam)
+table(seuratN$dataset)
+table(seuratN$orig.ident)
+```
+
+## plot umap all merged
+```{r plot umap all merged}
+## plot umap
+Idents(seuratN) <- seuratN$RNA_snn_res.0.25
+levels(seuratN)
+DimPlot(seuratN, reduction = "umap", label = TRUE)
+
+## plot feature
+FeaturePlot(seuratN, features = "ENSMUSG00000026395.Ptprc", pt.size = 1, cols = c("lightgrey", "#BE3144"))
+FeaturePlot(seuratN, features = "ENSMUSG00000020717.Pecam1", pt.size = 1, cols = c("lightgrey", "#BE3144"))
+FeaturePlot(seuratN, features = "ENSMUSG00000028583.Pdpn", pt.size = 1, cols = c("lightgrey", "#BE3144"))
+```
+## subset fibroblasts and rerun seurat
+```{r subset fb and rerun seurat, eval=FALSE, include=TRUE}
+## subset fb and rerun
+seuratFb <- subset(seuratN, RNA_snn_res.0.25 %in% c("0", "1", "2", "5", "12", "11", "14", "4"))
+
+## rerun seuratFb
+seuratFb <- NormalizeData (object = seuratFb)
+seuratFb <- FindVariableFeatures(object = seuratFb)
+seuratFb <- ScaleData(object = seuratFb, verbose = TRUE)
+seuratFb <- RunPCA(object=seuratFb, npcs = 30, verbose = FALSE)
+seuratFb <- RunTSNE(object=seuratFb, reduction="pca", dims = 1:20)
+seuratFb <- RunUMAP(object=seuratFb, reduction="pca", dims = 1:20)
+seuratFb <- FindNeighbors(object = seuratFb, reduction = "pca", dims= 1:20)
+
+res <- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratFb <- FindClusters(object = seuratFb, resolution = res[i], random.seed = 1234)
+}
+
+saveRDS(seuratFb, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4ANDd8_seurat.rds")
+```
+
+## add metadata
+```{r add metadata, eval=FALSE, include=TRUE}
+## add any type of metadata
+## cond2
+WT <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3",
+        "o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3", 
+        "11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3")
+cko <- c("o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3",
+         "o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+         "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3",
+         "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+         "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+         "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3",
+         "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+          "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+seuratFb$cond2 <- "cond2"
+seuratFb$cond2[which(seuratFb$dataset %in% WT)] <- "WT"
+seuratFb$cond2[which(seuratFb$dataset %in% cko)] <- "cko"
+table(seuratFb$cond2)
+
+## order
+seuratFb$cond2 <- factor(seuratFb$cond2, levels=c("WT", "cko"))
+Idents(seuratFb) <- seuratFb$cond2
+table(seuratFb$cond2)
+
+## mouse
+m1wtnaive <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3")
+m2wtnaive <- c("12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3")
+m1ckonaive <- c("10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+m2ckonaive <- c("9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+
+m1wtD4SI <- c("9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3")
+m2wtD4SI <- c("10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3")
+m1ckoD4SI <- c("7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3")
+m2ckoD4SI <- c("8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3")
+
+m1wtD4Gran <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3", "o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3")
+m2wtD4Gran <- c("9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3")
+m1ckoD4Gran <- c("o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3","o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3")
+m2ckoD4Gran <- c("10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+
+m1wtD8SI <- c("15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3")
+m2wtD8SI <- c("16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3")
+m1ckoD8SI <- c("13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+m2ckoD8SI <- c("14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+
+seuratFb$mouse <- "mouse"
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtnaive)] <- "m1wtnaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtnaive)] <- "m2wtnaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckonaive)] <- "m1ckonaive"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckonaive)] <- "m2ckonaive"
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4SI)] <- "m1wtD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4SI)] <- "m2wtD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4SI )] <- "m1ckoD4SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4SI)] <- "m2ckoD4SI"
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD4Gran)] <- "m1wtD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD4Gran)] <- "m2wtD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD4Gran)] <- "m1ckoD4Gran"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD4Gran)] <- "m2ckoD4Gran"
+
+seuratFb$mouse[which(seuratFb$dataset %in% m1wtD8SI)] <- "m1wtD8SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2wtD8SI)] <- "m2wtD8SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m1ckoD8SI)] <- "m1ckoD8SI"
+seuratFb$mouse[which(seuratFb$dataset %in% m2ckoD8SI)] <- "m2ckoD8SI"
+
+## order
+seuratFb$mouse <- factor(seuratFb$mouse, levels=c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD4SI", "m1ckoD4SI","m2ckoD4SI",  "m1wtD4Gran", "m2wtD4Gran",  "m1ckoD4Gran", "m2ckoD4Gran", "m1wtD8SI", "m2wtD8SI", "m1ckoD8SI", "m2ckoD8SI"))
+Idents(seuratFb) <- seuratFb$mouse
+table(seuratFb$mouse)
+
+## Hp
+d4 <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3",
+        "o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3",
+        "o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3",
+        "o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+        "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3",
+        "9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+        "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3")
+d8 <- c("15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+          "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+naive <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3",
+        "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+        "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+seuratFb$Hp <- "Hp"
+seuratFb$Hp[which(seuratFb$dataset %in% d4)] <- "d4"
+seuratFb$Hp[which(seuratFb$dataset %in% d8)] <- "d8"
+seuratFb$Hp[which(seuratFb$dataset %in% naive)] <- "naive"
+table(seuratFb$Hp)
+
+## cond3
+infectedD4 <- c("9_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "10_20200923_Mu_LP_Cxcl13Cre_EYFP_HpD4_v3",
+        "7_20200923_Mu_LP_Cxcl13Cre_IL33flfl_EYFP_HpD4_v3",
+        "8_20200923_Mu_LP_Cxcl13Cre_IL33fllf_EYFP_HpD4_v3")
+infectedD8 <- c("15_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "16_20190613_Mouse_LP_Hp_d8_Cxcl13cre_EYFP_v3",
+        "13_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP",
+          "14_20190613_Mouse_LP_Hp_d8_Cxcl13cre_IL33flfl_EYFP")
+granulomaD4 <- c("o289411_1-1_20220629_Mu_granuloma_Cxcl13Cre_CD45_HpD4_v3",
+        "o289411_2-2_20220629_Mu_granuloma_Cxcl13Cre_FSC_HpD4_v3",
+        "9_20210624_Mu_granuloma_Cxcl13Cre_EYFP_HpD4_v3",
+        "o289411_3-3_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_CD45_HpD4_v3",
+        "o289411_4-4_20220629_Mu_granuloma_Cxcl13Cre_IL33fl_FSC_HpD4_v3",
+        "10_20210624_Mu_granuloma_Cxcl13Cre_IL33flf_EYFP_HpD4_v3")
+naive <- c("11_20190604_Mouse_LP_Cxcl13cre_EYFP_v3", 
+        "12_20190604_Mouse_LP_Cxcl13cre_EYFP_v3",
+        "10_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3",
+        "9_20190604_Mouse_LP_Cxcl13cre_IL33flfl_EYFP_v3")
+seuratFb$cond3 <- "cond3"
+seuratFb$cond3[which(seuratFb$dataset %in% infectedD4)] <- "infectedD4"
+seuratFb$cond3[which(seuratFb$dataset %in% infectedD8)] <- "infectedD8"
+seuratFb$cond3[which(seuratFb$dataset %in% granulomaD4)] <- "granulomaD4"
+seuratFb$cond3[which(seuratFb$dataset %in% naive)] <- "naive"
+table(seuratFb$cond3)
+
+## order
+seuratFb$cond3 <- factor(seuratFb$cond3, levels=c("naive", "infectedD4", "granulomaD4", "infectedD8"))
+Idents(seuratFb) <- seuratFb$cond3
+table(seuratFb$cond3)
+
+seuratFb$cond2_plus_cond3 <- paste0(seuratFb$cond2, "_", seuratFb$cond3)
+table(seuratFb$cond2_plus_cond3)
+
+## clustername
+seuratFb$clustername <- "clustername"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "0" )] <- "PdgfraloFb1"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "1" )] <- "PdgfraloFb2"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "2" )] <- "Trophocytes"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "3" )] <- "Telocytes"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "4" )] <- "PdgfraloFb3"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "5" )] <- "PdgfraloFb4"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "6" )] <- "Myocytes"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "7" )] <- "Pdgfrahi"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "8" )] <- "Prolif"
+seuratFb$clustername[which(seuratFb$RNA_snn_res.0.25 %in% "9" )] <- "Thy1Fb"
+
+table(seuratFb$clustername)
+table(seuratFb$RNA_snn_res.0.25)
+
+## order
+seuratFb$clustername <- factor(seuratFb$clustername, levels=c("PdgfraloFb1","PdgfraloFb2","PdgfraloFb3","PdgfraloFb4","Trophocytes","Telocytes","Myocytes", "Pdgfrahi", "Thy1Fb", "Prolif"))
+Idents(seuratFb) <- seuratFb$clustername
+table(seuratFb$clustername)
+
+seuratFb$clustername_plus_cond3 <- paste0(seuratFb$clustername, "_", seuratFb$cond3)
+table(seuratFb$clustername_plus_cond3)
+
+### save seurat object
+saveRDS(seuratFb, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4ANDd8_seurat.rds")
+```
+#################################################
+
+# explore Fb
+
+## load object merged allFb 
+```{r load object merged allFb}
+##load object merged allFb naive and d4 and d8
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4ANDd8_seurat.rds"
+seuratFb <- readRDS(fileNam)
+table(seuratFb$dataset)
+```
+
+## set color vectors 
+```{r colors}
+## set vector for cond2
+colcond2 <- c("#202547","#BE3144")
+names(colcond2) <- c("WT", "cko")
+
+## set vector for cond2
+colcond3 <- c("#B45B5C","#628395","#BF782D","#67001f")# "#f4a582"
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4", "infectedD8")
+
+#colPal <- c("#355C7D", "#8E9B97","#779d8d","#0F1F38","#E84A5F","#FF847C","#F8B195", "#727077", "#C06C84","#2A363B", "#6C5B7B")
+#names(colPal) <- c("0" ,"1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+
+colPal <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
+names(colPal) <- c("0" ,"1", "2", "3","4", "5", "6", "7", "8", "9")
+
+colclustername <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#F8B195","#727077","#FF847C","#C06C84","#904D39")
+names(colclustername) <- c("PdgfraloFb1" ,"PdgfraloFb2", "Trophocytes","PdgfraloFb3", "Telocytes","Myocytes", "Pdgfrahi", "PdgfraloFb4", "Thy1Fb", "Prolif")
+```
+
+## umaps clustername
+```{r umaps clustername}
+## RNA_snn_res.0.25
+Idents(seuratFb) <- seuratFb$RNA_snn_res.0.25
+DimPlot(seuratFb, reduction= "umap", label = TRUE)
+## clustername
+Idents(seuratFb) <- seuratFb$clustername
+DimPlot(seuratFb, reduction= "umap", cols = colclustername)
+DimPlot(seuratFb, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+## cond2
+Idents(seuratFb) <- seuratFb$cond2
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, shuffle = TRUE)
+## cond3
+Idents(seuratFb) <- seuratFb$cond3
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = TRUE)
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = TRUE, split.by = "cond3")
+```
+
+## calculate cluster marker genes
+```{r marker gens, include=TRUE, eval=FALSE}
+## calculate marker genes
+Idents(seuratFb) <- seuratFb$clustername
+levels(seuratFb)
+
+markerGenes <- FindAllMarkers(seuratFb, only.pos=T) %>% 
+  dplyr::filter(p_val_adj < 0.01) 
+
+write.table(markerGenes, 
+            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/FbmarkerGenesclusternameincl.D8.txt",
+            sep="\t",
+            quote=F,
+            row.names=F,
+            col.names=T)
+```
+
+## dotplot fb
+```{r dotplot fb, fig.height=4, fig.width=7}
+genes <- data.frame(gene=rownames(seuratFb)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+
+selGenes <- data.frame(geneID=c("Mki67","Ncam1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+DotPlot(seuratFb, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="D") + coord_flip()
+```
+
+## abundances Fb subsets
+```{r Fb abundances plot}
+## make count list according to cond3
+datList <- NULL
+for(con in unique(seuratFb$cond3)){
+  seuratSub <- subset(seuratFb, cond3==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("naive", "infectedD4", "granulomaD4", "infectedD8") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
+
+## make count list according to cond2 plus cond3
+datList <- NULL
+for(con in unique(seuratFb$cond2_plus_cond3)){
+  seuratSub <- subset(seuratFb, cond2_plus_cond3==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT_naive", "cko_naive", "WT_infectedD4", "cko_infectedD4", "WT_granulomaD4", "cko_granulomaD4", "WT_infectedD8", "cko_infectedD8") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX) + theme(axis.text.x = element_text(angle = 20, hjust=1))
+
+## make count list according to mouse
+datList <- NULL
+for(con in unique(seuratFb$mouse)){
+  seuratSub <- subset(seuratFb, mouse==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <- c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD4SI", "m1ckoD4SI","m2ckoD4SI",  "m1wtD4Gran", "m2wtD4Gran",  "m1ckoD4Gran", "m2ckoD4Gran", "m1ckoD8SI","m2ckoD8SI", "m1wtD8SI","m2wtD8SI")
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) 
+```
+
+### subset fibroblast wt
+```{r subset seurat Fb wt, fig.height=8, fig.width=15}
+table(seuratFb$cond2)
+seuratFbwt <- subset(seuratFb, cond2 == "WT")
+table(seuratFbwt$orig.ident)
+```
+
+## avg heatmap cluster marker genes (Prados, Onder, Nat Immunol. 2021)
+```{r avg heatmap PP FRC cluster marker}
+Idents(seuratFb) <- seuratFb$cond3
+levels(seuratFb)
+seurat <- seuratFb
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  #selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(_.*)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=colnames(logNormExpresMa))
+  colnames(annotation_col)[1] <- "celltype"
+  colnames(annotation_col)[2] <- "cond"
+    annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^.*?_)","",cond))
+
+ rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      #cond = colcond3,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+     #ordVec <- c("naive","infectedD4","granulomaD4")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+##genes
+#	cytokine-mediated signaling pathway
+#negative regulation of endopeptidase activity
+genesPlot <- c("Cttnbp2","Cr2", "Cxcl13", "Madcam1", "Acta2", "Cxcl12", "Il33", "Il7", "Ccl19", "Ccl21a", "Col1a1", "C3", "Ltbr", "Tnfrsf1a", "Irf7", "Ifit3", "Ifit1")
+
+levels(seurat)
+colVec <- colcond3
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## avg heatmap cluster marker genes (Prados, Onder, Nat Immunol. 2021)
+```{r avg heatmap PP FRC cluster marker-2}
+Idents(seuratFb) <- seuratFb$cond2_plus_cond3
+levels(seuratFb)
+seurat <- seuratFb
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  #selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(_.*)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=colnames(logNormExpresMa))
+  colnames(annotation_col)[1] <- "celltype"
+  colnames(annotation_col)[2] <- "cond"
+    annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^.*?_)","",cond))
+
+ rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colcond3,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+     ordVec <- c("WT_naive","cko_naive", "WT_infectedD4","cko_infectedD4","WT_granulomaD4", "cko_granulomaD4", "WT_infectedD8", "cko_infectedD8")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+##genes
+#	cytokine-mediated signaling pathway
+#negative regulation of endopeptidase activity
+genesPlot <- c("Cttnbp2","Cr2", "Cxcl13", "Madcam1", "Acta2", "Cxcl12", "Il33", "Il7", "Ccl19", "Ccl21a", "Col1a1", "C3", "Ltbr", "Tnfrsf1a", "Irf7", "Ifit3", "Ifit1")
+
+levels(seurat)
+colVec <- colcond2
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## avg heatmap cluster marker genes (Cheng et al. Nat. commun. 2022)
+```{r avg heatmap SILT FRC cluster marker}
+Idents(seuratFb) <- seuratFb$cond3
+levels(seuratFb)
+seurat <- seuratFb
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  #selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(_.*)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=colnames(logNormExpresMa))
+  colnames(annotation_col)[1] <- "celltype"
+  colnames(annotation_col)[2] <- "cond"
+    annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^.*?_)","",cond))
+
+ rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      #cond = colcond3,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+     #ordVec <- c("naive","infectedD4","granulomaD4")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+#genes
+genesPlot <- c("Clu", "Il7", "Vcam1", "Icam1", "Cxcl16", "Cxcl13", "Cxcl10", "Cxcl9", "Ccl2", "Tnfsf13b", "Tnfsf11", "Kitl")
+
+levels(seurat)
+colVec <- colcond3
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## avg heatmap cluster marker genes (Cheng et al. Nat. commun. 2022)
+```{r avg heatmap SILT FRC cluster marker-2}
+Idents(seuratFb) <- seuratFb$cond2_plus_cond3
+levels(seuratFb)
+seurat <- seuratFb
+levels(seurat)
+
+avgHeatmap <- function(seurat, selGenes, colVecIdent, colVecCond=NULL,
+                       ordVec=NULL, gapVecR=NULL, gapVecC=NULL,cc=FALSE,
+                       cr=FALSE, condCol=FALSE){
+  
+  #selGenes <- selGenes$gene
+  
+  ## assay data
+  clusterAssigned <- as.data.frame(Idents(seurat)) %>%
+  dplyr::mutate(cell=rownames(.))
+  colnames(clusterAssigned)[1] <- "ident"
+  seuratDat <- GetAssayData(seurat)
+  
+  ## genes of interest
+  genes <- data.frame(gene=rownames(seurat)) %>% 
+    mutate(geneID=gsub("^.*\\.", "", gene)) %>% filter(geneID %in% selGenes)
+
+  ## matrix with averaged cnts per ident
+  logNormExpres <- as.data.frame(t(as.matrix(
+    seuratDat[which(rownames(seuratDat) %in% genes$gene),])))
+  logNormExpres <- logNormExpres %>% dplyr::mutate(cell=rownames(.)) %>%
+    dplyr::left_join(.,clusterAssigned, by=c("cell")) %>%
+    dplyr::select(-cell) %>% dplyr::group_by(ident) %>%
+    dplyr::summarise_all(mean)
+  logNormExpresMa <- logNormExpres %>% dplyr::select(-ident) %>% as.matrix()
+  rownames(logNormExpresMa) <- logNormExpres$ident
+  logNormExpresMa <- t(logNormExpresMa)
+  rownames(logNormExpresMa) <- gsub("^.*?\\.","",rownames(logNormExpresMa))
+  
+  ## remove genes if they are all the same in all groups
+  ind <- apply(logNormExpresMa, 1, sd) == 0
+  logNormExpresMa <- logNormExpresMa[!ind,]
+  genes <- genes[!ind,]
+
+  ## color columns according to cluster
+  annotation_col <- as.data.frame(gsub("(_.*)","",colnames(logNormExpresMa)))%>%
+    dplyr::mutate(celltype=colnames(logNormExpresMa))
+  colnames(annotation_col)[1] <- "celltype"
+  colnames(annotation_col)[2] <- "cond"
+    annotation_col <- annotation_col %>%
+    dplyr::mutate(cond = gsub("(^.*?_)","",cond))
+
+ rownames(annotation_col) <- colnames(logNormExpresMa) 
+
+  ann_colors = list(
+      cond = colcond3,
+      celltype=colVecIdent)
+  if(is.null(ann_colors$cond)){
+    annotation_col$cond <- NULL
+  }
+  
+  ## adjust order
+  logNormExpresMa <- logNormExpresMa[selGenes,]
+  if(is.null(ordVec)){
+    ordVec <- levels(seurat)
+     ordVec <- c("WT_naive","cko_naive", "WT_infectedD4","cko_infectedD4","WT_granulomaD4", "cko_granulomaD4", "WT_infectedD8", "cko_infectedD8")
+     
+  }
+  logNormExpresMa <- logNormExpresMa[,ordVec]
+
+  ## scaled row-wise
+  pheatmap(logNormExpresMa, scale="row" ,treeheight_row = 0, cluster_rows = cr, 
+         cluster_cols = cc,
+         color = colorRampPalette(c("#2166AC", "#F7F7F7", "#B2182B"))(50),
+         annotation_col = annotation_col, cellwidth=15, cellheight=10,
+         annotation_colors = ann_colors, gaps_row = gapVecR, gaps_col = gapVecC)
+}
+
+##genes
+genesPlot <- c("Clu", "Il7", "Vcam1", "Icam1", "Cxcl16", "Cxcl13", "Cxcl10", "Cxcl9", "Ccl2", "Tnfsf13b", "Tnfsf11", "Kitl")
+
+levels(seurat)
+colVec <- colcond2
+# colVec <- c(colPal, colPal, colPal)
+# colVec <- c("blue", "red")
+avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
+```
+
+## violin plots of FRC genes
+```{r violin plots of FRC genes}
+Idents(seuratFbwt) <- seuratFbwt$cond3
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000071005.Ccl19", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000094686.Ccl21a", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000035385.Ccl2", pt.size = 0, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000040329.Il7", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000022015.Tnfsf11", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000020310.Madcam1", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000022037.Clu", pt.size = 1, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000019966.Kitl", pt.size = 0, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000030339.Ltbr", pt.size = 0, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000025498.Irf7", pt.size = 0, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000031497.Tnfsf13b", pt.size = 0, cols = colcond3) 
+VlnPlot(object=seuratFbwt, features = "ENSMUSG00000029417.Cxcl9", pt.size = 0, cols = colcond3) 
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

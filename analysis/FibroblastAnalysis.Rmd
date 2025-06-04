@@ -312,6 +312,9 @@ seuratFb$clustername <- factor(seuratFb$clustername, levels=c("PdgfraloFb1","Pdg
 Idents(seuratFb) <- seuratFb$clustername
 table(seuratFb$clustername)
 
+seuratFb$clustername_plus_cond3 <- paste0(seuratFb$clustername, "_", seuratFb$cond3)
+table(seuratFb$clustername_plus_cond3)
+
 ### save seurat object
 saveRDS(seuratFb, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds")
 ```
@@ -354,7 +357,34 @@ table(seuratFb$clustername)
 table(seuratFb$orig.ident)
 table(seuratFb$cond3)
 DimPlot(seuratFb, reduction= "umap", cols = colclustername)
+DimPlot(seuratFb, reduction= "pca", cols = colclustername)
 DimPlot(seuratFb, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+#subset wt
+table(seuratFb$cond2)
+seuratFbwt <- subset(seuratFb, cond2 == "WT")
+table(seuratFbwt$cond2)
+#subset cko
+seuratFbcko <- subset(seuratFb, cond2 == "cko")
+table(seuratFbcko$cond2)
+
+## cluster name
+Idents(seuratFbwt) <- seuratFbwt$clustername
+DimPlot(seuratFbwt, reduction= "umap", cols = colclustername)
+DimPlot(seuratFbwt, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+## cond2
+Idents(seuratFbwt) <- seuratFbwt$cond2
+DimPlot(seuratFbwt, reduction= "umap", cols = colcond2)
+DimPlot(seuratFbwt, reduction= "umap", cols = colcond2) + theme(legend.position = "none")
+
+## cluster name
+Idents(seuratFbcko) <- seuratFbcko$clustername
+DimPlot(seuratFbcko, reduction= "umap", cols = colclustername)
+DimPlot(seuratFbcko, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+## cond2
+Idents(seuratFbcko) <- seuratFbcko$cond2
+DimPlot(seuratFbcko, reduction= "umap", cols = colcond2)
+DimPlot(seuratFbcko, reduction= "umap", cols = colcond2) + theme(legend.position = "none")
 ```
 
 ## umaps conditions
@@ -362,10 +392,28 @@ DimPlot(seuratFb, reduction= "umap", cols = colclustername) + theme(legend.posit
 ## cond3
 Idents(seuratFb) <- seuratFb$cond3
 table(seuratFb$cond3)
-DimPlot(seuratFb, reduction= "umap", cols = colcond3)
-DimPlot(seuratFb, reduction= "umap", cols = colcond3) + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = T)
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = T) + theme(legend.position = "none")
 DimPlot(seuratFb, reduction= "umap", cols = colcond3, split.by = "cond3") + theme(legend.position = "none")
 
+## on grey background 
+colcond3 <- c("lightgrey","lightgrey","#BF782D")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "granulomaD4") + theme(legend.position = "none")
+
+colcond3 <- c("lightgrey","#628395","lightgrey")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "naive")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "naive") + theme(legend.position = "none")
+
+colcond3 <- c("#B45B5C","lightgrey","lightgrey")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "infectedD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "infectedD4") + theme(legend.position = "none")
+
+colcond3 <- c("#B45B5C","#628395","#BF782D")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
 seuratFbgran <- subset(seuratFb, cond3 == "granulomaD4")
 DimPlot(seuratFbgran, reduction= "umap", cols = colcond3) + theme(legend.position = "none")
 
@@ -379,7 +427,23 @@ DimPlot(seuratFbnaive, reduction= "umap", cols = colcond3) + theme(legend.positi
 Idents(seuratFb) <- seuratFb$cond2
 table(seuratFb$cond2)
 DimPlot(seuratFb, reduction= "umap", cols = colcond2)
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "WT")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "WT") + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "cko")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "cko") + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, shuffle = TRUE)
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
 DimPlot(seuratFb, reduction= "umap", cols = colcond2, split.by = "cond2") + theme(legend.position = "none")
+
+DimPlot(seuratFb, reduction= "pca", cols = colcond2, shuffle = TRUE)
+```
+
+## density umaps
+```{r density umaps conditions}
+library(Nebulosa)
+plot_density(seuratFb, reduction = "umap", features = "ENSMUSG00000028583.Pdpn")
+plot_density(seuratFb, reduction = "umap", features = "ENSMUSG00000024810.Il33")
+plot_density(seuratFb, reduction = "umap", features = "ENSMUSG00000020676.Ccl11")
 ```
 
 ## feature plots fb maker genes
@@ -430,8 +494,14 @@ FeaturePlot(seuratFb, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgre
 FeaturePlot(seuratFb, features = "ENSMUSG00000022057.Adamdec1", cols = c("lightgrey", "#BE3144"), pt.size = 1)
 FeaturePlot(seuratFb, features = "ENSMUSG00000022057.Adamdec1", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
 
-FeaturePlot(seuratFb, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1, split.by = "cond3")
-FeaturePlot(seuratFb, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1, split.by = "cond3") + theme(legend.position = "none") + ggtitle(NULL)
+FeaturePlot(seuratFb, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFb, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFb, features = "ENSMUSG00000024011.Pi16", cols = c("lightgrey", "#BE3144"), pt.size = 1, order = TRUE)
+FeaturePlot(seuratFb, features = "ENSMUSG00000024011.Pi16", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFb, features = "ENSMUSG00000094686.Ccl21a", cols = c("lightgrey", "#BE3144"), pt.size = 1, order = TRUE)
+FeaturePlot(seuratFb, features = "ENSMUSG00000094686.Ccl21a", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
 ```
 
 ## average Heatmap - Fb top5 cluster marker
@@ -579,7 +649,6 @@ ordX <- c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD
 ## plot abundance
 ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) 
 ```
-
 
 ## session info
 ```{r date and session info}

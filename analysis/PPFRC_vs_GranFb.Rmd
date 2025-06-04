@@ -1,0 +1,255 @@
+---
+title: "PPFRCs_vs_GranFb"
+author: "A.DeMartin"
+date: "2025-03-24"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(corrplot)
+library(scran)
+library(VennDiagram)
+```
+
+## load object merged allFb d4
+```{r load object merged allFb d4}
+##load object merged allFb naive and d4
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds"
+seuratFb <- readRDS(fileNam)
+table(seuratFb$dataset)
+```
+
+## load object allPP Fb (Prados, Onder, Nat Immunol. 2021)
+```{r load object allPP Fb}
+##load object all PP FRCs (Prados, Onder, Nat Immunol. 2021)
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/allPP_merged_seurat.rds"
+seuratPP <- readRDS(fileNam)
+table(seuratPP$dataset)
+
+##explore object
+Idents(seuratPP) <- seuratPP$integrated_snn_res.0.25
+DimPlot(seuratPP, reduction= "umap")
+
+Idents(seuratPP) <- seuratPP$eyfpGrp
+DimPlot(seuratPP, reduction= "umap")
+```
+
+## load object EYFP+ Fb (Prados, Onder, Nat Immunol. 2021)
+```{r load object EYFP+ Fb}
+##load object EYFP+ PP FRCs (Prados, Onder, Nat Immunol. 2021)
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/eyfpOnlyPP_merged_seurat.rds"
+seuratPPeyfp <- readRDS(fileNam)
+table(seuratPPeyfp$dataset)
+
+##explore object
+Idents(seuratPPeyfp) <- seuratPPeyfp$integrated_snn_res.0.6
+DimPlot(seuratPPeyfp, reduction= "umap", label =TRUE)
+```
+
+## merge datasets eyfpOnlyPP and allFb_naiveANDd4
+```{r merge datasets eyfpOnlyPP and allFb_naiveANDd4}
+seuratC <- merge(x = seuratFb, y = seuratPPeyfp)
+
+##assign clusters for comparison
+##comp
+seuratC$comp <- "comp"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "0" )] <- "PP_TRC1"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "1" )] <- "PP_LPF1"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "2" )] <- "PP_SEF"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "3" )] <- "PP_LPF2"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "4" )] <- "PP_LPF3"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "5" )] <- "PP_TBRC"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "6" )] <- "PP_TRC3"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "7" )] <- "PP_FDC"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "8" )] <- "PP_Myo"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "9" )] <- "PP_TRC2"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "10" )] <- "PP_MRC"
+seuratC$comp[which(seuratC$integrated_snn_res.0.6 %in% "11" )] <- "PP_Meso"
+seuratC$comp[which(seuratC$cond3 %in% "naive" )] <- "naive"
+seuratC$comp[which(seuratC$cond3 %in% "infectedD4" )] <- "infectedD4"
+seuratC$comp[which(seuratC$cond3 %in% "granulomaD4" )] <- "granulomaD4"
+table(seuratC$comp)
+
+##assign clusters for comparison-2
+##comp2
+seuratC$comp2 <- "comp2"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "0" )] <- "PP_TRC1"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "1" )] <- "PP_LPF1"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "2" )] <- "PP_SEF"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "3" )] <- "PP_LPF2"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "4" )] <- "PP_LPF3"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "5" )] <- "PP_TBRC"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "6" )] <- "PP_TRC3"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "7" )] <- "PP_FDC"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "8" )] <- "PP_Myo"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "9" )] <- "PP_TRC2"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "10" )] <- "PP_MRC"
+seuratC$comp2[which(seuratC$integrated_snn_res.0.6 %in% "11" )] <- "PP_Meso"
+seuratC$comp2[which(seuratC$clustername %in% "PdgfraloFb1" )] <- "PdgfraloFb1"
+seuratC$comp2[which(seuratC$clustername %in% "PdgfraloFb2" )] <- "PdgfraloFb2"
+seuratC$comp2[which(seuratC$clustername %in% "PdgfraloFb3" )] <- "PdgfraloFb3"
+seuratC$comp2[which(seuratC$clustername %in% "PdgfraloFb4" )] <- "PdgfraloFb4"
+seuratC$comp2[which(seuratC$clustername %in% "Trophocytes" )] <- "Trophocytes"
+seuratC$comp2[which(seuratC$clustername %in% "Telocytes" )] <- "Telocytes"
+seuratC$comp2[which(seuratC$clustername %in% "Myocytes" )] <- "Myocytes"
+seuratC$comp2[which(seuratC$clustername %in% "Pdgfrahi" )] <- "Pdgfrahi"
+seuratC$comp2[which(seuratC$clustername %in% "Thy1Fb" )] <- "Thy1Fb"
+seuratC$comp2[which(seuratC$clustername %in% "Glial" )] <- "Glial"
+table(seuratC$comp2)
+```
+
+## generating pseudobulks for each comp cluster
+```{r generating pseudobulks for each comp cluster}
+Idents(seuratC) <- seuratC$comp
+sceC <- as.SingleCellExperiment(seuratC, assay = "RNA")
+
+#sceC.hvg <- modelGeneVar(secC) ##model highly variable genes
+#sceC.hvg.var <- getTopHVGs(sce.hvg, n=1000) ##select to p highly variable genes
+
+summed <- aggregateAcrossCells(sceC, id=colData(sceC)[,c("comp")])
+#summed <- summed[which(sce.hvg.var,] 
+hvg.mat <- as.matrix(summed@assays@data$counts)
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#242389","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+##highly variable genes only
+sceC.hvg <- modelGeneVar(sceC) ##model highly variable genes
+sceC.hvg.var <- getTopHVGs(sceC.hvg, n=1000) ##select to p highly variable genes
+
+summed <- aggregateAcrossCells(sceC, id=colData(sceC)[,c("comp")])
+summed <- summed[sceC.hvg.var,] 
+hvg.mat <- as.matrix(summed@assays@data$counts)
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#242389","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+```
+
+## generating pseudobulks for each comp2 cluster
+```{r generating pseudobulks for each comp2 cluster}
+Idents(seuratC) <- seuratC$comp2
+sceC2 <- as.SingleCellExperiment(seuratC, assay = "RNA")
+
+#sceC.hvg <- modelGeneVar(secC) ##model highly variable genes
+#sceC.hvg.var <- getTopHVGs(sce.hvg, n=1000) ##select to p highly variable genes
+
+summed <- aggregateAcrossCells(sceC2, id=colData(sceC2)[,c("comp2")])
+#summed <- summed[which(sce.hvg.var,] 
+hvg.mat <- as.matrix(summed@assays@data$counts)
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#242389","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+##highly variable genes only
+sceC.hvg <- modelGeneVar(sceC2) ##model highly variable genes
+sceC.hvg.var <- getTopHVGs(sceC.hvg, n=1000) ##select to p highly variable genes
+
+summed <- aggregateAcrossCells(sceC2, id=colData(sceC2)[,c("comp2")])
+summed <- summed[sceC.hvg.var,] 
+hvg.mat <- as.matrix(summed@assays@data$counts)
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#242389","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#050473","#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+cor.mat <- cor(hvg.mat)
+corrplot(cor.mat, type="full", order="hclust",
+         col=colorRampPalette(c("#39388a","#F7F7F7", "#B2182B"))(50),
+         is.corr = FALSE,
+         method = "color")
+
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```
