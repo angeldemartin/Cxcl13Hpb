@@ -1,0 +1,952 @@
+---
+title: "GranFb_withoutGlial"
+author: "A.DeMartin"
+date: "2025-06-05"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+options(width = 100)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, dev = c("png", "pdf"))
+seed <- 1234
+```
+
+## load packages
+```{r load packages}
+library(ExploreSCdataSeurat3)
+library(runSeurat3)
+library(Seurat)
+library(ggpubr)
+library(pheatmap)
+library(SingleCellExperiment)
+library(dplyr)
+library(tidyverse)
+library(viridis)
+library(muscat)
+library(circlize)
+library(destiny)
+library(scater)
+library(metap)
+library(multtest)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(msigdbr)
+library(enrichplot)
+library(DOSE)
+library(grid)
+library(gridExtra)
+library(ggupset)
+library(VennDiagram)
+```
+
+## load object merged allFb d4
+```{r load object merged allFb d4}
+##load object merged allFb naive and d4
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_allFb_naiveANDd4_seurat.rds"
+seuratFb <- readRDS(fileNam)
+table(seuratFb$dataset)
+```
+
+## exclude glial cells
+```{r subset wt}
+table(seuratFb$clustername)
+seuratnoglial <- subset(seuratFb, clustername == "Glial", invert = TRUE)
+table(seuratnoglial$clustername)
+
+seuratFb <- seuratnoglial
+```
+
+## set color vectors 
+```{r colors}
+## set vector for cond2
+colcond2 <- c("#202547","#BE3144")
+names(colcond2) <- c("WT", "cko")
+
+## set vector for cond2
+colcond3 <- c("#B45B5C","#628395","#BF782D")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+
+#colPal <- c("#355C7D", "#8E9B97","#779d8d","#0F1F38","#E84A5F","#FF847C","#F8B195", "#727077", "#C06C84","#2A363B", "#6C5B7B")
+#names(colPal) <- c("0" ,"1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+
+colPal <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#FF847C","#F8B195","#6C5B7B", "#C06C84", "#727077")
+names(colPal) <- c("0" ,"1", "2", "3","4", "5", "6", "7", "8", "9")
+
+colclustername <- c("#355C7D", "#8E9B97","#99B898","#E84A5F","#0F1F38","#F8B195","#727077","#FF847C","#C06C84","#904D39")
+names(colclustername) <- c("PdgfraloFb1" ,"PdgfraloFb2", "Trophocytes","PdgfraloFb3", "Telocytes","Myocytes", "Pdgfrahi", "PdgfraloFb4", "Thy1Fb", "Glial")
+
+colcelltype <- c("#355C7D","#99B898","#0F1F38","#F8B195","#727077","#C06C84","#904D39")
+names(colcelltype) <- c("PdgfraloFb", "Trophocytes", "Telocytes","Myocytes", "Pdgfrahi", "Thy1Fb", "Glial")
+
+colcelltype2 <- c("#E84A5F","#99B898","#0F1F38","#F8B195","#727077","#C06C84","#E84A5F","#99B898","#0F1F38","#F8B195","#727077","#C06C84")
+names(colcelltype2) <- c("PdgfraloFb", "Trophocytes", "Telocytes","Myocytes", "Pdgfrahi", "Thy1Fb","PdgfraloFb_out", "Trophocytes_out", "Telocytes_out","Myocytes_out", "Pdgfrahi_out", "Thy1Fb_out")
+```
+
+## subset PdgfraloFb3
+```{r PdgfraloFb3}
+Idents(seuratFb) <- seuratFb$cond2
+seurat1 <- subset(seuratFb, clustername == "PdgfraloFb3")
+table(seurat1$cond2)
+
+DEGenesPdgfraloFb3 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "PdgfraloFb3")
+
+VlnPlot(object=seurat1, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat1, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat1, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2)
+
+seurat2 <- subset(seuratFb, clustername == "Telocytes")
+table(seurat2$cond2)
+
+DEGenesTelocytes <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Telocytes")
+
+VlnPlot(object=seurat2, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat2, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat2, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2)
+
+seurat3 <- subset(seuratFb, clustername == "Myocytes")
+table(seurat3$cond2)
+
+DEGenesMyocytes <- FindAllMarkers(seurat3, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Myocytes")
+
+VlnPlot(object=seurat3, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat3, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2)
+VlnPlot(object=seurat3, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2)
+```
+
+## violin plots Fb 
+```{r violin plot Fb}
+Idents(seuratFb) <- seuratFb$cond2
+VlnPlot(object=seuratFb, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+
+Idents(seuratFb) <- seuratFb$clustername
+VlnPlot(object=seuratFb, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFb, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFb, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFb, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colclustername)
+```
+
+## assign cell types and Gran in and out
+```{r assign celltypes}
+#### celltype
+seuratFb$celltype <- "celltype"
+seuratFb$celltype[which(seuratFb$clustername %in% c("PdgfraloFb1", "PdgfraloFb2", "PdgfraloFb3","PdgfraloFb4"))] <- "PdgfraloFb"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Trophocytes"))] <- "Trophocytes"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Telocytes"))] <- "Telocytes"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Myocytes"))] <- "Myocytes"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Pdgfrahi"))] <- "Pdgfrahi"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Thy1Fb"))] <- "Thy1Fb"
+seuratFb$celltype[which(seuratFb$clustername %in% c("Glial"))] <- "Glial"
+table(seuratFb$celltype)
+
+###order
+Idents(seuratFb) <- seuratFb$celltype
+seuratFb$celltype <- factor(seuratFb$celltype, levels=c("PdgfraloFb", "Trophocytes", "Telocytes","Myocytes", "Pdgfrahi", "Thy1Fb", "Glial"))
+Idents(seuratFb) <- seuratFb$celltype
+table(seuratFb$celltype)
+
+#### Gran in and out
+seuratFb$Gran <- "Gran"
+seuratFb$Gran[which(seuratFb$cond3 %in% c("infectedD4", "naive"))] <- "out"
+table(seuratFb$Gran)
+
+```
+
+## subset Granuloma Fibroblasts
+```{r subset Gran Fb}
+seuratFbGran <- subset(seuratFb, cond3 == "granulomaD4")
+table(seuratFbGran$cond3)
+table(seuratFbGran$cond3)
+```
+
+## subset Fibroblasts ouside Granuloma
+```{r subset Fb out}
+seuratFbGranout <- subset(seuratFb, cond3 == "granulomaD4", invert = TRUE)
+table(seuratFb$cond3)
+table(seuratFbGranout$cond3)
+```
+
+## subset infected d4 Fibroblasts
+```{r subset infectedD4 Fb}
+seuratFbSI <- subset(seuratFb, cond3 == "infectedD4")
+table(seuratFb$cond3)
+table(seuratFbSI$cond3)
+```
+
+## subset naive Fibroblasts
+```{r subset naive Fb}
+seuratFbnaive <- subset(seuratFb, cond3 == "naive")
+table(seuratFb$cond3)
+table(seuratFbnaive$cond3)
+```
+
+## umaps 
+```{r umaps FbGran}
+##FbGran
+## cluster name
+Idents(seuratFbGran) <- seuratFbGran$clustername
+DimPlot(seuratFbGran, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbGran, reduction= "pca", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbGran, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFbGran) <- seuratFbGran$cond2
+DimPlot(seuratFbGran, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+DimPlot(seuratFbGran, reduction= "pca", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+```
+
+```{r umaps FbGranout}
+##FbGran outside
+## cluster name
+Idents(seuratFbGranout) <- seuratFbGranout$clustername
+DimPlot(seuratFbGranout, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbGranout, reduction= "pca", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbGranout, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFbGranout) <- seuratFbGranout$cond2
+DimPlot(seuratFbGranout, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+DimPlot(seuratFbGranout, reduction= "pca", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+```
+
+```{r umaps FbSI}
+##FbSI
+## cluster name
+Idents(seuratFbSI) <- seuratFbSI$clustername
+DimPlot(seuratFbSI, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbSI, reduction= "pca", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbSI, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFbSI) <- seuratFbSI$cond2
+DimPlot(seuratFbSI, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+DimPlot(seuratFbSI, reduction= "pca", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+```
+
+```{r umaps Fbnaive}
+##Fbnaive
+## cluster name
+Idents(seuratFbnaive) <- seuratFbnaive$clustername
+DimPlot(seuratFbnaive, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbnaive, reduction= "pca", cols = colclustername) + theme(legend.position = "none")
+DimPlot(seuratFbnaive, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFbnaive) <- seuratFbnaive$cond2
+DimPlot(seuratFbnaive, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+DimPlot(seuratFbnaive, reduction= "pca", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+```
+
+## DE genes for each celltype according to cond2
+```{r DE genes celltypes}
+Idents(seuratFb) <- seuratFb$cond2
+#top 100 DE genes PdgfraloFb
+seurat1 <- subset(seuratFb, celltype == "PdgfraloFb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "PdgfraloFb")
+
+DEGenesPdgfraloFb_100 <- DEGenesPdgfraloFb %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Trophocytes
+seurat1 <- subset(seuratFb, celltype == "Trophocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTrophocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Trophocytes")
+
+DEGenesTrophocytes_100 <- DEGenesTrophocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Telocytes
+seurat1 <- subset(seuratFb, celltype == "Telocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTelocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Telocytes")
+
+DEGenesTelocytes_100 <- DEGenesTelocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Myocytes
+seurat1 <- subset(seuratFb, celltype == "Myocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesMyocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Myocytes")
+
+DEGenesMyocytes_100 <- DEGenesMyocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Pdgfrahi
+seurat1 <- subset(seuratFb, celltype == "Pdgfrahi")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfrahi <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Pdgfrahi")
+
+DEGenesPdgfrahi_100 <- DEGenesPdgfrahi %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Thy1Fb
+seurat1 <- subset(seuratFb, celltype == "Thy1Fb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesThy1Fb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Thy1Fb")
+
+DEGenesThy1Fb_100 <- DEGenesThy1Fb %>% top_n(100, avg_log2FC) 
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesPdgfraloFb_100, DEGenesTrophocytes_100, DEGenesTelocytes_100, DEGenesMyocytes_100, DEGenesPdgfrahi_100, DEGenesThy1Fb_100)
+```
+
+## distribution of logFC of overall top 100 celltype wise DE genes
+```{r boxplot top100 DE genes celltype}
+ggdensity(DEGenesAll100, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+
+ggviolin(DEGenesAll100, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+
+ggboxplot(DEGenesAll100, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+```
+
+## DE genes for each celltype according to cond2 !! FbGran only !!
+```{r DE genes celltypes FbGran only}
+Idents(seuratFbGran) <- seuratFbGran$cond2
+table(seuratFbGran$cond2)
+table(seuratFbGran$celltype)
+#top 100 DE genes PdgfraloFb
+seurat1 <- subset(seuratFbGran, celltype == "PdgfraloFb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "PdgfraloFb")
+
+DEGenesPdgfraloFb_100 <- DEGenesPdgfraloFb %>% top_n(100, avg_log2FC) 
+DEGenesPdgfraloFb_50 <- DEGenesPdgfraloFb %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Trophocytes
+seurat1 <- subset(seuratFbGran, celltype == "Trophocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTrophocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Trophocytes")
+
+DEGenesTrophocytes_100 <- DEGenesTrophocytes %>% top_n(100, avg_log2FC) 
+DEGenesTrophocytes_50 <- DEGenesTrophocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Telocytes
+seurat1 <- subset(seuratFbGran, celltype == "Telocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTelocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Telocytes")
+
+DEGenesTelocytes_100 <- DEGenesTelocytes %>% top_n(100, avg_log2FC) 
+DEGenesTelocytes_50 <- DEGenesTelocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Myocytes
+seurat1 <- subset(seuratFbGran, celltype == "Myocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesMyocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Myocytes")
+
+DEGenesMyocytes_100 <- DEGenesMyocytes %>% top_n(100, avg_log2FC) 
+DEGenesMyocytes_50 <- DEGenesMyocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Pdgfrahi
+seurat1 <- subset(seuratFbGran, celltype == "Pdgfrahi")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfrahi <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Pdgfrahi")
+
+DEGenesPdgfrahi_100 <- DEGenesPdgfrahi %>% top_n(100, avg_log2FC) 
+DEGenesPdgfrahi_50 <- DEGenesPdgfrahi %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Thy1Fb
+seurat1 <- subset(seuratFbGran, celltype == "Thy1Fb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesThy1Fb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Thy1Fb")
+
+DEGenesThy1Fb_100 <- DEGenesThy1Fb %>% top_n(100, avg_log2FC) 
+DEGenesThy1Fb_50 <- DEGenesThy1Fb %>% top_n(50, avg_log2FC) 
+
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesPdgfraloFb_100, DEGenesTrophocytes_100, DEGenesTelocytes_100, DEGenesMyocytes_100, DEGenesPdgfrahi_100, DEGenesThy1Fb_100)
+
+DEGenesAll50 <- dplyr::bind_rows(DEGenesPdgfraloFb_50, DEGenesTrophocytes_50, DEGenesTelocytes_50, DEGenesMyocytes_50, DEGenesPdgfrahi_50, DEGenesThy1Fb_50)
+```
+
+## distribution of logFC of overall top 100 celltype wise DE genes !! GranFb only!!
+```{r boxplot top100 DE genes celltype GranFb only}
+ggdensity(DEGenesAll100, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+ggdensity(DEGenesAll50, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype)
+
+ggviolin(DEGenesAll100, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+ggviolin(DEGenesAll50, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype, add = "median_iqr")
+
+ggboxplot(DEGenesAll100, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+ggboxplot(DEGenesAll50, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype ,add = "jitter")
+```
+
+
+## DE genes for each celltype according to cond2 !! FbGran vs Fboutside !!
+```{r DE genes celltypes FbGran vs Fboutside}
+Idents(seuratFbGran) <- seuratFbGran$cond2
+Idents(seuratFbGranout) <- seuratFbGranout$cond2
+table(seuratFbGran$cond2)
+table(seuratFbGranout$cond2)
+table(seuratFbGran$celltype)
+table(seuratFbGranout$celltype)
+#top 100 DE genes PdgfraloFb Gran
+seurat1 <- subset(seuratFbGran, celltype == "PdgfraloFb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "PdgfraloFb")
+
+DEGenesPdgfraloFb_100 <- DEGenesPdgfraloFb %>% top_n(100, avg_log2FC) 
+DEGenesPdgfraloFb_50 <- DEGenesPdgfraloFb %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes PdgfraloFb outside
+seurat2 <- subset(seuratFbGranout, celltype == "PdgfraloFb")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesPdgfraloFbout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "PdgfraloFb_out")
+
+DEGenesPdgfraloFbout_100 <- DEGenesPdgfraloFbout %>% top_n(100, avg_log2FC) 
+DEGenesPdgfraloFbout_50 <- DEGenesPdgfraloFbout %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Trophocytes
+seurat1 <- subset(seuratFbGran, celltype == "Trophocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTrophocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Trophocytes")
+
+DEGenesTrophocytes_100 <- DEGenesTrophocytes %>% top_n(100, avg_log2FC) 
+DEGenesTrophocytes_50 <- DEGenesTrophocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Trophocytes outside
+seurat2 <- subset(seuratFbGranout, celltype == "Trophocytes")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesTrophocytesout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Trophocytes_out")
+
+DEGenesTrophocytesout_100 <- DEGenesTrophocytesout %>% top_n(100, avg_log2FC) 
+DEGenesTrophocytesout_50 <- DEGenesTrophocytesout %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Telocytes
+seurat1 <- subset(seuratFbGran, celltype == "Telocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTelocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Telocytes")
+
+DEGenesTelocytes_100 <- DEGenesTelocytes %>% top_n(100, avg_log2FC) 
+DEGenesTelocytes_50 <- DEGenesTelocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Telocytes outside
+seurat2 <- subset(seuratFbGranout, celltype == "Telocytes")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesTelocytesout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Telocytes_out")
+
+DEGenesTelocytesout_100 <- DEGenesTelocytesout %>% top_n(100, avg_log2FC) 
+DEGenesTelocytesout_50 <- DEGenesTelocytesout %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Myocytes
+seurat1 <- subset(seuratFbGran, celltype == "Myocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesMyocytes <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Myocytes")
+
+DEGenesMyocytes_100 <- DEGenesMyocytes %>% top_n(100, avg_log2FC) 
+DEGenesMyocytes_50 <- DEGenesMyocytes %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Myocytes out
+seurat2 <- subset(seuratFbGranout, celltype == "Myocytes")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesMyocytesout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Myocytes_out")
+
+DEGenesMyocytesout_100 <- DEGenesMyocytesout %>% top_n(100, avg_log2FC) 
+DEGenesMyocytesout_50 <- DEGenesMyocytesout %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Pdgfrahi
+seurat1 <- subset(seuratFbGran, celltype == "Pdgfrahi")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfrahi <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Pdgfrahi")
+
+DEGenesPdgfrahi_100 <- DEGenesPdgfrahi %>% top_n(100, avg_log2FC) 
+DEGenesPdgfrahi_50 <- DEGenesPdgfrahi %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Pdgfrahi out
+seurat2 <- subset(seuratFbGranout, celltype == "Pdgfrahi")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesPdgfrahiout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Pdgfrahi_out")
+
+DEGenesPdgfrahiout_100 <- DEGenesPdgfrahiout %>% top_n(100, avg_log2FC) 
+DEGenesPdgfrahiout_50 <- DEGenesPdgfrahiout %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Thy1Fb
+seurat1 <- subset(seuratFbGran, celltype == "Thy1Fb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesThy1Fb <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Thy1Fb")
+
+DEGenesThy1Fb_100 <- DEGenesThy1Fb %>% top_n(100, avg_log2FC) 
+DEGenesThy1Fb_50 <- DEGenesThy1Fb %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes Thy1Fb out
+seurat2 <- subset(seuratFbGranout, celltype == "Thy1Fb")
+table(seurat2$cond2)
+levels(seurat2) 
+
+DEGenesThy1Fbout <- FindAllMarkers(seurat2, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(celltype = "Thy1Fb_out")
+
+DEGenesThy1Fbout_100 <- DEGenesThy1Fbout %>% top_n(100, avg_log2FC) 
+DEGenesThy1Fbout_50 <- DEGenesThy1Fbout %>% top_n(50, avg_log2FC) 
+
+
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesPdgfraloFb_100, DEGenesPdgfraloFbout_100,
+                                  DEGenesTrophocytes_100,DEGenesTrophocytesout_100,
+                                  DEGenesTelocytes_100,DEGenesTelocytesout_100,
+                                  DEGenesMyocytes_100, DEGenesMyocytesout_100,
+                                  DEGenesPdgfrahi_100, DEGenesPdgfrahiout_100, 
+                                  DEGenesThy1Fb_100, DEGenesThy1Fbout_100)
+
+DEGenesAll50 <- dplyr::bind_rows(DEGenesPdgfraloFb_50,DEGenesPdgfraloFbout_50,
+                                 DEGenesTrophocytes_50, DEGenesTrophocytesout_50,
+                                 DEGenesTelocytes_50,DEGenesTelocytesout_50,
+                                 DEGenesMyocytes_50, DEGenesMyocytesout_50,
+                                 DEGenesPdgfrahi_50, DEGenesPdgfrahiout_50,
+                                 DEGenesThy1Fb_50, DEGenesThy1Fbout_50)
+```
+
+## distribution of logFC of overall top 100 celltype wise DE genes !! GranFb vs Fboutside !!
+```{r boxplot top100 DE genes celltype GranFb vs Fb oustide}
+ggdensity(DEGenesAll100, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype2)
+ggdensity(DEGenesAll50, x = "avg_log2FC", add= "median", rug = TRUE, color = "celltype", fill = "celltype", palette = colcelltype2)
+
+ggviolin(DEGenesAll100, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype2, add = "median_iqr")
+ggviolin(DEGenesAll50, x = "celltype", y = "avg_log2FC", fill = "celltype", palette = colcelltype2, add = "median_iqr")
+
+ggboxplot(DEGenesAll100, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype2 ,add = "jitter")
+ggboxplot(DEGenesAll50, x = "celltype", y = "avg_log2FC", color = "celltype", palette = colcelltype2 ,add = "jitter")
+```
+
+## DE genes for each cluster according to cond2
+```{r DE genes clusters}
+Idents(seuratFb) <- seuratFb$cond2
+#top 100 DE genes PdgfraloFb1
+seurat1 <- subset(seuratFb, clustername == "PdgfraloFb1")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb1 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "PdgfraloFb1")
+
+DEGenesPdgfraloFb1_100 <- DEGenesPdgfraloFb1 %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes PdgfraloFb2
+seurat1 <- subset(seuratFb, clustername == "PdgfraloFb2")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb2 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "PdgfraloFb2")
+
+DEGenesPdgfraloFb2_100 <- DEGenesPdgfraloFb2 %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes PdgfraloFb3
+seurat1 <- subset(seuratFb, clustername == "PdgfraloFb3")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb3 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "PdgfraloFb3")
+
+DEGenesPdgfraloFb3_100 <- DEGenesPdgfraloFb3 %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes PdgfraloFb4
+seurat1 <- subset(seuratFb, clustername == "PdgfraloFb4")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfraloFb4 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "PdgfraloFb4")
+
+DEGenesPdgfraloFb4_100 <- DEGenesPdgfraloFb4 %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Trophocytes
+seurat1 <- subset(seuratFb, clustername == "Trophocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTrophocytes<- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Trophocytes")
+
+DEGenesTrophocytes_100 <- DEGenesTrophocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Telocytes
+seurat1 <- subset(seuratFb, clustername == "Telocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesTelocytes<- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Telocytes")
+
+DEGenesTelocytes_100 <- DEGenesTelocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Myocytes
+seurat1 <- subset(seuratFb, clustername == "Myocytes")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesMyocytes<- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Myocytes")
+
+DEGenesMyocytes_100 <- DEGenesMyocytes %>% top_n(100, avg_log2FC) 
+
+#top 100 DE genes Pdgfrahi
+seurat1 <- subset(seuratFb, clustername == "Pdgfrahi")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesPdgfrahi<- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Pdgfrahi")
+
+DEGenesPdgfrahi_100 <- DEGenesPdgfrahi %>% top_n(100, avg_log2FC) 
+
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesPdgfraloFb1_100, DEGenesPdgfraloFb2_100, DEGenesPdgfraloFb3_100,DEGenesPdgfraloFb4_100, DEGenesTrophocytes_100, DEGenesTelocytes_100, DEGenesMyocytes_100, DEGenesPdgfrahi_100)
+
+#top 100 DE genes Thy1Fb
+seurat1 <- subset(seuratFb, clustername == "Thy1Fb")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesThy1Fb<- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(clustername = "Thy1Fb")
+
+DEGenesThy1Fb_100 <- DEGenesThy1Fb %>% top_n(100, avg_log2FC) 
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesPdgfraloFb1_100, DEGenesPdgfraloFb2_100, DEGenesPdgfraloFb3_100,DEGenesPdgfraloFb4_100, DEGenesTrophocytes_100, DEGenesTelocytes_100, DEGenesMyocytes_100, DEGenesPdgfrahi_100, DEGenesThy1Fb_100)
+```
+
+## distribution of logFC of overall top 100 cw DE genes
+```{r boxplot top100 DE genes cluster}
+ggdensity(DEGenesAll100, x = "avg_log2FC", add= "median", rug = TRUE, color = "clustername", fill = "clustername", palette = colclustername)
+
+ggviolin(DEGenesAll100, x = "clustername", y = "avg_log2FC", fill = "clustername", palette = colclustername, add = "median_iqr")
+
+ggboxplot(DEGenesAll100, x = "clustername", y = "avg_log2FC", color = "clustername", palette = colclustername ,add = "jitter")
+```
+
+## DE genes for each cond3 according to cond2
+```{r DE genes cond2-2}
+Idents(seuratFb) <- seuratFb$cond2
+#top 100 DE genes naive
+seurat1 <- subset(seuratFb, cond3 == "naive")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesnaive <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(cond3 = "naive")
+
+DEGenesnaive_100 <- DEGenesnaive %>% top_n(100, avg_log2FC) 
+DEGenesnaive_50 <- DEGenesnaive %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes infectedD4
+seurat1 <- subset(seuratFb, cond3 == "infectedD4")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesinfectedD4 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(cond3 = "infectedD4")
+
+DEGenesinfectedD4_100 <- DEGenesinfectedD4 %>% top_n(100, avg_log2FC) 
+DEGenesinfectedD4_50 <- DEGenesinfectedD4 %>% top_n(50, avg_log2FC) 
+
+#top 100 DE genes granulomaD4
+seurat1 <- subset(seuratFb, cond3 == "granulomaD4")
+table(seurat1$cond2)
+levels(seurat1) 
+
+DEGenesgranulomaD4 <- FindAllMarkers(seurat1, logfc.threshold = 0.1, only.pos = T) %>% 
+  dplyr::filter(p_val_adj < 0.01) %>% mutate(cond3 = "granulomaD4")
+
+DEGenesgranulomaD4_100 <- DEGenesgranulomaD4 %>% top_n(100, avg_log2FC) 
+DEGenesgranulomaD4_50 <- DEGenesgranulomaD4 %>% top_n(50, avg_log2FC) 
+
+
+DEGenesAll100 <- dplyr::bind_rows(DEGenesnaive_100, DEGenesinfectedD4_100, DEGenesgranulomaD4_100)
+DEGenesAll50 <- dplyr::bind_rows(DEGenesnaive_50, DEGenesinfectedD4_50, DEGenesgranulomaD4_50)
+```
+
+## distribution of logFC of overall top 100 cond3 wise DE genes
+```{r boxplot top100 DE genes overall}
+ggdensity(DEGenesAll100, x = "avg_log2FC", add= "median", rug = TRUE, color = "cond3", fill = "cond3", palette = colcond3)
+ggdensity(DEGenesAll50, x = "avg_log2FC", add= "median", rug = TRUE, color = "cond3", fill = "cond3", palette = colcond3)
+
+ggviolin(DEGenesAll100, x = "cond3", y = "avg_log2FC", fill = "cond3", palette = colcond3, add = "median_iqr")
+ggviolin(DEGenesAll50, x = "cond3", y = "avg_log2FC", fill = "cond3", palette = colcond3, add = "median_iqr")
+
+ggboxplot(DEGenesAll100, x = "cond3", y = "avg_log2FC", color = "cond3", palette = colcond3 ,add = "jitter")
+ggboxplot(DEGenesAll50, x = "cond3", y = "avg_log2FC", color = "cond3", palette = colcond3 ,add = "jitter")
+```
+
+## GSEA Fb gran wt
+```{r GSEA Fb gran wt, fig.height=12, fig.width=12}
+## GSEA on genes upregulated in wt granulomaFb 
+##adjust table
+DEGenesgranwt <- dplyr::filter(DEGenesgranulomaD4, cluster == "WT")
+DEGenesgranwt <- DEGenesgranwt %>%
+  mutate(Gene=gsub("^.*\\.", "", gene))  %>%
+  mutate(EnsID=gsub("\\..*","", gene))
+
+##GSEA Gran
+egoGranWT <- enrichGO(gene = unique(DEGenesgranwt$EnsID),
+                          OrgDb = org.Mm.eg.db,
+                          keyType = 'ENSEMBL',
+                          ont = "BP",
+                          pAdjustMethod = "BH",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05)
+egoGranWT <- setReadable(egoGranWT, OrgDb = org.Mm.eg.db)
+dotplot(egoGranWT, showCategory=30)
+```
+
+## violin plots infectedD4
+```{r violin plot infectedD4}
+Idents(seuratFbSI) <- seuratFbSI$cond2
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+
+Idents(seuratFbSI) <- seuratFbSI$clustername
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbSI, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2, split.by = "cond2")
+```
+
+## violin plots GranFb
+```{r violin plot GranFb}
+Idents(seuratFbGran) <- seuratFbGran$cond2
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2) + theme(legend.position = "none")
+
+Idents(seuratFbGran) <- seuratFbGran$clustername
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colclustername)
+
+Idents(seuratFbGran) <- seuratFbGran$mouse
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2, split.by = "cond2")
+```
+
+
+
+## violin plots GranFb wt only
+```{r violin plot GranFb wt only}
+seuratFbGranwt <- subset(seuratFbGran, cond2 == "WT")
+
+Idents(seuratFbGranwt) <- seuratFbGranwt$clustername
+VlnPlot(object=seuratFbGranwt, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGranwt, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGranwt, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGranwt, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colclustername)
+VlnPlot(object=seuratFbGranwt, features = "ENSMUSG00000026073.Il1r2", pt.size = 0, cols = colclustername)
+
+Idents(seuratFbGran) <- seuratFbGran$mouse
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colcond2, split.by = "cond2")
+VlnPlot(object=seuratFbGran, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colcond2, split.by = "cond2")
+```
+
+### dotplot FbGranwt 
+```{r dotplot FbGranwt Ccl11 Osmr and Il1r1, fig.height=6, fig.width=7}
+genes <- data.frame(gene=rownames(seuratFbGranwt)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=rev(c("Ccl11","Il1r1","Osmr","Il1r2"))) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFbGranwt, features = selGenes, group.by= "clustername") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
+```
+
+## violin plots according to Gran in and out
+```{r violin plot Gran in and out}
+Idents(seuratFb) <- seuratFb$clustername
+VlnPlot(object=seuratFb, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colclustername, split.by = "Gran")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000020676.Ccl11", pt.size = 0, cols = colclustername, split.by = "Gran")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000026072.Il1r1", pt.size = 0, cols = colclustername, split.by = "Gran")
+VlnPlot(object=seuratFb, features = "ENSMUSG00000022146.Osmr", pt.size = 0, cols = colclustername, split.by = "Gran")
+```
+
+```{r rerun seurat GranFb, eval=FALSE, include=TRUE}
+#rerun seurat GranFb
+seuratFbGran <- NormalizeData (object = seuratFbGran)
+seuratFbGran <- FindVariableFeatures(object = seuratFbGran)
+seuratFbGran <- ScaleData(object = seuratFbGran, verbose = TRUE)
+seuratFbGran <- RunPCA(object=seuratFbGran, npcs = 30, verbose = FALSE)
+seuratFbGran <- RunTSNE(object=seuratFbGran, reduction="pca", dims = 1:20)
+seuratFbGran <- RunUMAP(object=seuratFbGran, reduction="pca", dims = 1:20)
+seuratFbGran <- FindNeighbors(object = seuratFbGran, reduction = "pca", dims= 1:20)
+
+res <- c(0.25, 0.6, 0.8, 0.4)
+for (i in 1:length(res)) {
+  seuratFbGran <- FindClusters(object = seuratFbGran, resolution = res[i], random.seed = 1234)
+}
+
+### save seurat object
+saveRDS(seuratFbGran, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_GranFb_withoutGlial_seurat.rds")
+```
+
+## umaps 
+```{r load and umaps FbGran}
+##load object Fb gran rerun
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_GranFb_withoutGlial_seurat.rds"
+seuratFbGran <- readRDS(fileNam)
+
+##FbGran
+## cluster name
+Idents(seuratFbGran) <- seuratFbGran$RNA_snn_res.0.25
+DimPlot(seuratFbGran, reduction= "umap") 
+DimPlot(seuratFbGran, reduction= "pca") + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFbGran) <- seuratFbGran$cond2
+DimPlot(seuratFbGran, reduction= "umap", cols = colcond2, shuffle = TRUE) 
+DimPlot(seuratFbGran, reduction= "pca", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+```
+
+## dotplot FbGran
+```{r dotplot Fb Gran, fig.height=4, fig.width=7}
+genes <- data.frame(gene=rownames(seuratFbGran)) %>% 
+  mutate(geneID=gsub("^.*\\.", "", gene))
+
+selGenes <- data.frame(geneID=c("Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+
+DotPlot(seuratFbGran, features = selGenes, group.by= "RNA_snn_res.0.25") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
+DotPlot(seuratFbGran, features = selGenes, group.by= "RNA_snn_res.0.25") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
+```
+## feature plots fb maker genes
+```{r feature plots fb}
+## plot feature
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000028583.Pdpn", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000028583.Pdpn", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "Rosa26eyfp.Rosa26eyfp", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "Rosa26eyfp.Rosa26eyfp", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000035783.Acta2", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000035783.Acta2", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000016494.Cd34", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000016494.Cd34", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000029231.Pdgfra", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000029231.Pdgfra", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000071005.Ccl19", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000071005.Ccl19", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000037706.Cd81", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000037706.Cd81", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000024810.Il33", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000024810.Il33", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000023078.Cxcl13", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000020676.Ccl11", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000024011.Pi16", cols = c("lightgrey", "#BE3144"), pt.size = 1, order = TRUE)
+FeaturePlot(seuratFbGran, features = "ENSMUSG00000024011.Pi16", cols = c("lightgrey", "#BE3144"), pt.size = 1) + theme(legend.position = "none") + ggtitle(NULL)
+```
+
+## Rel Abundance Fb subsets
+```{r Fb abundance plot}
+## make count list according to cond3
+datList <- NULL
+for(con in unique(seuratFbGran$cond2)){
+  seuratSub <- subset(seuratFbGran, cond2==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$RNA_snn_res.0.25)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT", "cko") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency") + scale_x_discrete(limits=ordX)
+```
+
+## session info
+```{r date and session info}
+date()
+sessionInfo()
+```

@@ -907,8 +907,9 @@ saveRDS(seuratFbGran, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/dat
 
 ## umaps 
 ```{r load and umaps FbGran}
-### load object
-saveRDS(seuratFbGran, file="/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_GranFb_seurat.rds")
+##load object Fb gran rerun
+fileNam <- "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/merged_GranFb_seurat.rds"
+seuratFbGran <- readRDS(fileNam)
 
 ##FbGran
 ## cluster name
