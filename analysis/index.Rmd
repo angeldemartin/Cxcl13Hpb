@@ -49,6 +49,10 @@ FRC signatures
 Gran Fibroblasts
 [link](GranFb.html)
 
+### Gran Fibroblasts without Glia
+Gran Fibroblasts without Glia
+[link](GranFb_withoutGlial.html)
+
 ### Fibroblast analysis including D8 
 Fibroblast analysis including D8 data
 [link](FibroblastAnalysisincl.D8.html)
