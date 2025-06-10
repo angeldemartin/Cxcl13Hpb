@@ -650,6 +650,163 @@ ordX <- c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD
 ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) 
 ```
 
+## without gial cells
+```{r}
+##filter glial
+seuratFb_noglial <- subset(seuratFb, clustername == "Glial", invert = TRUE)
+
+table(seuratFb$clustername)
+table(seuratFb_noglial$clustername)
+
+table(seuratFb$orig.ident)
+table(seuratFb_noglial$orig.ident)
+
+seuratFb <- seuratFb_noglial
+```
+
+## umaps clustername
+```{r umaps clustername no glial}
+## cluster name
+Idents(seuratFb) <- seuratFb$clustername
+table(seuratFb$clustername)
+table(seuratFb$orig.ident)
+table(seuratFb$cond3)
+DimPlot(seuratFb, reduction= "umap", cols = colclustername)
+DimPlot(seuratFb, reduction= "pca", cols = colclustername)
+DimPlot(seuratFb, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+
+#subset wt
+table(seuratFb$cond2)
+seuratFbwt <- subset(seuratFb, cond2 == "WT")
+table(seuratFbwt$cond2)
+#subset cko
+seuratFbcko <- subset(seuratFb, cond2 == "cko")
+table(seuratFbcko$cond2)
+
+## cluster name
+Idents(seuratFbwt) <- seuratFbwt$clustername
+DimPlot(seuratFbwt, reduction= "umap", cols = colclustername)
+DimPlot(seuratFbwt, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+## cond2
+Idents(seuratFbwt) <- seuratFbwt$cond2
+DimPlot(seuratFbwt, reduction= "umap", cols = colcond2)
+DimPlot(seuratFbwt, reduction= "umap", cols = colcond2) + theme(legend.position = "none")
+
+## cluster name
+Idents(seuratFbcko) <- seuratFbcko$clustername
+DimPlot(seuratFbcko, reduction= "umap", cols = colclustername)
+DimPlot(seuratFbcko, reduction= "umap", cols = colclustername) + theme(legend.position = "none")
+## cond2
+Idents(seuratFbcko) <- seuratFbcko$cond2
+DimPlot(seuratFbcko, reduction= "umap", cols = colcond2)
+DimPlot(seuratFbcko, reduction= "umap", cols = colcond2) + theme(legend.position = "none")
+```
+
+## umaps conditions
+```{r umaps conditions no glial}
+## cond3
+Idents(seuratFb) <- seuratFb$cond3
+table(seuratFb$cond3)
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = T)
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, shuffle = T) + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, split.by = "cond3") + theme(legend.position = "none")
+
+## on grey background 
+colcond3 <- c("lightgrey","lightgrey","#BF782D")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "granulomaD4") + theme(legend.position = "none")
+
+colcond3 <- c("lightgrey","#628395","lightgrey")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "naive")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "naive") + theme(legend.position = "none")
+
+colcond3 <- c("#B45B5C","lightgrey","lightgrey")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "infectedD4")
+DimPlot(seuratFb, reduction= "umap", cols = colcond3, order = "infectedD4") + theme(legend.position = "none")
+
+colcond3 <- c("#B45B5C","#628395","#BF782D")
+names(colcond3) <- c("infectedD4", "naive", "granulomaD4")
+seuratFbgran <- subset(seuratFb, cond3 == "granulomaD4")
+DimPlot(seuratFbgran, reduction= "umap", cols = colcond3) + theme(legend.position = "none")
+
+seuratFbinf <- subset(seuratFb, cond3 == "infectedD4")
+DimPlot(seuratFbinf, reduction= "umap", cols = colcond3) + theme(legend.position = "none")
+
+seuratFbnaive <- subset(seuratFb, cond3 == "naive")
+DimPlot(seuratFbnaive, reduction= "umap", cols = colcond3) + theme(legend.position = "none")
+
+## cond2
+Idents(seuratFb) <- seuratFb$cond2
+table(seuratFb$cond2)
+DimPlot(seuratFb, reduction= "umap", cols = colcond2)
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "WT")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "WT") + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "cko")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, order = "cko") + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, shuffle = TRUE)
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, shuffle = TRUE) + theme(legend.position = "none")
+DimPlot(seuratFb, reduction= "umap", cols = colcond2, split.by = "cond2") + theme(legend.position = "none")
+
+DimPlot(seuratFb, reduction= "pca", cols = colcond2, shuffle = TRUE)
+```
+
+## Rel Abundance Fb subsets
+```{r Fb abundance plot no glial}
+## make count list according to cond3
+datList <- NULL
+for(con in unique(seuratFb$cond3)){
+  seuratSub <- subset(seuratFb, cond3==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("naive", "infectedD4", "granulomaD4") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX)
+
+## make count list according to cond2 plus cond3
+datList <- NULL
+for(con in unique(seuratFb$cond2_plus_cond3)){
+  seuratSub <- subset(seuratFb, cond2_plus_cond3==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <-  c("WT_naive", "cko_naive", "WT_infectedD4", "cko_infectedD4", "WT_granulomaD4", "cko_granulomaD4") 
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + scale_x_discrete(limits=ordX) + theme(axis.text.x = element_text(angle = 20, hjust=1))
+
+## make count list according to mouse
+datList <- NULL
+for(con in unique(seuratFb$mouse)){
+  seuratSub <- subset(seuratFb, mouse==con)
+  print(dim(seuratSub))
+  dat_con <- as.data.frame(table(seuratSub$clustername)) %>%
+  mutate(percent=Freq/ncol(seuratSub)) %>% mutate(cond=con)
+  datList[[con]] <- dat_con
+}
+dat_all <- do.call("rbind", datList)
+
+##order x
+ordX <- c("m1wtnaive", "m2wtnaive", "m1ckonaive","m2ckonaive","m1wtD4SI", "m2wtD4SI", "m1ckoD4SI","m2ckoD4SI",  "m1wtD4Gran", "m2wtD4Gran",  "m1ckoD4Gran", "m2ckoD4Gran")
+
+## plot abundance
+ggbarplot(dat_all, x= "cond", y= "percent", fill = "Var1", legend = "right", legend.titel = "clustername", ylab = "frequency", palette = colclustername) + theme(axis.text.x = element_text(angle = 20, hjust=1)) + scale_x_discrete(limits=ordX) 
+```
+
 ## session info
 ```{r date and session info}
 date()
