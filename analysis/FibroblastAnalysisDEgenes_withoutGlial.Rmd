@@ -96,7 +96,7 @@ markerGenes <- FindAllMarkers(seuratFb, only.pos=T) %>%
   dplyr::filter(p_val_adj < 0.01) 
 
 write.table(markerGenes, 
-            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/FbmarkerGenesclustername_noGlial.txt",
+            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/FbmarkerGenesclustername_noGlial.txt",
             sep="\t",
             quote=F,
             row.names=F,
@@ -113,7 +113,7 @@ DEGenesFbcond3 <- FindAllMarkers(seuratFb, only.pos=T) %>%
   dplyr::filter(p_val_adj < 0.01) 
 
 write.table(DEGenesFbcond3, 
-            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/DEGenesFbcond3.txt",
+            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond3_noGlial.txt",
             sep="\t",
             quote=F,
             row.names=F,
@@ -123,7 +123,7 @@ write.table(DEGenesFbcond3,
 ## GSEA Fb gran
 ```{r GSEA Fb gran, fig.height=12, fig.width=12}
 ## load DEGenesFbcond3
-DEGenesFbcond3 <- read.delim("/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond3.txt", header = TRUE, sep = "\t")
+DEGenesFbcond3 <- read.delim("/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond3_noGlial.txt", header = TRUE, sep = "\t")
 
 ## GSEA on genes upregulated in granulomaFb
 ##adjust table
@@ -737,7 +737,7 @@ DEGenesFbcond2 <- FindAllMarkers(seuratFb, only.pos=T) %>%
   dplyr::filter(p_val_adj < 0.01) 
 
 write.table(DEGenesFbcond2, 
-            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/analysis/DEGenesFbcond2.txt",
+            file= "/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond2_noGlial.txt",
             sep="\t",
             quote=F,
             row.names=F,
@@ -747,7 +747,7 @@ write.table(DEGenesFbcond2,
 ## GSEA wt
 ```{r GSEA Fb wt, fig.height=12, fig.width=12}
 ## load DEGenesFbcond2
-DEGenesFbcond2 <- read.delim("/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond2.txt", header = TRUE, sep = "\t")
+DEGenesFbcond2 <- read.delim("/Users/immbio/Desktop/Project/Angelina/Cxcl13Hpb/data/DEGenesFbcond2_noGlial.txt", header = TRUE, sep = "\t")
 ## GSEA on genes upregulated in wt
 ##adjust table
 DEGeneswt <- dplyr::filter(DEGenesFbcond2, cluster == "WT")
@@ -766,6 +766,7 @@ egowt <- enrichGO(gene = unique(DEGeneswt$EnsID),
 egowt <- setReadable(egowt, OrgDb = org.Mm.eg.db)
 dotplot(egowt, showCategory=30)
 ```
+
 ## barplot GSEA wt
 ```{r barplot GSEA wt, fig.height=5, fig.width=12}
 #select pahtways and filter file
@@ -811,6 +812,7 @@ egocko <- enrichGO(gene = unique(DEGenescko$EnsID),
 egocko <- setReadable(egocko, OrgDb = org.Mm.eg.db)
 dotplot(egocko, showCategory=30)
 ```
+
 ## barplot GSEA cko
 ```{r barplot GSEA cko, fig.height=5, fig.width=12}
 #select pahtways and filter file
@@ -836,7 +838,6 @@ DotPlot(seuratFb, features = selGenes, group.by= "cond2_plus_cond3") + RotatedAx
 DotPlot(seuratFb, features = selGenes, group.by= "cond2") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
 DotPlot(seuratFb, features = selGenes, group.by= "cond2") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
 ```
-
 
 ### filter top10 genes of each pathway wt
 ```{r filter top 10 genes, fig.height=6, fig.width=7}
@@ -1659,11 +1660,11 @@ DotPlot(seuratFb, features = selGenes, group.by= "cond2") + RotatedAxis() + scal
 ```
 
 ## neg regualtion of endopepitdase activity
-```{r dotplot genes GSEA intersect-2, fig.height=3, fig.width=7}
+```{r dotplot genes GSEA intersect-2, fig.height=3.5, fig.width=7}
 genes <- data.frame(gene=rownames(seuratFb)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=rev(c("Serpina3n", "Hspa1b","Serpina3g","Picalm","Xiap","Serpina3i", "Rps6ka3"))) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=rev(c("Serpina3n", "Hspa1b","Serpina3g","Picalm","Xiap","Serpina3i", "Rps6ka3", "Src"))) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratFb, features = selGenes, group.by= "cond3") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
 DotPlot(seuratFb, features = selGenes, group.by= "cond2_plus_cond3") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()

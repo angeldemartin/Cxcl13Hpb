@@ -33,6 +33,10 @@ Fibroblast Analysis wt only
 Fibroblast Analysis DE genes
 [link](FibroblastAnalysisDEgenes.html)
 
+### Fibroblast Analysis DE genes without Glia
+Fibroblast Analysis DE genes without Glia
+[link](FibroblastAnalysisDEgenes_withoutGlial.html)
+
 ### Fibroblast Analysis DE genes wt only
 Fibroblast Analysis DE genes wt only
 [link](FibroblastAnalysisDEgenes_wtonly.html)
