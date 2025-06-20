@@ -708,6 +708,12 @@ plotUMAP(sceFbgranSub, colour_by = "sign2", point_size = 1) + sc +
 plotUMAP(sceFbgranSub, colour_by = "sign2", point_size = 1) + sc
 ```
 
+## plot violin Il33
+```{r violin}
+Idents(seuratFb) <- seuratFb$cond3
+VlnPlot(object = seuratFb, features = "ENSMUSG00000024810.Il33", pt.size = 0, cols = colcond3)
+```
+
 ## session info
 ```{r date and session info}
 date()

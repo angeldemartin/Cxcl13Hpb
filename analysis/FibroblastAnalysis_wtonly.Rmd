@@ -286,7 +286,7 @@ avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
 genes <- data.frame(gene=rownames(seuratFb)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("Il33", "Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratFb, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
 DotPlot(seuratFb, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
@@ -542,7 +542,7 @@ avgHeatmap(seurat, selGenes = genesPlot, colVecIdent = colVec)
 genes <- data.frame(gene=rownames(seuratFb)) %>% 
   mutate(geneID=gsub("^.*\\.", "", gene))
 
-selGenes <- data.frame(geneID=c("Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
+selGenes <- data.frame(geneID=c("Il33","Thy1","Ly6a","Acta2","Cd81","Cd34","Pdgfra","Pdpn")) %>% left_join(., genes, by="geneID")
 
 DotPlot(seuratFb, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="E") + coord_flip()
 DotPlot(seuratFb, features = selGenes, group.by= "cluster_name") + RotatedAxis() + scale_color_viridis(option="F") + coord_flip()
